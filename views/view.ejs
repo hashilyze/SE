@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><%=title%></title>
+    <link rel="stylesheet" href="/stylesheets/css.css">
+</head>
+<body>
+    <div class="board_wrap">
+        <%- include("./header.html")%>
+        <div class="board_view_wrap">
+            <!--게시물 뷰어-->
+            <div class="board_view">
+                <!--제목-->
+                <div class="title">
+                    [<%=category%>] <%=title%>
+                </div>
+                <!--메타 데이터-->
+                <div class="info">
+                    <dl>
+                        <dt>번호</dt>
+                        <dd><%=pid%></dd>
+                    </dl>
+                    <dl>
+                        <dt>글쓴이</dt>
+                        <dd><%=author%></dd>
+                    </dl>
+                    <dl>
+                        <dt>작성일</dt>
+                        <dd><%=regist_date%></dd>
+                    </dl>
+                    <dl>
+                        <dt>조회</dt>
+                        <dd><%=views%></dd>
+                    </dl>
+                    <dl>
+                        <a href="/board/post/read/<%=pid%>/upvote">
+                        <dt>추천</dt>
+                        <dd><%=votes%></dd>
+                        </a>
+                    </dl>
+                </div>
+                <!--컨텐츠: 텍스트-->
+                <div class="cont">
+                    <%=content%>
+                </div>
+                <%if(image_name !== undefined){%>
+                <!--컨텐츠: 이미지-->
+                <div class="img">
+                    <img src="/images/<%=image_name%>">
+                </div>
+                <%}%>
+            </div>
+            <!--페이지 이동-->
+            <div class="bt_wrap">
+                <form action="/board/post/delete" method="post">
+                    <a href="/board" class="on">목록</a>
+                    <a href="/board/post/edit/<%=pid%>">수정</a>
+                    <input type="hidden" name="pid" value="<%=pid%>">
+                    <button type="submit">삭제</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

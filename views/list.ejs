@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>게시판</title>
+    <link rel="stylesheet" href="/stylesheets/css.css">
+</head>
+<body>
+    <div class="board_wrap">
+        <%- include("./header.html")%>
+        <div class="board_list_wrap">
+            <!--게시물 리스트-->
+            <table class="board_list">
+                <tr class="top">
+                    <th class="num">번호</th>
+                    <th class="category">범주</th>
+                    <th class="title">제목</th>
+                    <th class="author">글쓴이</th>
+                    <th class="date">작성일</th>
+                    <th class="views">조회</th>
+                    <th class="votes">추천</th>
+                </tr>
+                <% for(var i = 0; i < posts.length; ++i) {%>
+                <tr>
+                    <td class="num"><%=posts[i].pid%></td>
+                    <td class="category"><%=posts[i].category%></td>
+                    <td class="title"><a href="/board/post/read/<%=posts[i].pid%>"><%=posts[i].title%></a></td>
+                    <td class="author"><%=posts[i].author%></td>
+                    <td class="date"><%=posts[i].regDate%></td>
+                    <td class="views"><%=posts[i].views%></td>  
+                    <td class="votes"><%=posts[i].votes%></td>
+                </tr>
+                <%}%>
+            </table>
+            <!--페이지 조작-->
+            <div class="board_page">
+                <a href="/board/0" class="bt first"><<</a>
+                <a href="/board/<%=page - 1%>" class="bt prev"><</a>
+                <%# 페이지 메뉴 생성%>
+                <%for(var left = Math.min(4, page), right = 9 - left, i = 0; i < 10; ++i){%>
+                    <%if(i == left) {%>
+                        <a href="#" class="num on"><%=page + 1%></a>
+                    <%} else {%>
+                        <a href="/board/<%=page - left + i%>" class="num"><%=page - left + i + 1%></a>
+                    <%}%>
+                <%}%>
+                <a href="/board/<%=page + 1%>" class="bt next">></a>
+                <a href="#" class="bt last">>></a>
+            </div>
+            <!--페이지 이동-->
+            <div class="bt_wrap">
+                <a href="/board/post/write" class="on">등록</a>
+            </div>
+        </div>
+    </div>
+</body>
+</html> 
