@@ -3,7 +3,7 @@ create database sedb;
 use sedb;
 
 # 테이블 생성
-create table if not exists board (
+create table board (
     pid    INT              	NOT NULL    AUTO_INCREMENT COMMENT '게시글ID', 
     
     author      VARCHAR(50)      	NOT NULL    				COMMENT '작성자',

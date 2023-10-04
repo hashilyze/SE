@@ -91,7 +91,7 @@ router.get('/write', (req, res)=>{
 });
 
 router.post("/create",  upload.array("img"), (req, res)=>{    
-    const filename = "no_image.jpg";
+    var filename = "no_image.jpg";
     if(req.files !== undefined) filename = req.files[0].filename;
 
     const state = `
@@ -131,7 +131,7 @@ router.get('/edit/:pid', (req, res) => {
     connection.query(lookupState, (err, data) => {
         if(err) console.log(err);
         if(data.length < 1) {
-            res.redirect(router.root_url);
+            res.redirect(router.parent_url);
             connection.end();
         }
         res.render("edit", {

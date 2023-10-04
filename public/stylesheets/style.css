@@ -63,11 +63,14 @@ a, button {
  * BEGIN: board-list
  */
 .board_list {
-    /* width: 100%; */
-    width: 1080px;
+    width: 100%;
     border-top: 2px solid #000;
     border-bottom: 2px solid #000;
     border-collapse: collapse;
+}
+
+.board_list tr {
+    display:flex;
 }
 
 .board_list td {
