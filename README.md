@@ -7,7 +7,7 @@
 
 **URL**
 
-http://ec2-3-34-136-207.ap-northeast-2.compute.amazonaws.com:3000/board/0
+http://ec2-3-34-136-207.ap-northeast-2.compute.amazonaws.com/board/0
 
 ### 2. 로컬에서 실행하기
 #### 2-1. 필요 프로그램
