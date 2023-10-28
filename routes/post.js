@@ -1,14 +1,14 @@
+// Import
 const express = require("express");
 const path = require("path");
-const mysql = require('mysql2');
 const multer = require("multer");
 const moment = require("moment");
+const db_handler = require("../lib/db_api");
 
 const router = express.Router();
 router.parent_url = "/board"
 router.root_url = "/board/post"
 
-const db_template = require("../lib/db_template");
 
 const upload = multer({ storage: multer.diskStorage({
     destination(req, file, cb){
@@ -38,50 +38,20 @@ router.get('/read/:pid', (req, res)=>{
         res.redirect(router.parent_url);
         return;
     }
-
-    const connection = mysql.createConnection(db_template);
-    const lookupState = `
-        SELECT * 
-        FROM board 
-        WHERE pid=${req.params.pid}
-    `;
-    // 조회수 갱신
-    const countViewState = `
-        UPDATE board 
-        SET views = views + 1 
-        WHERE pid=${req.params.pid}
-    `;
-    connection.connect();
-    connection.query(lookupState, function(err, lookupData) {
-        if(err) console.log(err);
-        if(lookupData.length <= 0){
-            res.redirect(router.parent_url);
-            connection.end();
-            return;
-        }
-        connection.query(countViewState, function(err, countData){
-            if(err) console.log(err);
-
-            lookupData[0].views += 1;
-            res.render("view", lookupData[0]);
-            connection.end();
-        });
+    model.upviewPostById(req.params.pid, (data) => {
+        model.getPostById(req.params.pid, (data) => {
+            if(data.length < 1){
+                res.redirect(router.parent_url);
+            } else {
+                res.render("view", data[0]);
+            }
+        })
     });
 });
 router.get("/read/:pid/upvote", (req, res)=>{
-    const connection = mysql.createConnection(db_template);
-    // 추천수 갱신
-    const state = `
-        UPDATE board 
-        SET votes = votes + 1 
-        WHERE pid=${req.params.pid}
-    `;
-    connection.query(state, function(err, data){
-        if(err) console.log(err);
+    model.upvotePostById(req.params.pid, (data) => {
         res.redirect(router.root_url + `/read/${req.params.pid}`);
-        connection.end();
-    });
-
+    })
 });
 
 
@@ -91,27 +61,18 @@ router.get('/write', (req, res)=>{
 });
 
 router.post("/create",  upload.array("img"), (req, res)=>{    
-    var filename = "no_image.jpg";
-    if(req.files !== undefined) filename = req.files[0].filename;
-
-    const state = `
-        INSERT INTO board(author, pw, category, title, content, image_name, regist_date)
-        VALUES (
-            "${req.body.author}", 
-            "${req.body.pw}", 
-            "미분류",
-            "${req.body.title}",
-            "${req.body.content}",
-            "${filename}",
-            "${moment().format("YYYY-MM-DD HH:mm:ss")}"
-        )
-    `;
-    const connection = mysql.createConnection(db_template);
-    connection.connect();
-    connection.query(state, (err, data) => {
-        if(err) console.log(err);
+    var record = {
+        author: req.body.author,
+        pw: req.body.pw,
+        category: "미분류",
+        title: req.body.title,
+        content: req.body.content,
+        filename: (req.files.length > 0 ? req.files[0].filename : "no_image.jpg"),
+        date: moment().format("YYYY-MM-DD HH:mm:ss"),
+    };
+    db_handler.createPost(record, (data) => {
         res.redirect(router.root_url + `/read/${data.insertId}`);
-    });
+    })
 });
 
 
@@ -121,65 +82,38 @@ router.get('/edit/:pid', (req, res) => {
         res.redirect(router.root_url);
         return;
     }
-    const connection = mysql.createConnection(db_template);
-    const lookupState = `
-        SELECT * 
-        FROM board 
-        WHERE pid=${req.params.pid}
-    `;
-    connection.connect();
-    connection.query(lookupState, (err, data) => {
-        if(err) console.log(err);
+    db_handler.getPostById(req.params.pid, (data) => {
         if(data.length < 1) {
             res.redirect(router.parent_url);
-            connection.end();
+        } else {
+            res.render("edit", {
+                pid: data[0].pid,
+                title: data[0].title,
+                author: data[0].author,
+                content: data[0].content,
+                image_name: data[0].image_name,
+            });
         }
-        res.render("edit", {
-            pid: data[0].pid,
-            title: data[0].title,
-            author: data[0].author,
-            content: data[0].content,
-            image_name: data[0].image_name,
-        });
-        connection.end();
-    });
+    })
 });
 router.post('/update', upload.array("img"), (req, res) => {
-    var state = `
-        UPDATE board
-        SET
-        author = "${req.body.author}",
-        pw = "${req.body.pw}",
-        category = "미분류",
-        title = "${req.body.title}",
-        content = "${req.body.content}"`;
-    console.log(req.files);
-    if(req.files.length > 0) {
-        state += `,\nimage_name = "${req.files[0].filename}"`;
-    }
-    state += `\nWHERE pid = ${req.body.pid}`;
-    console.log(state);
-
-    const connection = mysql.createConnection(db_template);
-    connection.connect();
-    connection.query(state, (err, data) => {
-        if(err) console.log(err);
+    var record = {
+        author: req.body.author,
+        pw: req.body.pw,
+        category: "미분류",
+        title: req.body.title,
+        content: req.body.content,
+        image_name: req.files.length > 0 ? req.files[0].filename : undefined
+    };
+    db_handler.updatePostById(req.body.pid, record, () => {
         res.redirect(router.root_url + `/read/${req.body.pid}`);
     });
 });
 
 
-
 // 게시물 삭제
 router.post('/delete', (req, res)=>{
-    const state = `
-        DELETE FROM board
-        WHERE pid = ${req.body.pid}
-    `;
-    const connection = mysql.createConnection(db_template);
-    connection.connect();
-    connection.query(state, (err, data) => {
-        if(err) console.log(err);   
+    db_handler.deletePostById(req.body.pid, ()=>{
         res.redirect(router.parent_url);
     });
 });
