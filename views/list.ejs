@@ -24,16 +24,16 @@
                 <% for(var i = 0; i < posts.length; ++i) {%>
                 <tr>
                     <td class="num"><%=posts[i].pid%></td>
-                    <td class="category"><%=posts[i].category%></td>
+                    <td class="category"><%=posts[i].category_name%></td>
                     <td class="title"><a href="/board/post/read/<%=posts[i].pid%>"><%=posts[i].title%></a></td>
-                    <td class="author"><%=posts[i].author%></td>
-                    <td class="date"><%=posts[i].regDate%></td>
+                    <td class="author"><%=posts[i].writer_name%></td>
+                    <td class="date"><%=posts[i].simple_reg_date%></td>
                     <td class="views"><%=posts[i].views%></td>  
-                    <td class="votes"><%=posts[i].votes%></td>
+                    <td class="votes"><%=posts[i].likes%></td>
                 </tr>
                 <%}%>
             </table>
-            <!--페이지 조작-->
+            <!--페이지 이동-->
             <div class="board_page">
                 <a href="/board/0" class="bt first"><<</a>
                 <a href="/board/<%=page - 1%>" class="bt prev"><</a>
@@ -48,7 +48,7 @@
                 <a href="/board/<%=page + 1%>" class="bt next">></a>
                 <a href="#" class="bt last">>></a>
             </div>
-            <!--페이지 이동-->
+            <!--메뉴-->
             <div class="bt_wrap">
                 <a href="/board/post/write" class="on">등록</a>
             </div>

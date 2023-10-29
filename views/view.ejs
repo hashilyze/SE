@@ -14,7 +14,7 @@
             <div class="board_view">
                 <!--제목-->
                 <div class="title">
-                    [<%=category%>] <%=title%>
+                    [<%=category_name%>] <%=title%>
                 </div>
                 <!--메타 데이터-->
                 <div class="info">
@@ -24,11 +24,11 @@
                     </dl>
                     <dl>
                         <dt>글쓴이</dt>
-                        <dd><%=author%></dd>
+                        <dd><%=writer_name%></dd>
                     </dl>
                     <dl>
                         <dt>작성일</dt>
-                        <dd><%=regist_date%></dd>
+                        <dd><%=reg_date%></dd>
                     </dl>
                     <dl>
                         <dt>조회</dt>
@@ -37,7 +37,7 @@
                     <dl>
                         <a href="/board/post/read/<%=pid%>/upvote">
                         <dt>추천</dt>
-                        <dd><%=votes%></dd>
+                        <dd><%=likes%></dd>
                         </a>
                     </dl>
                 </div>
@@ -45,10 +45,10 @@
                 <div class="cont">
                     <%=content%>
                 </div>
-                <%if(image_name !== undefined){%>
+                <%if(images){%>
                 <!--컨텐츠: 이미지-->
                 <div class="img">
-                    <img src="/images/<%=image_name%>">
+                    <img src="/post_images/<%=images[0].url%>">
                 </div>
                 <%}%>
             </div>

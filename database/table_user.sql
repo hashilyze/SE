@@ -5,6 +5,5 @@ CREATE TABLE IF NOT EXISTS user(
     id          VARCHAR(60)     NOT NULL UNIQUE,            # 회원 아이디
     password    VARCHAR(60)     NOT NULL,                   # 회원 비밀번호
     name        VARCHAR(60)     NOT NULL,                   # 이름
-    reg_date    TIMESTAMP       NOT NULL DEFAULT NOW(),     # 가입일
     PRIMARY KEY (uid)
 );

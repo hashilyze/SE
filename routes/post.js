@@ -2,8 +2,7 @@
 const express = require("express");
 const path = require("path");
 const multer = require("multer");
-const moment = require("moment");
-const db_handler = require("../lib/db_api");
+const Post = require("../lib/Post");
 
 const router = express.Router();
 router.parent_url = "/board"
@@ -12,7 +11,7 @@ router.root_url = "/board/post"
 
 const upload = multer({ storage: multer.diskStorage({
     destination(req, file, cb){
-        cb(null, "public/images/");
+        cb(null, "public/post_images/");
     },
     filename(req, file, cb){
         const ext = path.extname(file.originalname);
@@ -32,88 +31,99 @@ const upload = multer({ storage: multer.diskStorage({
 });
 
 
+// 게시물 작성
+router.get('/write', (req, res)=>{ res.render("write"); });
+
+router.post("/create",  upload.array("img"), (req, res)=>{    
+    var newPost = {
+        title: req.body.title,
+        writer: 1,
+        category: 1,
+        content: req.body.content,
+        images: (req.files.length > 0 ? [{ mid: 0, url: req.files[0].filename }] : null),
+    };
+    Post.create(newPost, (err, post) => {
+        if(err){
+            res.status(500).send({message: err.message || "Error occured while create post"});
+            return;
+        }
+        res.redirect(router.root_url + `/read/${post.pid}`);
+    });
+});
+
+
 // 게시물 열람
 router.get('/read/:pid', (req, res)=>{
-    if(isNaN(req.params.pid)) {
-        res.redirect(router.parent_url);
-        return;
-    }
-    model.upviewPostById(req.params.pid, (data) => {
-        model.getPostById(req.params.pid, (data) => {
-            if(data.length < 1){
-                res.redirect(router.parent_url);
-            } else {
-                res.render("view", data[0]);
+    let pid = parseInt(req.params.pid);
+
+    Post.updateViewById(pid, (err) => {
+        if(err){
+            res.status(500).send("Can not found post");
+            return;
+        }
+        Post.findById(pid, (err, post) => {
+            if(err){
+                res.status(500).send("Can not found post");
+                return;
             }
-        })
+            res.render("view", post);
+        });
     });
 });
 router.get("/read/:pid/upvote", (req, res)=>{
-    model.upvotePostById(req.params.pid, (data) => {
+    Post.updateLikeById(req.params.pid, (err) => {
+        if(err){
+            res.status(500).send("Can not found post");
+            return;
+        }
         res.redirect(router.root_url + `/read/${req.params.pid}`);
-    })
-});
-
-
-// 게시물 작성
-router.get('/write', (req, res)=>{
-    res.render("write");
-});
-
-router.post("/create",  upload.array("img"), (req, res)=>{    
-    var record = {
-        author: req.body.author,
-        pw: req.body.pw,
-        category: "미분류",
-        title: req.body.title,
-        content: req.body.content,
-        filename: (req.files.length > 0 ? req.files[0].filename : "no_image.jpg"),
-        date: moment().format("YYYY-MM-DD HH:mm:ss"),
-    };
-    db_handler.createPost(record, (data) => {
-        res.redirect(router.root_url + `/read/${data.insertId}`);
     })
 });
 
 
 // 게시물 수정
 router.get('/edit/:pid', (req, res) => {
-    if(isNaN(req.params.pid) || req.params.pid < 0){
-        res.redirect(router.root_url);
-        return;
-    }
-    db_handler.getPostById(req.params.pid, (data) => {
-        if(data.length < 1) {
-            res.redirect(router.parent_url);
-        } else {
-            res.render("edit", {
-                pid: data[0].pid,
-                title: data[0].title,
-                author: data[0].author,
-                content: data[0].content,
-                image_name: data[0].image_name,
-            });
+    let pid = parseInt(req.params.pid);
+    Post.findById(pid, (err, post) => {
+        if(err){
+            res.status(500).send("Can not found post");
+            return;
         }
+        res.render("edit", {
+            pid: post.pid,
+            title: post.title,
+            author: post.writer,
+            content: post.content,
+            image_name: post.images ? post.images[0].url : "no_image.jpg",
+        });
     })
 });
 router.post('/update', upload.array("img"), (req, res) => {
-    var record = {
-        author: req.body.author,
-        pw: req.body.pw,
-        category: "미분류",
+    let post = {
         title: req.body.title,
+        writer: 1,
+        category: 1,
         content: req.body.content,
-        image_name: req.files.length > 0 ? req.files[0].filename : undefined
+        images: null,
+        //image_name: req.files.length > 0 ? req.files[0].filename : undefined
     };
-    db_handler.updatePostById(req.body.pid, record, () => {
+    Post.updateById(req.body.pid, post, (err) => {
+        if(err){
+            res.status(500).send("error occured");
+            return;
+        }
         res.redirect(router.root_url + `/read/${req.body.pid}`);
-    });
+    })
 });
 
 
 // 게시물 삭제
 router.post('/delete', (req, res)=>{
-    db_handler.deletePostById(req.body.pid, ()=>{
+    Post.deleteById(req.body.pid, (err)=>{
+        if(err){
+            res.status(500).send("Error occured");
+            return;
+        }
         res.redirect(router.parent_url);
     });
 });
