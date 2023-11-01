@@ -49,10 +49,10 @@ User.findById = function (id, cb) {
         conn.query(sql, (error, results) => {
             if (error) {
                 console.error("Error: ", error);
-                cb(error, null);
+                cb({...error, kind: "server_error" }, null);
             } else if (results.length == 0) {
                 console.log(`Can not found user{ uid: ${id} }`);
-                cb({ message: "not found" }, null);
+                cb({ message: "not found", kind: "not_found" }, null);
             } else {
                 console.log(`Found user{ uid: ${results[0].uid} }`);
                 cb(null, results[0]);
