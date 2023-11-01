@@ -1,7 +1,7 @@
 // Import
 const express = require("express");
 const moment = require("moment");
-const Post = require("../lib/Post");
+const Post = require("../models/Post");
 // Router
 const postRouter = require("./post");
 

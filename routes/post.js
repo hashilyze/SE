@@ -2,7 +2,7 @@
 const express = require("express");
 const path = require("path");
 const multer = require("multer");
-const Post = require("../lib/Post");
+const Post = require("../models/Post");
 
 const router = express.Router();
 router.parent_url = "/board"
