@@ -27,7 +27,7 @@ User.create = function (newUser, cb) {
         conn.query(sql, vals, (error, results) => {
             if (error) {
                 console.error("Error: ", error);
-                cb(error, null);
+                cb({...error, kind: "server_error" }, null);
             } else {
                 console.log(`Created user{ uid: ${results.insertId} }`);
                 cb(null, { ...newUser, uid: results.insertId });
@@ -72,7 +72,7 @@ User.findAll = function (cb) {
         conn.query(sql, (error, results) => {
             if (error) {
                 console.error("Error: ", error);
-                cb(error, null);
+                cb({ ...error, kind: "server_eeror" }, null);
             } else {
                 console.log(`Found ${results.length} users`);
                 cb(null, results);
@@ -105,10 +105,10 @@ User.updateById = function (id, user, cb) {
         conn.query(sql, vals, (error, results) => {
             if (error) {
                 console.error("Error: ", error);
-                cb(error);
+                cb({...error, kind: "server_error"});
             } else if (results.affectedRows == 0) {
                 console.error(`Error: there is not user{ uid: ${id} }`);
-                cb({ message: "not found" });
+                cb({ message: "not found", kind: "not_found" });
             } else {
                 console.log(`Updated user{ uid: ${id} }`);
                 cb(null);
@@ -129,10 +129,10 @@ User.deleteById = function (id, cb) {
         conn.query(sql, (error, results) => {
             if (error) {
                 console.error("Error: ", error);
-                cb(error);
+                cb({...error, kind: "server_error"});
             } else if (results.affectedRows == 0) {
                 console.error(`Error: there is not users{ uid: ${id} }`);
-                cb({ message: "not found" });
+                cb({ message: "not found", kind: "not_found" });
             } else {
                 console.log(`Deleted user{ uid: ${id} }`);
                 cb(null);
