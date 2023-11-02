@@ -9,6 +9,7 @@ var bodyParser = require('body-parser');
 var indexRouter = require('./routes/index');
 var boardRouter = require('./routes/board');
 var userRouter = require('./routes/user');
+var categoryRouter = require('./routes/category');
 
 
 var app = express();
@@ -26,6 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/', userRouter);
+app.use('/test', categoryRouter);
 app.use('/board', boardRouter);
 
 

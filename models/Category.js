@@ -20,7 +20,7 @@ Category.create = function (newCategory, cb) {
         conn.query(sql, (error, results) => {
             if (error) {
                 console.error("Error: ", error);
-                cb(error, null);
+                cb({...error, kind: "server_error"}, null);
             } else {
                 console.log(`Created category{ cid: ${results.insertId} }`);
                 cb(null, { ...newCategory, cid: results.insertId });
@@ -41,10 +41,10 @@ Category.findById = function (id, cb) {
         conn.query(sql, (error, results) => {
             if (error) {
                 console.error("Error: ", error);
-                cb(error, null);
+                cb({...error, kind: "server_error"}, null);
             } else if (results.length == 0) {
                 console.log(`Can not found category{ cid: ${id} }`);
-                cb({ message: "not found" }, null);
+                cb({ message: "not found", kind: "not_found"}, null);
             } else {
                 console.log(`Found category{ cid: ${results[0].cid} }`);
                 cb(null, results[0]);
@@ -65,10 +65,10 @@ Category.findByName = function (name, cb) {
         conn.query(sql, (error, results) => {
             if (error) {
                 console.error("Error: ", error);
-                cb(error, null);
+                cb({...error, kind: "server_error"}, null);
             } else if (results.length == 0) {
                 console.log(`Can not found category(${id})`);
-                cb({ message: "not found" }, null);
+                cb({ message: "not found", kind: "not_found" }, null);
             } else {
                 console.log(`Found category{ cid: ${results[0].cid} }`);
                 cb(null, results[0]);
@@ -88,7 +88,7 @@ Category.findAll = function (cb) {
         conn.query(sql, (error, results) => {
             if (error) {
                 console.error("Error: ", error);
-                cb(error, null);
+                cb({...error, kind: "server_error"}, null);
             } else {
                 console.log(`Found ${results.length} categories`);
                 cb(null, results);
@@ -116,10 +116,10 @@ Category.updateById = function (id, category, cb) {
         conn.query(sql, vals, (error, results) => {
             if (error) {
                 console.error("Error: ", error);
-                cb(error)
+                cb({...error, kind: "server_error"})
             } else if (results.affectedRows == 0) {
                 console.error(`Error: there is not category{ cid: ${id} }`);
-                cb({ message: "not found" });
+                cb({ message: "not found", kind: "not_found" });
             } else {
                 console.log(`Updated category{ cid: ${id} }`);
                 cb(null);
@@ -140,10 +140,10 @@ Category.deleteById = function (id, cb) {
         conn.query(sql, (error, results) => {
             if (error) {
                 console.error("Error: ", error);
-                cb(error);
+                cb({...error, kind: "server_error"});
             } else if (results.affectedRows == 0) {
                 console.error(`Error: there is not category{ cid: ${id} }`);
-                cb({ message: "not found" });
+                cb({ message: "not found", kind: "not_found" });
             } else {
                 console.log(`Deleted category{ cid: ${id} }`);
                 cb(null);
