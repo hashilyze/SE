@@ -16,28 +16,27 @@ router.get("/", (req, res) => {
     res.redirect(router.root_url+"/0"); 
 });
 
-router.get('/:pageNo',(req, res) => {
-    let pageNo = parseInt(req.params.pageNo) || 0;
+router.get('/:page',(req, res) => {
+    let page = parseInt(req.params.page) || 0;
     let options = {
         key: "pid", 
         order: "DESC", 
         limit: 10, 
-        offset: pageNo * 10
+        offset: page * 10
     };
-
-    Post.findHeadersByRange(options, (err, headers) => {
+    Post.findAll((err, posts) => {
         if(err){
             res.status(500).send({message: err.message || "Error occured while find posts"});
             return;
         }
-        headers.map((val, idx) => { 
-            headers[idx].simple_reg_date = 
-                val.reg_date.substr(0, 10) == moment().format("YYYY-MM-DD")
-                ? val.reg_date.substr(11, 5)
-                : val.reg_date.substr(0, 10);
+        posts.map((val, idx) => { 
+            posts[idx].simple_created_at = 
+                val.created_at.substr(0, 10) == moment().format("YYYY-MM-DD")
+                ? val.created_at.substr(11, 5)
+                : val.created_at.substr(0, 10);
         })
-        res.render("list", {page: pageNo, posts: headers});
-    });
+        res.render("list", {page, posts});
+    }, options);
 });
 
 module.exports=router;

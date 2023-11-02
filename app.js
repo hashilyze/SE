@@ -27,7 +27,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
 app.use('/', userRouter);
-app.use('/test', categoryRouter);
+app.use('/', categoryRouter);
 app.use('/board', boardRouter);
 
 

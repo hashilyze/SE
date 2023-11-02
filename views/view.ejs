@@ -28,7 +28,7 @@
                     </dl>
                     <dl>
                         <dt>작성일</dt>
-                        <dd><%=reg_date%></dd>
+                        <dd><%=created_at%></dd>
                     </dl>
                     <dl>
                         <dt>조회</dt>
@@ -43,12 +43,12 @@
                 </div>
                 <!--컨텐츠: 텍스트-->
                 <div class="cont">
-                    <%=content%>
+                    <%=description%>
                 </div>
                 <%if(images){%>
                 <!--컨텐츠: 이미지-->
                 <div class="img">
-                    <img src="/post_images/<%=images[0].url%>">
+                    <img src="/post_images/<%=images[0]%>">
                 </div>
                 <%}%>
             </div>

@@ -39,8 +39,9 @@ router.post("/create",  upload.array("img"), (req, res)=>{
         title: req.body.title,
         writer: 1,
         category: 1,
-        content: req.body.content,
-        images: (req.files.length > 0 ? [{ mid: 0, url: req.files[0].filename }] : null),
+        description: req.body.content,
+        price: 0,
+        images: req.files.map((val) => val.filename),
     };
     Post.create(newPost, (err, post) => {
         if(err){
@@ -56,7 +57,7 @@ router.post("/create",  upload.array("img"), (req, res)=>{
 router.get('/read/:pid', (req, res)=>{
     let pid = parseInt(req.params.pid);
 
-    Post.updateViewById(pid, (err) => {
+    Post.addViewsById(pid, 1, (err) => {
         if(err){
             res.status(500).send("Can not found post");
             return;
@@ -71,7 +72,7 @@ router.get('/read/:pid', (req, res)=>{
     });
 });
 router.get("/read/:pid/upvote", (req, res)=>{
-    Post.updateLikeById(req.params.pid, (err) => {
+    Post.addLikesById(req.params.pid, 1, (err) => {
         if(err){
             res.status(500).send("Can not found post");
             return;
@@ -92,9 +93,9 @@ router.get('/edit/:pid', (req, res) => {
         res.render("edit", {
             pid: post.pid,
             title: post.title,
-            author: post.writer,
-            content: post.content,
-            image_name: post.images ? post.images[0].url : "no_image.jpg",
+            author: post.writer_name,
+            content: post.description,
+            image_name: post.images ? post.images[0] : "no_image.jpg",
         });
     })
 });
@@ -103,9 +104,8 @@ router.post('/update', upload.array("img"), (req, res) => {
         title: req.body.title,
         writer: 1,
         category: 1,
-        content: req.body.content,
-        images: null,
-        //image_name: req.files.length > 0 ? req.files[0].filename : undefined
+        description: req.body.content,
+        images: req.files.map((val) => val.filename),
     };
     Post.updateById(req.body.pid, post, (err) => {
         if(err){
