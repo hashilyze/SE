@@ -3,7 +3,7 @@ const mysql = require("mysql2");
 
 
 class Category {
-    constructor(category) {
+    constructor(newCategory) {
         this.cid = category.cid;
         this.name = category.name;
     }

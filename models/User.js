@@ -3,13 +3,13 @@ const mysql = require("mysql2");
 
 
 class User {
-    constructor(user) {
-        this.uid = user.uid;
-        this.role = user.role;
-        this.login_id = user.login_id;
-        this.password = user.password;
-        this.name = user.name;
-        this.created_at = user.created_at;
+    constructor(newUser) {
+        this.uid = newUser.uid;
+        this.role = newUser.role;
+        this.login_id = newUser.login_id;
+        this.password = newUser.password;
+        this.name = newUser.name;
+        this.created_at = newUser.created_at;
     }
 };
 
@@ -33,6 +33,7 @@ User.create = function (newUser, cb) {
                 cb(null, { ...newUser, uid: results.insertId });
             }
         });
+        
         conn.release();
     });
 };
@@ -57,7 +58,7 @@ User.findById = function (id, cb) {
                 console.log(`Found user{ uid: ${results[0].uid} }`);
                 cb(null, results[0]);
             }
-        });
+        }   );
         conn.release();
     });
 };

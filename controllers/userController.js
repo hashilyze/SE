@@ -1,10 +1,8 @@
 const User = require("../models/User");
 
-controller = Object();
-
 
 // 사용자 생성
-controller.create = function (req, res) {
+exports.create = function (req, res) {
     let newUser = new User(req.body);
     User.create(newUser, (err, user) => {
         if(err) res.status(500).send({ result: "fail" });
@@ -14,7 +12,7 @@ controller.create = function (req, res) {
 
 
 // 사용자 가져오기
-controller.findOne = function(req, res) {
+exports.findOne = function (req, res) {
     let uid = req.params.uid
     User.findById(uid, (err, user) => {
         if(err){
@@ -28,7 +26,7 @@ controller.findOne = function(req, res) {
 
 
 // 사용자 수정
-controller.updateOne = function(req, res){
+exports.updateOne = function (req, res){
     let uid = req.params.uid;
     let updateInfo = new User(req.body);
     User.updateById(uid, updateInfo, (err) => {
@@ -43,7 +41,7 @@ controller.updateOne = function(req, res){
 
 
 // 사용자 삭제
-controller.deleteOne = function(req, res) {
+exports.deleteOne = function (req, res) {
     let uid = req.params.uid;
     User.deleteById(uid, (err) => {
         if(err){
@@ -57,11 +55,9 @@ controller.deleteOne = function(req, res) {
 
 
 // 사용자 검색
-controller.findAll = function(req, res) {
+exports.findAll = function (req, res) {
     User.findAll((err, users) => {
         if(err) res.status(500).send({result: "fail"});
         else res.send({result:"success", users});
     });
 };
-
-module.exports=controller;
