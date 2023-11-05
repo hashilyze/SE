@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- GET Method -->
+    <div>
+        <input type="button" value="GET" onclick='
+            uid = document.getElementById("getId").value;
+            fetch("/user/" + uid)
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            '>
+        <input type="number" id="getId" placeholder="uid">
+    </div>
+    <!-- POST Method -->
+    <div>
+        <input type="button" value="POST" onclick='
+            login_id = document.getElementById("postLoginId").value;
+            password = document.getElementById("postPassword").value;
+            name = document.getElementById("postName").value;
+            fetch("/user", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    login_id,
+                    password,
+                    name,
+                }),
+            })
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            '>
+        <input type="text" id="postLoginId" placeholder="아이디">
+        <input type="text" id="postPassword" placeholder="비밀번호">
+        <input type="text" id="postName" placeholder="사용자 명">
+    </div>
+    <!-- PUT Method -->
+    <div>
+        <input type="button" value="PUT" onclick='
+            uid = document.getElementById("putId").value;
+            name = document.getElementById("putName").value;
+            fetch("/user/" + uid, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: name
+                }),
+            })
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            '>
+        <input type="number" id="putId" placeholder="uid">
+        <input type="text" id="putName" placeholder="새 사용자 명">
+    </div>
+    <!-- DELETE Method -->
+    <div>
+        <input type="button" value="DELETE" onclick='
+            uid = document.getElementById("deleteId").value;
+            fetch("/user/" + uid, {
+                method: "DELETE",
+            })
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            '>
+        <input type="number" id="deleteId" placeholder="uid">
+    </div>
+    <!-- SEARCH -->
+    <div>
+        <input type="button" value="SEARCH" onclick='
+            keyword = document.getElementById("keyword").value;
+            fetch("/users?" + new URLSearchParams({
+                name: keyword
+            }))
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            '>
+        <input type="text" id="keyword" placeholder="사용자 검색">
+    </div>
+</body>
+</html>

@@ -2,62 +2,67 @@ const Category = require("../models/Category");
 
 
 // 카테고리 생성
-exports.create = function (req, res) {
+exports.create = async function (req, res) {
     let newCategory = new Category(req.body);
-    Category.create(newCategory, (err, category) => {
-        if(err) res.status(500).send({ result: "fail" });
-        res.status(201).send({result: "succsss", cid: category.cid });
-    });
+
+    try {
+        let id = await Category.create(newCategory);
+        res.status(201).send({ result: "succsss", cid: id });
+    } catch (err) {
+        res.status(500).send({ result: "fail" });
+    }
 };
 
 
 // 카테고리 가져오기
-exports.findOne = function(req, res) {
+exports.findOne = async function (req, res) {
     let cid = req.params.cid
-    Category.findById(cid, (err, category) => {
-        if(err){
-            if(err.kind == "not_found") res.status(404).send({ result: "fail" });
-            else if(err.kind == "server_error") res.status(500).send({ result: "fail" });
-        } else{
-            res.send({ result: "success", category });
-        }
-    });
+
+    try {
+        let category = await Category.findById(cid);
+        res.send({ result: "success", category });
+    } catch (err) {
+        if (err.kind == "not_found") res.status(404).send({ result: "fail" });
+        else res.status(500).send({ result: "fail" });
+    }
 };
 
 
 // 카테고리 수정
-exports.updateOne = function(req, res){
+exports.updateOne = async function (req, res) {
     let cid = req.params.cid;
     let updateInfo = new Category(req.body);
-    Category.updateById(cid, updateInfo, (err) => {
-        if(err){
-            if(err.kind == "not_found") res.status(400).send({ result: "fail" });
-            else if(err.kind == "server_error") res.status(500).send({ result: "fail" });
-        } else{
-            res.send({ result: "success"});
-        }
-    });
+
+    try {
+        await Category.updateById(cid, updateInfo);
+        res.send({ result: "success" });
+    } catch (err) {
+        if (err.kind == "not_found") res.status(404).send({ result: "fail" });
+        else res.status(500).send({ result: "fail" });
+    }
 };
 
 
 // 카테고리 삭제
-exports.deleteOne = function(req, res) {
+exports.deleteOne = async function (req, res) {
     let cid = req.params.cid;
-    Category.deleteById(cid, (err) => {
-        if(err){
-            if(err.kind == "not_found") res.status(400).send({ result: "fail" });
-            else if(err.kind == "server_error") res.status(500).send({ result: "fail" });
-        } else{
-            res.send({ result: "success"});
-        }
-    });
-}
+
+    try {
+        await Category.deleteById(cid);
+        res.send({ result: "success" });
+    } catch (err) {
+        if (err.kind == "not_found") res.status(404).send({ result: "fail" });
+        else res.status(500).send({ result: "fail" });
+    }
+};
 
 
 // 카테고리 검색
-exports.findAll = function(req, res) {
-    Category.findAll((err, categories) => {
-        if(err) res.status(500).send({result: "fail"});
-        else res.send({result:"success", categories});
-    });
+exports.findAll = async function (req, res) {
+    try {
+        let categories = await Category.findAll({ name: req.query.name || null });
+        res.send({ result: "success", categories });
+    } catch (err) {
+        res.status(500).send({ result: "fail" });
+    }
 };

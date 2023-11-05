@@ -1,145 +1,180 @@
 const connection = require("../database/mysql_connection");
+
 const mysql = require("mysql2");
+const db_config = require('../database/db_config.json');
+const pool = mysql.createPool(db_config);
 
 
 class User {
-    constructor(newUser) {
-        this.uid = newUser.uid;
-        this.role = newUser.role;
-        this.login_id = newUser.login_id;
-        this.password = newUser.password;
-        this.name = newUser.name;
-        this.created_at = newUser.created_at;
+    constructor({ uid, role, login_id, password, name, created_at }) {
+        this.uid = uid;
+        this.role = role;
+        this.login_id = login_id;
+        this.password = password;
+        this.name = name;
+        this.created_at = created_at;
     }
 };
 
 
 /**
  * @param {User} newUser 
- * @param {(err: import("mysql2").QueryError, user: User) => any} cb 
+ * @returns {Promise<Number>} insertId
  */
-User.create = function (newUser, cb) {
-    connection((conn) => {
-        let sql = "INSERT INTO User SET login_id = ?, password = ?, name = ?";
-        if (newUser.role) sql += `, role = ?`;
-        let vals = [newUser.login_id, newUser.password, newUser.name, newUser.role];
+User.create = async function (newUser) {
+    const conn = await pool.promise().getConnection();
+    let sql = `
+    INSERT INTO User 
+    SET 
+        login_id = ?, 
+        password = ?, 
+        name = ?,
+        role = IFNULL(?, 0)
+    `;
+    let vals = [newUser.login_id, newUser.password, newUser.name, newUser.role];
 
-        conn.query(sql, vals, (error, results) => {
-            if (error) {
-                console.error("Error: ", error);
-                cb({...error, kind: "server_error" }, null);
-            } else {
-                console.log(`Created user{ uid: ${results.insertId} }`);
-                cb(null, { ...newUser, uid: results.insertId });
-            }
-        });
-        
+    try {
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, vals);
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        console.log(err);
+        throw { kind: "server_error" };
+    } finally {
         conn.release();
-    });
+    }
+    console.log(`Created user{ uid: ${rows.insertId} }`);
+    return rows.insertId;
 };
 
 
-/**
- * @param {Number} id 
- * @param {(err: import("mysql2").QueryError, user: User) => any} cb 
- */
-User.findById = function (id, cb) {
-    connection((conn) => {
-        let sql = `SELECT * FROM User WHERE uid = ${mysql.escape(id)}`;
+async function findOne(column, key) {
+    const conn = await pool.promise().getConnection();
+    const sql = "Select * FROM User WHERE ?? = ?";
 
-        conn.query(sql, (error, results) => {
-            if (error) {
-                console.error("Error: ", error);
-                cb({...error, kind: "server_error" }, null);
-            } else if (results.length == 0) {
-                console.log(`Can not found user{ uid: ${id} }`);
-                cb({ message: "not found", kind: "not_found" }, null);
-            } else {
-                console.log(`Found user{ uid: ${results[0].uid} }`);
-                cb(null, results[0]);
-            }
-        }   );
+    try {
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, [column, key]);
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        console.log(err)
+        throw { kind: "server_error" };
+    } finally {
         conn.release();
-    });
+    }
+
+    if (rows.length == 0) {
+        console.log(`Can not found user{ ${column}: ${key} }`);
+        throw { kind: "not_found" };
+    } else {
+        console.log(`Found user{ ${column}: ${key} }`);
+        return new User(rows[0]);
+    }
 };
 
 
+User.findById = async (id) => findOne("uid", id);
+
+
 /**
- * @param {(err: import("mysql2").QueryError, users: User[]) => any} cb 
+ * @param {{name: String}} filter
+ * @returns {Promise<User[]>}
  */
-User.findAll = function (cb) {
-    connection((conn) => {
-        let sql = `SELECT * FROM User`;
-        conn.query(sql, (error, results) => {
-            if (error) {
-                console.error("Error: ", error);
-                cb({ ...error, kind: "server_eeror" }, null);
-            } else {
-                console.log(`Found ${results.length} users`);
-                cb(null, results);
-            }
-        });
+User.findAll = async function (filter) {
+    if (!filter) filter = {};
+    const conn = await pool.promise().getConnection();
+    let sql = `
+    Select * 
+    FROM User 
+    WHERE name LIKE IFNULL(CONCAT('%', ?, '%'), name)
+    ORDER BY uid ASC
+    `;
+
+    try {
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, [filter.name]);
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        console.log(err);
+        throw { kind: "server_error" };
+    } finally {
         conn.release();
-    });
+    }
+    console.log(`Found ${rows.length} users`);
+    return rows.map((val) => new User(val));
 };
 
 
 /**
  * @param {Number} id 
  * @param {User} user
- * @param {(err: import("mysql2").QueryError) => any} cb 
  */
-User.updateById = function (id, user, cb) {
-    connection((conn) => {
-        let sql = `
-        UPDATE User
-        SET
-            role = IFNULL(?, role),
-            login_id = IFNULL(?, login_id),
-            password = IFNULL(?, password),
-            name = IFNULL(?, name),
-            created_at = IFNULL(?, created_at)
-        WHERE uid = ${mysql.escape(id)}`;
-        let vals = [user.role, user.login_id, user.password,
-        user.name, user.created_at];
+User.updateById = async function (id, user) {
+    const conn = await pool.promise().getConnection();
+    let sql = `
+    UPDATE User 
+    SET 
+        role = IFNULL(?, role),
+        login_id = IFNULL(?, login_id),
+        password = IFNULL(?, password),
+        name = IFNULL(?, name),
+        created_at = IFNULL(?, created_at)
+    WHERE uid = ?
+    `;
+    let vals = [user.role, user.login_id, user.password,
+    user.name, user.created_at, id];
 
-        conn.query(sql, vals, (error, results) => {
-            if (error) {
-                console.error("Error: ", error);
-                cb({...error, kind: "server_error"});
-            } else if (results.affectedRows == 0) {
-                console.error(`Error: there is not user{ uid: ${id} }`);
-                cb({ message: "not found", kind: "not_found" });
-            } else {
-                console.log(`Updated user{ uid: ${id} }`);
-                cb(null);
-            }
-        });
+    try {
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, vals);
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        console.log(err);
+        throw { kind: "server_error" };
+    } finally {
         conn.release();
-    });
-}
+    }
+
+    if (rows.affectedRows == 0) {
+        console.error(`Error: there is not user{ uid: ${id} }`);
+        throw { kind: "not_found" };
+    } else {
+        console.log(`Updated user{ uid: ${id} }`);
+        return true;
+    }
+};
 
 
 /**
  * @param {Number} id 
  * @param {(err: import("mysql2").QueryError) => any} cb 
  */
-User.deleteById = function (id, cb) {
-    connection((conn) => {
-        let sql = `DELETE FROM User WHERE uid = ${mysql.escape(id)}`;
-        conn.query(sql, (error, results) => {
-            if (error) {
-                console.error("Error: ", error);
-                cb({...error, kind: "server_error"});
-            } else if (results.affectedRows == 0) {
-                console.error(`Error: there is not users{ uid: ${id} }`);
-                cb({ message: "not found", kind: "not_found" });
-            } else {
-                console.log(`Deleted user{ uid: ${id} }`);
-                cb(null);
-            }
-        });
+User.deleteById = async function (id, cb) {
+    const conn = await pool.promise().getConnection();
+    let sql = `DELETE FROM User WHERE uid = ?`;
+
+    try {
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, [id]);
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        console.log(err);
+        cb({ ...err, kind: "server_error" }, null);
+    } finally {
         conn.release();
-    });
-}
+    }
+
+    if (rows.affectedRows == 0) {
+        console.error(`Error: there is not user{ uid: ${id} }`);
+        throw { kind: "not_found" };
+    } else {
+        console.log(`Deleted user{ uid: ${id} }`);
+        return true;
+    }
+};
 module.exports = User;

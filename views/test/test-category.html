@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- GET Method -->
+    <div>
+        <input type="button" value="GET" onclick='
+            cid = document.getElementById("getId").value;
+            fetch("/category/" + cid)
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            '>
+        <input type="number" id="getId" placeholder="cid">
+    </div>
+    <!-- POST Method -->
+    <div>
+        <input type="button" value="POST" onclick='
+            name = document.getElementById("postName").value;
+            fetch("/category", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: name,
+                }),
+            })
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            '>
+        <input type="text" id="postName" placeholder="카테고리 명">
+    </div>
+    <!-- PUT Method -->
+    <div>
+        <input type="button" value="PUT" onclick='
+            cid = document.getElementById("putId").value;
+            name = document.getElementById("putName").value;
+            fetch("/category/" + cid, {
+                method: "PUT",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                    name: name
+                }),
+            })
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            '>
+        <input type="number" id="putId" placeholder="cid">
+        <input type="text" id="putName" placeholder="새 카테고리 명">
+    </div>
+    <!-- DELETE Method -->
+    <div>
+        <input type="button" value="DELETE" onclick='
+            cid = document.getElementById("deleteId").value;
+            fetch("/category/" + cid, {
+                method: "DELETE",
+            })
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            '>
+        <input type="number" id="deleteId" placeholder="cid">
+    </div>
+    <!-- SEARCH -->
+    <div>
+        <input type="button" value="SEARCH" onclick='
+            keyword = document.getElementById("keyword").value;
+            fetch("/categories?" + new URLSearchParams({
+                name: keyword
+            }))
+            .then((response) => response.json())
+            .then((data) => console.log(data))
+            '>
+        <input type="text" id="keyword" placeholder="카테고리 검색">
+    </div>
+</body>
+</html>

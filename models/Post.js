@@ -1,228 +1,234 @@
 const connection = require("../database/mysql_connection");
+
 const mysql = require("mysql2");
+const db_config = require('../database/db_config.json');
+const pool = mysql.createPool(db_config);
 
 
 class Post {
-    constructor(post) {
-        this.pid = post.pid;
-        this.title = post.title;
-        this.writer = post.writer;
-        this.category = post.category;
+    constructor({pid, title, writer, category, 
+        description, price, 
+        created_at, views, likes, downloads, 
+        writer_name, category_name, images}) {
 
-        this.description = post.description;
-        this.price = post.price;
+        this.pid = pid;
+        this.title = title;
+        this.writer = writer;
+        this.category = category;
 
-        this.created_at = post.created_at;
-        this.views = post.views;
-        this.likes = post.likes;
-        this.downloads = post.downloads;
+        this.description = description;
+        this.price = price;
 
-        this.writer_name = post.writer_name;
-        this.category_name = post.category_name;
-        this.images = post.images;
+        this.created_at = created_at;
+        this.views = views;
+        this.likes = likes;
+        this.downloads = downloads;
+
+        this.writer_name = writer_name;
+        this.category_name = category_name;
+        this.images = images;
     }
 };
 
 
-Post.updateImagesById = function(id, images, cb) {
-    connection((conn) => {
-        conn.query(`DELETE FROM Post_Image WHERE pid = ${mysql.escape(id)}`, (error, results) => {
-            if(error){
-                console.error("Error: " + error);
-                cb({ ...error, kind: "server_error"});
-            } else if(images && images.length > 0) {
-                let sql = "INSERT INTO Post_Image(pid, img_id, name) VALUES";
-                images.map((val, idx) => {
-                    if (idx != 0) sql += ','
-                    sql += `(${mysql.escape(id)}, ${mysql.escape(idx)}, ${mysql.escape(val)})\n`;
-                });
-                
-                conn.query(sql, (error, results) => {
-                    if(error){
-                        console.error("Error: " + error);
-                        cb({ ...error, kind: "server_error"});
-                    } else {
-                        console.log(`Stored ${results.affectedRows} images`);
-                        cb(null);
-                    }
-                });
-            } else{
-                cb(null);
-            }
-        });
+async function updateImagesById(conn, id, images) {
+    let delete_sql = `DELETE FROM Post_Image WHERE pid = ?`;
+    let insert_sql = `INSERT INTO Post_Image(pid, img_id, name) VALUES\n`;
+    images.map((val, idx) => {
+        if (idx != 0) sql += ','
+        insert_sql += mysql.format("(?, ?, ?)\n", [id, idx, val]);
     });
-}
+
+    await conn.query(delete_sql, [id]);
+    let [rows, fileds] = await conn.query(insert_sql);
+    console.log(`Stored ${rows.affectedRows} images`);
+    return true;
+};
 
 
 /**
  * @param {Post} newPost 
- * @param {(err: import("mysql2").QueryError, post: Post)=>any} cb 
+ * @returns {Promise<Number>} insertId
  */
-Post.create = function (newPost, cb) {
-    connection((conn) => {
-        let sql_create_post = `INSERT INTO Post 
-            SET title = ?, writer = ?, category = ?, description = ?, price = ?`;
-        let vals = [newPost.title, newPost.writer, newPost.category,
-            newPost.description, newPost.price];
-
-        conn.query(sql_create_post, vals, (error, results) => {
-            if (error) {
-                console.error("Error: " + error);
-                cb({ ...error, kind: "server_error"}, null);
-            } else {
-                let pid = results.insertId;
-                console.log(`Created post{ pid: ${pid}}`);
-                
-                Post.updateImagesById(pid, newPost.images, (error) => {
-                    if(error) {
-                        cb({...error, kind: "server_error"}, null);
-                    } else {
-                        cb(null, { ...newPost, pid: pid });
-                    }
-                });
-            }
-        });
+Post.create = async function (newPost, cb) {
+    const conn = await pool.promise().getConnection();
+    let sql = `
+    INSERT INTO Post 
+    SET 
+        title = ?, 
+        writer = ?, 
+        category = ?, 
+        description = ?, 
+        price = ?
+    `;
+    let vals = [newPost.title, newPost.writer, newPost.category,
+        newPost.description, newPost.price];
+    
+    try{
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, vals);
+        if(newPost.images && newPost.images.length > 0)
+            await updateImagesById(conn, rows.insertId, newPost.images);
+        await conn.commit();
+    }catch(err){
+        conn.rollback();
+        console.log(err);
+        cb({ ...err, kind: "server_error" }, null);
+    }finally{
         conn.release();
-    });
+    }
+    console.log(`Created post{ pid: ${rows.insertId}}`);
+    return rows.insertId;
 }
 
 
 /**
  * @param {Int} id 
- * @param {(err: import("mysql2").QueryError, post: Post)=>any} cb 
  */
-Post.findById = function (id, cb) {
-    let sql = `SELECT * FROM XPost WHERE pid = ${mysql.escape(id)}`;
-    connection((conn) => {
-        conn.query(sql, (error, results) => {
-            if (error) {
-                console.error("Error: " + error);
-                cb({ ...error, kind: "server_error"}, null);
-            } else if (results.length == 0) {
-                console.log(`Can not found post{ pid: ${id} }`);
-                cb({ message: "not found", kind: "not_found"}, null);
-            } else {
-                console.log(`Found post: ${results[0].pid}`);
-                cb(null, results[0]);
-            }
-        });
+Post.findById = async function (id) {
+    const conn = await pool.promise().getConnection();
+    let sql = "SELECT * FROM XPost WHERE pid = ?";
+
+    try {
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, [id]);
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        console.log(err)
+        throw { kind: "server_error" };
+    } finally {
         conn.release();
-    });
+    }
+
+    if (rows.length == 0) {
+        console.log(`Can not found post{ pid: ${id} }`);
+        throw { kind: "not_found" };
+    } else {
+        console.log(`Found post{ pid: ${id} }`);
+        return new Post(rows[0]);
+    }
 }
 
 
 /**
- * @param {{key: String, order: "ASC" | "DESC", limit: Number, offset: Number
+ * @param {{key: String
+ * , order: "ASC" | "DESC"
+ * , limit: Number
+ * , offset: Number
  * , title: String, description: String
  * , min_price: Number, max_price: Number
  * , category: Number | Array, writer: Number | Array
  * , category_name: String | Array, writer_name: String | Array
- * }} options 
- * @param {(err: import("mysql2").QueryError, posts: Post[])=>any} cb 
+ * }} filter
+ * @returns {Promist<Post[]>}
  */
-Post.findAll = function (cb, options) {
-    if(!options) options = { };
+Post.findAll = async function (filter) {
+    const conn = await pool.promise().getConnection();
+    if(!filter) filter = { };
     let sql = `
     SELECT * FROM XPost 
-    WHERE title LIKE ${options.title ? mysql.escape("%"+options.title+"%") : "title"}
-        AND description LIKE ${ options.description ? `"%${options.description}%"` : "description"}
-        AND price BETWEEN ${options.min_price || 0} AND ${options.max_price || 2**31 }
-        AND writer IN (${options.writer ? mysql.escape(options.writer) : "writer"})
-        AND category IN (${options.category ? mysql.escape(options.category) : "category"})
-        AND writer_name IN (${options.writer_name ? mysql.escape(options.writer_name) : "writer_name"})
-        AND category_name IN (${options.category_name ? mysql.escape(options.category_name) : "category_name"})
-    ORDER BY ${options.key || "pid"} ${options.order || "ASC"}
-    LIMIT ${options.limit || 2**31} OFFSET ${options.offset || 0}
+    WHERE title LIKE ${filter.title ? mysql.escape("%"+filter.title+"%") : "title"}
+        AND description LIKE ${ filter.description ? `"%${filter.description}%"` : "description"}
+        AND price BETWEEN ${filter.min_price || 0} AND ${filter.max_price || 2**31 }
+        AND writer IN (${filter.writer ? mysql.escape(filter.writer) : "writer"})
+        AND category IN (${filter.category ? mysql.escape(filter.category) : "category"})
+        AND writer_name IN (${filter.writer_name ? mysql.escape(filter.writer_name) : "writer_name"})
+        AND category_name IN (${filter.category_name ? mysql.escape(filter.category_name) : "category_name"})
+    ORDER BY ${filter.key || "pid"} ${filter.order || "ASC"}
+    LIMIT ${filter.limit || 2**31} OFFSET ${filter.offset || 0}
     `;
-    let vals = []
 
-    connection((conn) => {
-        conn.query(sql, vals, (error, results) => {
-            if (error) {
-                console.error(error);
-                cb({...error, kind: "server_error"}, null);
-            } else {
-                console.log(`Found ${results.length} posts`);
-                cb(null, results);
-            }
-        });
+    try {
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, [filter.name]);
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        console.log(err);
+        throw { kind: "server_error" };
+    } finally {
         conn.release();
-    });
+    }
+    console.log(`Found ${rows.length} posts`);
+    return rows.map((val) => new Post(val));
 }
 
 
 /**
  * @param {Int} id 
  * @param {Post} post
- * @param {(err: import("mysql2").QueryError)=>any} cb 
  */
-Post.updateById = function (id, post, cb) {
-    connection((conn) => {
-        let sql = `
-        UPDATE Post 
-        SET 
-            title = IFNULL(?, title), 
-            writer = IFNULL(?, writer), 
-            category = IFNULL(?, category), 
-            description = IFNULL(?, description),
-            price = IFNULL(?, price),
-            created_at = IFNULL(?, created_at),
-            views = IFNULL(?, views),
-            likes = IFNULL(?, likes),
-            downloads = IFNULL(?, downloads)
-        WHERE pid = ${mysql.escape(id)}
-        `;
-        let vals = [post.title, post.writer, post.category,
-            post.description, post.price, post.created_at,
-            post.views, post.likes, post.downloads];
+Post.updateById = async function (id, post) {
+    const conn = await pool.promise().getConnection();
+    let sql = `
+    UPDATE Post 
+    SET 
+        title = IFNULL(?, title), 
+        writer = IFNULL(?, writer), 
+        category = IFNULL(?, category), 
+        description = IFNULL(?, description),
+        price = IFNULL(?, price),
+        created_at = IFNULL(?, created_at),
+        views = IFNULL(?, views),
+        likes = IFNULL(?, likes),
+        downloads = IFNULL(?, downloads)
+    WHERE pid = ?
+    `;
+    let vals = [post.title, post.writer, post.category,
+        post.description, post.price, post.created_at,
+        post.views, post.likes, post.downloads, id];
 
-        conn.query(sql, vals, (error, results) => {
-            if (error) {
-                console.error("Error: ", error);
-                cb({...error, kind: "server_error"});
-            } else if (results.affectedRows == 0) {
-                console.error(`Error: there is not post{ pid: ${id} }`);
-                cb({ message: "not found", kind: "not_found" });
-            } else {
-                if(post.images === undefined) {
-                    cb(null);
-                } else{
-                    Post.updateImagesById(id, post.images, (error) => {
-                        if(error) {
-                            cb({...error, kind: "server_error"}, null);
-                        } else {
-                            cb(null);
-                        }
-                    });
-                }                
-            }
-        });
+    try {
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, vals);
+        if(post.images && post.images.length > 0)
+            await updateImagesById(conn, id, post.images);
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        console.log(err);
+        throw { kind: "server_error" };
+    } finally {
         conn.release();
-    });
+    }
+
+    if (rows.affectedRows == 0) {
+        console.error(`Error: there is not post{ pid: ${id} }`);
+        throw { kind: "not_found" };
+    } else {
+        console.log(`Updated category{ pid: ${id} }`);
+        return true;
+    }
 }
 
 
 /**
  * @param {Number} id 
- * @param {(err: import("mysql2").QueryError) => any} cb 
  */
-Post.deleteById = function (id, cb) {
-    connection((conn) => {
-        let sql = `DELETE FROM Post WHERE pid = ${mysql.escape(id)}`;
-        conn.query(sql, (error, results) => {
-            if (error) {
-                console.log("Error: " + error);
-                cb({...error, kind: "server_error"});
-            } else if (results.affectedRows == 0) {
-                console.error(`Error: there is not post{ pid: ${id} }`);
-                cb({ message: "not found", kind: "not_found" });
-            } else {
-                console.log(`Deleted post{ pid(${id} }`);
-                cb(null);
-            }
-        });
+Post.deleteById = async function (id, cb) {
+    const conn = await pool.promise().getConnection();
+    let sql = `DELETE FROM Post WHERE pid = ?`;
+
+    try {
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, [id]);
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        console.log(err);
+        cb({ ...err, kind: "server_error" }, null);
+    } finally {
         conn.release();
-    });
+    }
+
+    if (rows.affectedRows == 0) {
+        console.error(`Error: there is not post{ pid: ${id} }`);
+        throw { kind: "not_found" };
+    } else {
+        console.log(`Deleted post{ pid(${id} }`);
+        return true;
+    }
 }
 
 
@@ -230,53 +236,37 @@ Post.deleteById = function (id, cb) {
  * @param {Number} id 
  * @param {Number} val
  * @param {String} column
- * @param {(err: import("mysql2").QueryError)=>any} cb 
  */
-function addValueById(id, val, column, cb) {
-    connection((conn) => {
-        let sql = `UPDATE Post SET ?? = ?? + ? WHERE pid = ${mysql.escape(id)}`;
-        let vals = [column, column, val];
-        conn.query(sql, vals, (error, results) => {
-            if (error) {
-                console.error("Error: ", error);
-                cb({ error, kind: "server_error"});
-            } else if (results.affectedRows == 0) {
-                console.error(`Error: there is not post{ pid: ${id} }`);
-                cb({ message: "not found", kind: "not_found" });
-            } else {
-                console.log(`Updated post(${id})'s ${column}`);
-                cb(null);
-            }
-        });
+async function addValueById(id, val, column) {
+    const conn = await pool.promise().getConnection();
+    let sql = `UPDATE Post SET ?? = ?? + ? WHERE pid = ?`;
+    let vals = [column, column, val, id];
+    
+    try{
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, vals);
+        await conn.commit();
+    }catch(err){
+        await conn.rollback();
+        console.log(err);
+        throw { kind: "server_error" };
+    } finally{
         conn.release();
-    });
+    }
+
+    if (rows.affectedRows == 0) {
+        console.error(`Error: there is not post{ pid: ${id} }`);
+        throw { kind: "not_found" };
+    } else {
+        console.log(`Updated post(${id})'s ${column}`);
+        return true;
+    }
 };
 
 
-/**
- * @param {Number} id 
- * @param {Number} val 
- * @param {(err: import("mysql2").QueryError)=>any} cb 
- */
-Post.addViewsById = function (id, val, cb) {
-    addValueById(id, val, "views", cb);
-}
-/**
- * @param {Number} id 
- * @param {Number} val 
- * @param {(err: import("mysql2").QueryError)=>any} cb 
- */
-Post.addLikesById = function (id, val, cb) {
-    addValueById(id, val, "likes", cb);
-}
-/**
- * @param {Number} id 
- * @param {Number} val 
- * @param {(err: import("mysql2").QueryError)=>any} cb 
- */
-Post.addDownloadsById = function (id, val, cb) {
-    addValueById(id, val, "downloads", cb);
-}
+Post.addViewsById = async (id, val) => addValueById(id, val, "views");
+Post.addLikesById = async (id, val) => addValueById(id, val, "likes");
+Post.addDownloadsById = async (id, val) => addValueById(id, val, "downloads");
 
 
 module.exports = Post;

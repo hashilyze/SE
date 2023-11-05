@@ -47,7 +47,7 @@ router.get("/posts", postController.findAll);
 // 게시물 작성
 router.get('/write', (req, res)=>{ res.render("write"); });
 
-router.post("/create",  upload.array("img"), (req, res)=>{    
+router.post("/create", upload.array("img"), async (req, res)=>{ 
     var newPost = {
         title: req.body.title,
         writer: 1,
@@ -56,53 +56,44 @@ router.post("/create",  upload.array("img"), (req, res)=>{
         price: 0,
         images: req.files.map((val) => val.filename),
     };
-    Post.create(newPost, (err, post) => {
-        if(err){
-            res.status(500).send({message: err.message || "Error occured while create post"});
-            return;
-        }
-        res.redirect(router.root_url + `/read/${post.pid}`);
-    });
+
+    try{
+        let id = await Post.create(newPost);
+        res.redirect(router.root_url + `/read/${id}`);
+    }catch(err){
+        console.log(err);
+        res.status(500).send("Error occured while create post");
+    }
 });
 
 
 // 게시물 열람
-router.get('/read/:pid', (req, res)=>{
+router.get('/read/:pid', async (req, res)=>{
     let pid = parseInt(req.params.pid);
 
-    Post.addViewsById(pid, 1, (err) => {
-        if(err){
-            res.status(500).send("Can not found post");
-            return;
-        }
-        Post.findById(pid, (err, post) => {
-            if(err){
-                res.status(500).send("Can not found post");
-                return;
-            }
-            res.render("view", post);
-        });
-    });
+    try{
+        await Post.addViewsById(req.params.pid, 1);
+        let post = await Post.findById(pid);
+        res.render("view", post);
+    }catch(err){
+        res.status(500).send("Can not found post");
+    }
 });
-router.get("/read/:pid/upvote", (req, res)=>{
-    Post.addLikesById(req.params.pid, 1, (err) => {
-        if(err){
-            res.status(500).send("Can not found post");
-            return;
-        }
+router.get("/read/:pid/upvote", async (req, res)=>{
+    try{
+        await Post.addLikesById(req.params.pid, 1);
         res.redirect(router.root_url + `/read/${req.params.pid}`);
-    })
+    }catch(err){
+        res.status(500).send("Can not found post");
+    }
 });
 
 
 // 게시물 수정
-router.get('/edit/:pid', (req, res) => {
+router.get('/edit/:pid', async (req, res) => {
     let pid = parseInt(req.params.pid);
-    Post.findById(pid, (err, post) => {
-        if(err){
-            res.status(500).send("Can not found post");
-            return;
-        }
+    try {
+        let post = await Post.findById(pid);
         res.render("edit", {
             pid: post.pid,
             title: post.title,
@@ -110,9 +101,11 @@ router.get('/edit/:pid', (req, res) => {
             content: post.description,
             image_name: post.images ? post.images[0] : "no_image.jpg",
         });
-    })
+    } catch(err){
+        res.status(500).send("Can not found post");
+    }
 });
-router.post('/update', upload.array("img"), (req, res) => {
+router.post('/update', upload.array("img"), async (req, res) => {
     let post = {
         title: req.body.title,
         writer: 1,
@@ -120,25 +113,25 @@ router.post('/update', upload.array("img"), (req, res) => {
         description: req.body.content,
         images: req.files.map((val) => val.filename),
     };
-    Post.updateById(req.body.pid, post, (err) => {
-        if(err){
-            res.status(500).send("error occured");
-            return;
-        }
+
+    try{
+        await Post.updateById(req.body.pid, post);
         res.redirect(router.root_url + `/read/${req.body.pid}`);
-    })
+    } catch(err){
+        console.log(err);
+        res.status(500).send("error occured");
+    }
 });
 
 
 // 게시물 삭제
-router.post('/delete', (req, res)=>{
-    Post.deleteById(req.body.pid, (err)=>{
-        if(err){
-            res.status(500).send("Error occured");
-            return;
-        }
+router.post('/delete', async (req, res)=>{
+    try{
+        await Post.deleteById(req.body.pid);
         res.redirect(router.parent_url);
-    });
+    } catch(err){
+        res.status(500).send("Error occured");
+    }
 });
 
 module.exports=router;

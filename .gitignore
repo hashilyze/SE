@@ -8,8 +8,8 @@ lerna-debug.log*
 .pnpm-debug.log*
 
 # Post image Storage
-public/post_images
-views/test
+public/post_images/*
+#views/test
 
 # Diagnostic reports (https://nodejs.org/api/report.html)
 report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json

@@ -1,156 +1,164 @@
 const connection = require("../database/mysql_connection");
+
 const mysql = require("mysql2");
+const db_config = require('../database/db_config.json');
+const pool = mysql.createPool(db_config);
 
 
 class Category {
-    constructor(newCategory) {
-        this.cid = category.cid;
-        this.name = category.name;
+    constructor({ cid, name }) {
+        this.cid = cid;
+        this.name = name;
     }
 };
 
 
 /**
  * @param {Category} newCategory
- * @param {(err: import("mysql2").QueryError, category: Category) => any} cb 
+ * @returns {Promise<Number>} insertId
  */
-Category.create = function (newCategory, cb) {
-    connection((conn) => {
-        let sql = `INSERT INTO Category SET name = "${mysql.escape(newCategory.name)}"`;
-        conn.query(sql, (error, results) => {
-            if (error) {
-                console.error("Error: ", error);
-                cb({...error, kind: "server_error"}, null);
-            } else {
-                console.log(`Created category{ cid: ${results.insertId} }`);
-                cb(null, { ...newCategory, cid: results.insertId });
-            }
-        });
+Category.create = async function (newCategory) {
+    const conn = await pool.promise().getConnection();
+    let sql = "INSERT INTO Category SET name = ?";
+
+    try {
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, [newCategory.name]);
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        console.log(err);
+        throw { kind: "server_error" };
+    } finally {
         conn.release();
-    });
+    }
+    console.log(`Created category{ cid: ${rows.insertId} }`);
+    return rows.insertId;
 };
 
 
-/**
- * @param {Number} id 
- * @param {(err: import("mysql2").QueryError, category: Category) => any} cb 
- */
-Category.findById = function (id, cb) {
-    connection((conn) => {
-        let sql = `Select * FROM Category WHERE cid = ${mysql.escape(id)}`;
-        conn.query(sql, (error, results) => {
-            if (error) {
-                console.error("Error: ", error);
-                cb({...error, kind: "server_error"}, null);
-            } else if (results.length == 0) {
-                console.log(`Can not found category{ cid: ${id} }`);
-                cb({ message: "not found", kind: "not_found"}, null);
-            } else {
-                console.log(`Found category{ cid: ${results[0].cid} }`);
-                cb(null, results[0]);
-            }
-        });
+async function findOne(column, key) {
+    const conn = await pool.promise().getConnection();
+    const sql = "Select * FROM Category WHERE ?? = ?";
+
+    try {
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, [column, key]);
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        console.log(err)
+        throw { kind: "server_error" };
+    } finally {
         conn.release();
-    });
+    }
+
+    if (rows.length == 0) {
+        console.log(`Can not found category{ ${column}: ${key} }`);
+        throw { kind: "not_found" };
+    } else {
+        console.log(`Found category{ ${column}: ${key} }`);
+        return new Category(rows[0]);
+    }
 };
 
 
-/**
- * @param {String} name
- * @param {(err: import("mysql2").QueryError, category: Category) => any} cb 
- */
-Category.findByName = function (name, cb) {
-    connection((conn) => {
-        let sql = `Select * FROM Category WHERE name = "${mysql.escape(name)}"`;
-        conn.query(sql, (error, results) => {
-            if (error) {
-                console.error("Error: ", error);
-                cb({...error, kind: "server_error"}, null);
-            } else if (results.length == 0) {
-                console.log(`Can not found category(${id})`);
-                cb({ message: "not found", kind: "not_found" }, null);
-            } else {
-                console.log(`Found category{ cid: ${results[0].cid} }`);
-                cb(null, results[0]);
-            }
-        });
-        conn.release();
-    });
-};
+Category.findById = async (id) => findOne("cid", id);
+Category.findByName = async (name) => findOne("name", name);
 
 
 /**
- * @param {(err: import("mysql2").QueryError, categories: Category[]) => any} cb 
+ * @param {{name: String}} filter
+ * @returns {Promise<Category[]>}
  */
-Category.findAll = function (cb) {
-    connection((conn) => {
-        let sql = `Select * FROM Category`;
-        conn.query(sql, (error, results) => {
-            if (error) {
-                console.error("Error: ", error);
-                cb({...error, kind: "server_error"}, null);
-            } else {
-                console.log(`Found ${results.length} categories`);
-                cb(null, results);
-            }
-        });
+Category.findAll = async function (filter) {
+    if (!filter) filter = {};
+    const conn = await pool.promise().getConnection();
+    let sql = `
+    Select * 
+    FROM Category 
+    WHERE name LIKE IFNULL(CONCAT('%', ?, '%'), name)
+    ORDER BY cid ASC
+    `;
+
+    try {
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, [filter.name]);
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        console.log(err);
+        throw { kind: "server_error" };
+    } finally {
         conn.release();
-    });
+    }
+    console.log(`Found ${rows.length} categories`);
+    return rows.map((val) => new Category(val));
 };
 
 
 /**
  * @param {Number} id 
  * @param {Category} category
- * @param {(err: import("mysql2").QueryError) => any} cb 
  */
-Category.updateById = function (id, category, cb) {
-    connection((conn) => {
-        let sql = `
-        UPDATE category 
-        SET 
-            name = IFNULL(?, name)
-        WHERE cid = ${mysql.escape(id)}`;
-        let vals = [category.name];
+Category.updateById = async function (id, category) {
+    const conn = await pool.promise().getConnection();
+    let sql = `
+    UPDATE Category 
+    SET 
+        name = IFNULL(?, name)
+    WHERE cid = ?
+    `;
 
-        conn.query(sql, vals, (error, results) => {
-            if (error) {
-                console.error("Error: ", error);
-                cb({...error, kind: "server_error"})
-            } else if (results.affectedRows == 0) {
-                console.error(`Error: there is not category{ cid: ${id} }`);
-                cb({ message: "not found", kind: "not_found" });
-            } else {
-                console.log(`Updated category{ cid: ${id} }`);
-                cb(null);
-            }
-        });
+    try {
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, [category.name, id]);
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        console.log(err);
+        throw { kind: "server_error" };
+    } finally {
         conn.release();
-    });
-}
+    }
+
+    if (rows.affectedRows == 0) {
+        console.error(`Error: there is not category{ cid: ${id} }`);
+        throw { kind: "not_found" };
+    } else {
+        console.log(`Updated category{ cid: ${id} }`);
+        return true;
+    }
+};
 
 
 /**
  * @param {Number} id 
- * @param {(err: import("mysql2").QueryError) => any} cb 
  */
-Category.deleteById = function (id, cb) {
-    connection((conn) => {
-        let sql = `DELETE FROM Category WHERE cid = ${mysql.escape(id)}`;
-        conn.query(sql, (error, results) => {
-            if (error) {
-                console.error("Error: ", error);
-                cb({...error, kind: "server_error"});
-            } else if (results.affectedRows == 0) {
-                console.error(`Error: there is not category{ cid: ${id} }`);
-                cb({ message: "not found", kind: "not_found" });
-            } else {
-                console.log(`Deleted category{ cid: ${id} }`);
-                cb(null);
-            }
-        });
+Category.deleteById = async function (id) {
+    const conn = await pool.promise().getConnection();
+    let sql = `DELETE FROM Category WHERE cid = ?`;
+
+    try {
+        await conn.beginTransaction();
+        var [rows, fields] = await conn.query(sql, [id]);
+        await conn.commit();
+    } catch (err) {
+        await conn.rollback();
+        console.log(err);
+        cb({ ...err, kind: "server_error" }, null);
+    } finally {
         conn.release();
-    });
-}
+    }
+
+    if (rows.affectedRows == 0) {
+        console.error(`Error: there is not category{ cid: ${id} }`);
+        throw { kind: "not_found" };
+    } else {
+        console.log(`Deleted category{ cid: ${id} }`);
+        return true;
+    }
+};
+
 
 module.exports = Category;
