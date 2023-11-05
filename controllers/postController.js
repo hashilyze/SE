@@ -1,4 +1,5 @@
 const Post = require("../models/Post");
+const util = require("./util");
 
 
 // 게시물 생성
@@ -7,9 +8,9 @@ exports.create = async function (req, res) {
 
     try {
         let id = await Post.create(newPost);
-        res.status(201).send({ result: "succsss", pid: id });
+        res.status(201).send({ ...util.getSuccess(), pid: id });
     } catch (err) {
-        res.status(500).send({ result: "fail" });
+        util.errorHandle(err, req, res);
     }
 };
 
@@ -20,10 +21,9 @@ exports.findOne = async function (req, res) {
 
     try{
         let post = await Post.findById(pid);
-        res.send({ result: "success", post });
+        res.send({ ...util.getSuccess(), post });
     }catch(err){
-        if(err.kind == "not_found") res.status(404).send({ result: "fail" });
-        else res.status(500).send({ result: "fail" });
+        util.errorHandle(err, req, res);
     }
 };
 
@@ -35,10 +35,9 @@ exports.updateOne = async function (req, res){
 
     try {
         await Post.updateById(pid, updateInfo);
-        res.send({ result: "success" });
+        res.send(util.getSuccess());
     } catch (err) {
-        if (err.kind == "not_found") res.status(404).send({ result: "fail" });
-        else res.status(500).send({ result: "fail" });
+        util.errorHandle(err, req, res);
     }
 };
 
@@ -49,20 +48,19 @@ exports.deleteOne = async function (req, res) {
 
     try {
         await Category.deleteById(pid);
-        res.send({ result: "success" });
+        res.send(util.getSuccess());
     } catch (err) {
-        if (err.kind == "not_found") res.status(404).send({ result: "fail" });
-        else res.status(500).send({ result: "fail" });
+        util.errorHandle(err, req, res);
     }
-}
+};
 
 
 // 게시물 검색
 exports.findAll = async function (req, res) {
     try {
         let posts = await Post.findAll({ name: req.query.name || null });
-        res.send({ result: "success", posts });
+        res.send({ ...util.getSuccess(), posts });
     } catch (err) {
-        res.status(500).send({ result: "fail" });
+        util.errorHandle(err, req, res);
     }
 };

@@ -1,15 +1,16 @@
 const User = require("../models/User");
+const util = require("./util");
 
 
 // 사용자 생성
 exports.create = async function (req, res) {
     let newUser = new User(req.body);
-
+    
     try {
         let id = await User.create(newUser);
-        res.status(201).send({ result: "succsss", uid: id });
+        res.status(201).send({ ...util.getSuccess(), uid: id });
     } catch (err) {
-        res.status(500).send({ result: "fail" });
+        util.errorHandle(err, req, res);
     }
 };
 
@@ -20,10 +21,9 @@ exports.findOne = async function (req, res) {
 
     try {
         let user = await User.findById(uid);
-        res.send({ result: "success", user });
+        res.send({ ...util.getSuccess(), user });
     } catch (err) {
-        if (err.kind == "not_found") res.status(404).send({ result: "fail" });
-        else res.status(500).send({ result: "fail" });
+        util.errorHandle(err, req, res);
     }
 };
 
@@ -35,10 +35,9 @@ exports.updateOne = async function (req, res) {
 
     try {
         await User.updateById(uid, updateInfo);
-        res.send({ result: "success" });
+        res.send(util.getSuccess());
     } catch (err) {
-        if (err.kind == "not_found") res.status(404).send({ result: "fail" });
-        else res.status(500).send({ result: "fail" });
+        util.errorHandle(err, req, res);
     }
 };
 
@@ -49,10 +48,9 @@ exports.deleteOne = async function (req, res) {
 
     try {
         await User.deleteById(uid);
-        res.send({ result: "success" });
+        res.send(util.getSuccess());
     } catch (err) {
-        if (err.kind == "not_found") res.status(404).send({ result: "fail" });
-        else res.status(500).send({ result: "fail" });
+        util.errorHandle(err, req, res);
     }
 }
 
@@ -61,8 +59,8 @@ exports.deleteOne = async function (req, res) {
 exports.findAll = async function (req, res) {
     try {
         let users = await User.findAll({ name: req.query.name || null });
-        res.send({ result: "success", users });
+        res.send({ ...util.getSuccess(), users });
     } catch (err) {
-        res.status(500).send({ result: "fail" });
+        util.errorHandle(err, req, res);
     }
 };

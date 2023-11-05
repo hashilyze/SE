@@ -76,7 +76,7 @@
     <div>
         <input type="button" value="SEARCH" onclick='
             keyword = document.getElementById("keyword").value;
-            fetch("/users?" + new URLSearchParams({
+            fetch("/user/search?" + new URLSearchParams({
                 name: keyword
             }))
             .then((response) => response.json())

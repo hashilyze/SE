@@ -1,8 +1,5 @@
-const connection = require("../database/mysql_connection");
-
 const mysql = require("mysql2");
-const db_config = require('../database/db_config.json');
-const pool = mysql.createPool(db_config);
+const pool = require("../database/mysql_pool");
 
 
 class Basket {
@@ -99,7 +96,7 @@ Basket.findAll = async function (filter) {
 /**
  * @param { pid: Number, uid: Number} id
  */
-Basket.deleteById = async function (id, cb) {
+Basket.deleteById = async function (id) {
     const conn = await pool.promise().getConnection();
     let sql = `DELETE FROM Basket WHERE uid = ? AND pid = ?`;
 
@@ -110,7 +107,6 @@ Basket.deleteById = async function (id, cb) {
     } catch (err) {
         await conn.rollback();
         console.log(err);
-        cb({ ...err, kind: "server_error" }, null);
     } finally {
         conn.release();
     }

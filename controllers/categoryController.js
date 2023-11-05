@@ -1,15 +1,16 @@
 const Category = require("../models/Category");
+const util = require("./util");
 
 
 // 카테고리 생성
 exports.create = async function (req, res) {
     let newCategory = new Category(req.body);
-
+    
     try {
         let id = await Category.create(newCategory);
-        res.status(201).send({ result: "succsss", cid: id });
+        res.status(201).send({ ...util.getSuccess(), cid: id });
     } catch (err) {
-        res.status(500).send({ result: "fail" });
+        util.errorHandle(err, req, res);
     }
 };
 
@@ -20,10 +21,9 @@ exports.findOne = async function (req, res) {
 
     try {
         let category = await Category.findById(cid);
-        res.send({ result: "success", category });
+        res.send({ ...util.getSuccess(), category });
     } catch (err) {
-        if (err.kind == "not_found") res.status(404).send({ result: "fail" });
-        else res.status(500).send({ result: "fail" });
+        util.errorHandle(err, req, res);
     }
 };
 
@@ -35,10 +35,9 @@ exports.updateOne = async function (req, res) {
 
     try {
         await Category.updateById(cid, updateInfo);
-        res.send({ result: "success" });
+        res.send(util.getSuccess());
     } catch (err) {
-        if (err.kind == "not_found") res.status(404).send({ result: "fail" });
-        else res.status(500).send({ result: "fail" });
+        util.errorHandle(err, req, res);
     }
 };
 
@@ -49,10 +48,9 @@ exports.deleteOne = async function (req, res) {
 
     try {
         await Category.deleteById(cid);
-        res.send({ result: "success" });
+        res.send(util.getSuccess());
     } catch (err) {
-        if (err.kind == "not_found") res.status(404).send({ result: "fail" });
-        else res.status(500).send({ result: "fail" });
+        util.errorHandle(err, req, res);
     }
 };
 
@@ -61,8 +59,8 @@ exports.deleteOne = async function (req, res) {
 exports.findAll = async function (req, res) {
     try {
         let categories = await Category.findAll({ name: req.query.name || null });
-        res.send({ result: "success", categories });
+        res.send({ ...util.getSuccess(), categories });
     } catch (err) {
-        res.status(500).send({ result: "fail" });
+        util.errorHandle(err, req, res);
     }
 };

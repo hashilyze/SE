@@ -1,9 +1,5 @@
-const connection = require("../database/mysql_connection");
-
 const mysql = require("mysql2");
-const db_config = require('../database/db_config.json');
-const pool = mysql.createPool(db_config);
-
+const pool = require("../database/mysql_pool");
 
 class User {
     constructor({ uid, role, login_id, password, name, created_at }) {
@@ -151,9 +147,8 @@ User.updateById = async function (id, user) {
 
 /**
  * @param {Number} id 
- * @param {(err: import("mysql2").QueryError) => any} cb 
  */
-User.deleteById = async function (id, cb) {
+User.deleteById = async function (id) {
     const conn = await pool.promise().getConnection();
     let sql = `DELETE FROM User WHERE uid = ?`;
 
@@ -164,7 +159,6 @@ User.deleteById = async function (id, cb) {
     } catch (err) {
         await conn.rollback();
         console.log(err);
-        cb({ ...err, kind: "server_error" }, null);
     } finally {
         conn.release();
     }

@@ -1,8 +1,5 @@
-const connection = require("../database/mysql_connection");
-
 const mysql = require("mysql2");
-const db_config = require('../database/db_config.json');
-const pool = mysql.createPool(db_config);
+const pool = require("../database/mysql_pool");
 
 
 class Post {
@@ -40,9 +37,12 @@ async function updateImagesById(conn, id, images) {
     });
 
     await conn.query(delete_sql, [id]);
-    let [rows, fileds] = await conn.query(insert_sql);
-    console.log(`Stored ${rows.affectedRows} images`);
-    return true;
+    let affected = 0;
+    if(images && images.length > 0){
+        var [rows, fileds] = await conn.query(insert_sql);
+        affected = rows.affectedRows;
+    }
+    console.log(`Stored ${affected} images`);
 };
 
 
@@ -50,7 +50,7 @@ async function updateImagesById(conn, id, images) {
  * @param {Post} newPost 
  * @returns {Promise<Number>} insertId
  */
-Post.create = async function (newPost, cb) {
+Post.create = async function (newPost) {
     const conn = await pool.promise().getConnection();
     let sql = `
     INSERT INTO Post 
@@ -71,9 +71,8 @@ Post.create = async function (newPost, cb) {
             await updateImagesById(conn, rows.insertId, newPost.images);
         await conn.commit();
     }catch(err){
-        conn.rollback();
+        await conn.rollback();
         console.log(err);
-        cb({ ...err, kind: "server_error" }, null);
     }finally{
         conn.release();
     }
@@ -206,7 +205,7 @@ Post.updateById = async function (id, post) {
 /**
  * @param {Number} id 
  */
-Post.deleteById = async function (id, cb) {
+Post.deleteById = async function (id) {
     const conn = await pool.promise().getConnection();
     let sql = `DELETE FROM Post WHERE pid = ?`;
 
@@ -217,7 +216,6 @@ Post.deleteById = async function (id, cb) {
     } catch (err) {
         await conn.rollback();
         console.log(err);
-        cb({ ...err, kind: "server_error" }, null);
     } finally {
         conn.release();
     }

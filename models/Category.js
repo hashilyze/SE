@@ -1,8 +1,5 @@
-const connection = require("../database/mysql_connection");
-
 const mysql = require("mysql2");
-const db_config = require('../database/db_config.json');
-const pool = mysql.createPool(db_config);
+const pool = require("../database/mysql_pool");
 
 
 class Category {
@@ -146,7 +143,6 @@ Category.deleteById = async function (id) {
     } catch (err) {
         await conn.rollback();
         console.log(err);
-        cb({ ...err, kind: "server_error" }, null);
     } finally {
         conn.release();
     }

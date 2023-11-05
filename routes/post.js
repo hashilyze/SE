@@ -33,15 +33,15 @@ const upload = multer({ storage: multer.diskStorage({
 
 
 // 게시물 생성
-router.post("/post", postController.create);
-// 게시물 가져오기
-router.get("/post/:pid", postController.findOne);
-// 게시물 정보 수정
-router.put("/post/:pid", postController.updateOne);
-// 게시물 삭제
-router.delete("/post/:pid", postController.deleteOne);
+router.post("/", postController.create);
 // 게시물 검색
-router.get("/posts", postController.findAll);
+router.get("/search", postController.findAll);
+// 게시물 가져오기
+router.get("/:pid", postController.findOne);
+// 게시물 정보 수정
+router.put("/:pid", postController.updateOne);
+// 게시물 삭제
+router.delete("/:pid", postController.deleteOne);
 
 
 // 게시물 작성

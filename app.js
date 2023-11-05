@@ -7,9 +7,11 @@ var logger = require('morgan');
 var bodyParser = require('body-parser');
 // Router
 var indexRouter = require('./routes/index');
-var boardRouter = require('./routes/board');
 var userRouter = require('./routes/user');
+var authRouter = require('./routes/auth');
 var categoryRouter = require('./routes/category');
+// var postRouter = require('./routes/post');
+var boardRouter = require('./routes/board');
 var testRouter = require('./routes/test');
 
 
@@ -27,10 +29,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/', userRouter);
-app.use('/', categoryRouter);
+app.use('/user', userRouter);
+app.use('/auth', authRouter);
+app.use('/category', categoryRouter);
+// app.use('/post', postRouter);
 app.use('/board', boardRouter);
 app.use('/test', testRouter);
+
 
 
 // catch 404 and forward to error handler
