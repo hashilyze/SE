@@ -5,10 +5,19 @@ var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 var bodyParser = require('body-parser');
+var session = require('express-session');
+var MySQLStore = require('express-mysql-session')(session);
+var mysqlConfig = require('./database/config.json');
 // Router
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
-var boardRouter = require('./routes/board');
+var formatRouter = require('./routes/formatRouter');
+var categoryRouter = require('./routes/categoryRouter');
+var userRouter = require('./routes/userRouter');
+var postRouter = require('./routes/postRouter');
+var basketRouter = require('./routes/basketRouter');
+var authRouter = require('./routes/authRouter');
+var payRouter = require('./routes/payRouter');
+var testRouter = require('./routes/testRouter');
 
 
 var app = express();
@@ -23,10 +32,23 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({
+  secret: "default",
+  resave: false,
+  saveUninitialized: true,
+  store: new MySQLStore(mysqlConfig),
+}));
 
 app.use('/', indexRouter);
-app.use('/users', usersRouter);
-app.use('/board', boardRouter);
+app.use('/format', formatRouter);
+app.use('/category', categoryRouter);
+app.use('/user', userRouter);
+app.use('/post', postRouter);
+app.use('/basket', basketRouter);
+app.use('/auth', authRouter);
+app.use('/pay', payRouter);
+app.use('/test', testRouter);
+
 
 
 // catch 404 and forward to error handler

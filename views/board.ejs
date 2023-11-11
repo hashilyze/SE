@@ -1,55 +1,58 @@
-게시물 수정
+게시판
+<%for(i = 0; i < posts.length; ++i){%>
 <div>
     <div>
         <span>pid</span>
-        <span><%=post.pid%></span>
+        <span><%=posts[i].pid%></span>
     </div>
     <div>
         <span>writer</span>
-        <span><%=post.writer%></span>
+        <span><%=posts[i].writer%></span>
     </div>
     <div>
         <span>writer_name</span>
-        <span><%=post.writer_name%></span>
+        <span><%=posts[i].writer_name%></span>
     </div>
     <div>
         <span>category</span>
-        <span><%=post.category%></span>
+        <span><%=posts[i].category%></span>
     </div>
     <div>
         <span>category_name</span>
-        <span><%=post.category_name%></span>
+        <span><%=posts[i].category_name%></span>
     </div>
     <div>
         <span>format</span>
-        <span><%=post.format%></span>
+        <span><%=posts[i].format%></span>
     </div>
     <div>
         <span>format_name</span>
-        <span><%=post.format_name%></span>
+        <span><%=posts[i].format_name%></span>
     </div>
     <div>
         <span>views</span>
-        <span><%=post.views%></span>
+        <span><%=posts[i].views%></span>
     </div>
     <div>
         <span>likes</span>
-        <span><%=post.likes%></span>
+        <span><%=posts[i].likes%></span>
     </div>
     <div>
         <span>downloads</span>
-        <span><%=post.downloads%></span>
+        <span><%=posts[i].downloads%></span>
     </div>
     <div>
         <span>title</span>
-        <span><%=post.title%></span>
+        <span><%=posts[i].title%></span>
     </div>
     <div>
         <span>price</span>
-        <span><%=post.price%></span>
+        <span><%=posts[i].price%></span>
     </div>
     <div>
         <span>description</span>
-        <span><%=post.description%></span>
+        <span><%=posts[i].description%></span>
     </div>
 </div>
+<hr>
+<%}%>

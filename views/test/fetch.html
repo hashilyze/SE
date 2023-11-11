@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <!-- POST Method -->
+    <div>
+        <div>
+            <input class="btnGet" type="button" value="GET"
+                onclick='excuteMethod("GET")'>
+        </div>
+        <div>
+            <input class="btnPost" type="button" value="POST"
+            onclick='excuteMethod("POST")'>
+        </div>
+        <div>
+            <input class="btnPut" type="button" value="PUT"
+            onclick='excuteMethod("PUT")'>
+        </div>
+        <div>
+            <input class="btnDelete" type="button" value="DELETE"
+                onclick='excuteMethod("DELETE")'>
+        </div>
+    </div>
+    <br>
+    <div>
+        <div>
+            <label for="outputStyle">입력 형식</label>
+            <select id ="mediaStyle">
+                <option value="JSON" selected>JSON</option>
+                <option value="Form-Data">Form Data</option>
+            </select>
+        </div>
+        <div>
+            <label for="outputStyle">출력 형식</label>
+            <select id ="outputStyle">
+                <option value="Plain" selected>Plain Text</option>
+                <option value="JSON">JSON</option>
+            </select>
+        </div>
+        <div>
+            <input type="file" id="image" accept="image/*" multiple>
+        </div>
+        <div>
+            <input type="text" id="inUrl" placeholder="url"> 
+        </div>
+        <br>
+        <div>
+            <textarea id="inBody"placeholder="body"></textarea>
+        </div>
+    </div>
+    <br>
+</body>
+<script>
+    function excuteMethod(_method) {
+        let _url = document.getElementById("inUrl").value;
+        let _body = document.getElementById("inBody").value;
+        let mediaStyle = document.getElementById("mediaStyle").value;
+        let outputStyle = document.getElementById("outputStyle").value;
+        
+        console.log("url: ", _url, "\nbody: ", _body);
+        let = req = { method: _method, };
+        if(mediaStyle == "JSON"){
+            req.headers = { "Content-Type": "application/json" };
+            if(_method != "GET") req.body = _body;
+        } else {
+            req.headers = { };
+            const formData = new FormData();
+            let files = document.getElementById("image").files;
+            for(let file of files){
+                formData.append("images", file);
+            }
+            
+            if(_body){
+                for(let [key, value] of Object.entries(JSON.parse(_body))){
+                    formData.append(key, value);        
+                }
+            }
+            if(_method != "GET") req.body = formData;
+        }
+
+        fetch(_url, req)
+        .then((response) => {
+            if(outputStyle == "JSON"){
+                return response.json();
+            }
+            return response.text();
+        })
+        .then((data) => console.log(data));
+    };
+</script>
+</html>

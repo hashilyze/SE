@@ -1,0 +1,15 @@
+{
+    "host": "localhost",
+    "port": 3306,
+    "user": "root",
+    "password": "1234",
+    "database": "sedb3",
+    "dateStrings": "date",
+    "timezone": "+09:00",
+    "pool": {
+        "max": 10,
+        "min": 1,
+        "idle": 10000
+    },
+    "multipleStatements": true
+}
