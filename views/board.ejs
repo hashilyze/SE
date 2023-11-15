@@ -53,6 +53,15 @@
         <span>description</span>
         <span><%=posts[i].description%></span>
     </div>
+    <div>
+        <%if(posts[i].images){%>
+            <%for(let image of posts[i].images){%>
+                <img src = "/uploads/<%=image%>" width="300px" height="300px">
+            <%}%>
+        <%} else {%>
+            <img src = "/images/no_image.png" width="300px" height="300px">
+        <%}%>
+    </div>
 </div>
 <hr>
 <%}%>

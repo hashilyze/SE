@@ -60,26 +60,28 @@ router.get("/edit/:pid",
 });
 // 게시판
 router.get("/board", async (req, res) => {
-    res.render("board", { posts: await Post.findAll(
-        {
-            title: req.query.title,
-            description: req.query.description,
-            min_price: req.query.min_price,
-            max_price: req.query.max_price,
-    
-            writer: req.query.writer,
-            writer_name: req.query.writer_name,
-            category: req.query.category,
-            category_name: req.query.category_name,
-            format: req.query.format,
-            format_name: req.query.format_name,
-            
-            key: req.query.key,
-            order: req.query.order,
-            limit: parseInt(req.query.limit),
-            offset: parseInt(req.query.offset)
-        }
-    )})
+    let filter = { 
+        title: req.query.title,
+        description: req.query.description,
+        min_price: req.query.min_price,
+        max_price: req.query.max_price,
+
+        writer: req.query.writer,
+        writer_name: req.query.writer_name,
+        category: req.query.category,
+        category_name: req.query.category_name,
+        format: req.query.format,
+        format_name: req.query.format_name,
+        
+        key: req.query.key,
+        order: req.query.order,
+        limit: parseInt(req.query.limit),
+        offset: parseInt(req.query.offset)
+    };
+    req.session["format_name"] = filter.format_name;
+    req.session["category_name"] = filter.category_name;
+    let posts = await Post.findAll(filter);
+    res.render("board", { posts: posts });
 });
 
 

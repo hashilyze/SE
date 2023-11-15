@@ -52,4 +52,10 @@
         <span>description</span>
         <span><%=post.description%></span>
     </div>
+    <div>
+        <span>images</span>
+        <%for(let image of post.images){%>
+            <img src="/uploads/<%=image%>" width="300px" height="300px">
+        <%}%>
+    </div>
 </div>

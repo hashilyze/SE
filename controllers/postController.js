@@ -9,6 +9,21 @@ const utility = require("./utility");
 
 
 exports.validateCreateParameter = async (req, res, next) =>{
+    try{
+        if(req.body.writer === undefined) {
+            req.body.writer = req.session.uid;
+        }
+        if(req.body.category === undefined){
+            req.body.category = (await Category.findByName(req.session.category_name)).cid;
+        }
+        if(req.body.format === undefined){
+            req.body.format = (await Format.findByName(req.session.format_name)).fid;
+        }
+    }catch(e){
+        utility.errorHandle({kind: "bad_request"}, req, res);    
+        return;
+    }
+
     if(req.body.title === undefined){
         console.log(`Title is not exist`);
     } else if(req.body.description === undefined){

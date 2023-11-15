@@ -12,7 +12,7 @@ exports.payOnBasket = async (req, res) => {
         let baskets = await Basket.findAll({uid});
         for(let basket of baskets){
             let list = await Download.findAll({uid: basket.uid, pid: basket.pid});
-            if(list.length == 0) await Post.addDownloadsById(pid, 1);
+            if(list.length == 0) await Post.addDownloadsById(basket.pid, 1);
             await Download.create({uid: basket.uid, pid: basket.pid});
             await Basket.deleteById({uid: basket.uid, pid: basket.pid});
         }

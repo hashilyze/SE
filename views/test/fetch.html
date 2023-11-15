@@ -6,8 +6,8 @@
     <title>Document</title>
 </head>
 <body>
-    <!-- POST Method -->
-    <div>
+    <!--메소드 메뉴-->
+    <div class="method_menu">
         <div>
             <input class="btnGet" type="button" value="GET"
                 onclick='excuteMethod("GET")'>
@@ -26,30 +26,38 @@
         </div>
     </div>
     <br>
-    <div>
-        <div>
-            <label for="outputStyle">입력 형식</label>
+    <!--입력 패널-->
+    <div class="input_panel">
+        <!--Request 형식-->
+        <div class="application_style">
+            <label for="mediaStyle">입력 형식</label>
             <select id ="mediaStyle">
                 <option value="JSON" selected>JSON</option>
                 <option value="Form-Data">Form Data</option>
             </select>
         </div>
-        <div>
+        <!--Response 파싱 형식-->
+        <div class="parsing_style">
             <label for="outputStyle">출력 형식</label>
             <select id ="outputStyle">
                 <option value="Plain" selected>Plain Text</option>
                 <option value="JSON">JSON</option>
             </select>
-        </div>
+        </div><br>
+        <!--포함할 이미지 파일-->
         <div>
             <input type="file" id="image" accept="image/*" multiple>
-        </div>
+        </div><br>
+        <!--목적지 url-->
         <div>
             <input type="text" id="inUrl" placeholder="url"> 
-        </div>
-        <br>
+        </div><br>
+        <!--Request Body(JSON으로 작성)-->
         <div>
             <textarea id="inBody"placeholder="body"></textarea>
+        </div>
+        <div id="result">
+            
         </div>
     </div>
     <br>
@@ -62,21 +70,22 @@
         let outputStyle = document.getElementById("outputStyle").value;
         
         console.log("url: ", _url, "\nbody: ", _body);
-        let = req = { method: _method, };
+        let req = { method: _method, };
         if(mediaStyle == "JSON"){
+            // 일반 Request
             req.headers = { "Content-Type": "application/json" };
             if(_method != "GET") req.body = _body;
         } else {
+            // 이미지를 포함한 Request
             req.headers = { };
             const formData = new FormData();
             let files = document.getElementById("image").files;
             for(let file of files){
                 formData.append("images", file);
             }
-            
             if(_body){
                 for(let [key, value] of Object.entries(JSON.parse(_body))){
-                    formData.append(key, value);        
+                    formData.append(key, value);
                 }
             }
             if(_method != "GET") req.body = formData;
@@ -84,12 +93,22 @@
 
         fetch(_url, req)
         .then((response) => {
-            if(outputStyle == "JSON"){
-                return response.json();
-            }
             return response.text();
-        })
-        .then((data) => console.log(data));
+        }).then((text) => {
+            let map = {
+                " " : "&nbsp;",
+                "\\n": "<br>",
+                "<" : "&lt;",
+                ">" : "&gt;",
+                "\"": "&quot;",
+                "&" : "&amp;",
+            };
+            let escapedText = text.replace(/[ <>\"&]|\\n/g, (m) => map[m]);;
+            document.getElementById("result").innerHTML = escapedText;
+            return (outputStyle == "JSON") ? JSON.parse(text) : text; 
+        }).then((data) => {
+            console.log(data);
+        });
     };
 </script>
 </html>
