@@ -90,20 +90,20 @@
             }
             if(_method != "GET") req.body = formData;
         }
-
+        
         fetch(_url, req)
         .then((response) => {
             return response.text();
         }).then((text) => {
             let map = {
                 " " : "&nbsp;",
-                "\\n": "<br>",
+                "\n": "<br>",
                 "<" : "&lt;",
                 ">" : "&gt;",
                 "\"": "&quot;",
                 "&" : "&amp;",
             };
-            let escapedText = text.replace(/[ <>\"&]|\\n/g, (m) => map[m]);;
+            let escapedText = text.replace(/[ \n<>\"&]/g, (m) => map[m]);
             document.getElementById("result").innerHTML = escapedText;
             return (outputStyle == "JSON") ? JSON.parse(text) : text; 
         }).then((data) => {
