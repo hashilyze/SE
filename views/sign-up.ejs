@@ -1,1 +1,48 @@
-회원가입
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>회원가입</title>
+
+  <link rel="stylesheet" href="/stylesheets/signup.css" />
+  <script src="/javascripts/signup.js"></script>
+</head>
+
+<body>
+  <div class="register">
+    <!--헤더-->
+    <div class="logo-wrapper">
+      <a class="logo-text" href="/">(홈페이지로고)</a>
+    </div>
+
+    <!--콘텐츠-->
+    <div class="frame">
+      <div class="overlap-group">
+        <!--라벨-->
+        <label class="name_label_wrapper" for="name">
+          <div class="text-wrapper-1">이름</div>
+        </label>
+        <label class="id_label_wrapper" for="login_id">
+          <div class="text-wrapper-2">아이디</div>
+        </label>
+        <label class="pw_label_wrapper" for="password">
+          <div class="text-wrapper-3">비밀번호</div>
+        </label>
+        <!--입력-->
+        <div class="name_input"><input id="name" type="text"></div>
+        <div class="id_input"><input id="login_id" type="text"></div>
+        <div class="pw_input"><input id="password" type="text"></div>
+
+        <!--버튼-->
+        <button class="signup_wrapper" onclick="requestSignin()">
+          <div class="text-wrapper-4">회원가입</div>
+        </button>
+      </div>
+    </div>
+  </div>
+
+</body>
+
+</html>

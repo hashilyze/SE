@@ -1,1 +1,47 @@
-로그인
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>로그인</title>
+  
+  <link rel="stylesheet" href="/stylesheets/signin.css" />
+  <script src="/javascripts/hyperlink.js"></script>
+  <script src="/javascripts/signin.js"></script>
+</head>
+
+<body>
+  <div class="typeb-login-register">
+    <!--헤더-->
+    <div class="logo-wrapper">
+      <a class="logo-text" href="/">(홈페이지로고)</a>
+    </div>
+
+    <!--콘텐츠-->
+    <div class="frame">
+      <div class="overlap-group">
+        <!--라벨-->
+        <label class="id_label_wrapper" for="login_id">
+          <div class="text-wrapper-1">아이디</div>
+        </label>
+        <label class="pw_label_wrapper" for="password">
+          <div class="text-wrapper-2">비밀번호</div>
+        </label>
+        <!--입력-->
+        <div class="id_input"><input id="login_id" type="text"></div>
+        <div class="pw_input"><input id="password" type="password"></div>
+
+        <!--버튼-->
+        <button class="signup_wrapper" onclick="moveToSignUp()">
+          <div class="text-wrapper-2">회원가입</div>
+        </button>
+        <button class="signin_wrapper" onclick="requestSignin()">
+          <div class="text-wrapper-1">로그인</div>
+        </button>
+      </div>
+    </div>
+
+  </div>
+</body>
+</html>
