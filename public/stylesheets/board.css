@@ -1,0 +1,544 @@
+@import url("./globals.css");
+
+.dashboard {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+  position: relative;
+  background-color: #ffffff;
+  width: 100%;
+  min-width: 1457px;
+  min-height: 1003.68px;
+  justify-content: center;
+}
+
+.dashboard .sidebar-section {
+  position: relative;
+  width: 318.5px;
+  height: 983.68px;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.dashboard .sidebar-wrapper {
+  position: relative;
+  width: 319px;
+  height: 1004px;
+}
+
+.dashboard .sidebar-1 {
+  top: 502px;
+  background: linear-gradient(
+    180deg,
+    rgb(232.6, 215, 255) 0%,
+    rgba(233, 215, 255, 0.74) 40.62%,
+    rgba(215, 248, 255, 0) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  width: 319px;
+  height: 502px;
+  align-items: center;
+  justify-content: center;
+  gap: 21px;
+  padding: 36px 24px;
+  position: absolute;
+  left: 0;
+}
+
+.dashboard .sidemenu-title {
+  position: relative;
+  width: 271px;
+  height: 19.64px;
+  margin-top: -1px;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  font-size: 45px;
+  line-height: 18px;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .div {
+  position: relative;
+  width: 271px;
+  height: 19.64px;
+  font-family: "Inter-Thin", Helvetica;
+  font-weight: 100;
+  font-size: 26px;
+  line-height: normal;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .line {
+  position: relative;
+  width: 271px;
+  height: 1px;
+  object-fit: cover;
+}
+
+.dashboard .sidebar-2 {
+  top: 0;
+  background: linear-gradient(
+    180deg,
+    rgb(215, 248, 255) 0%,
+    rgba(215, 248, 255, 0.84) 52.08%,
+    rgba(215, 248, 255, 0) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  width: 319px;
+  height: 502px;
+  align-items: center;
+  justify-content: center;
+  gap: 21px;
+  padding: 36px 24px;
+  position: absolute;
+  left: 0;
+}
+
+.dashboard .sidemenu-option {
+  position: relative;
+  width: 271px;
+  height: 19.64px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: normal;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .main-section {
+  position: relative;
+  width: 1108.5px;
+  height: 983.68px;
+  background-color: #fff7f7;
+  border: 1px solid;
+  border-color: #00000080;
+}
+
+.dashboard .logo-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  height: 101px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px 92px;
+  position: absolute;
+  top: 26px;
+  left: 24px;
+  background-color: #d9d9d9;
+}
+
+.dashboard .logo-text {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 44px;
+  line-height: normal;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .btnWrite {
+  position: absolute;
+  width: 210px;
+  height: 60px;
+  top: 216px;
+  left: 822px;
+  background-color: #ff9999;
+  border-radius: 15px;
+}
+
+.dashboard .write-text {
+  position: absolute;
+  top: 8px;
+  left: 56px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 35px;
+  line-height: normal;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .element-1 {
+  position: absolute;
+  width: 314px;
+  height: 500px;
+  top: 305px;
+  left: 76px;
+}
+
+.dashboard .views_likes-wrapper {
+  position: absolute;
+  width: 178px;
+  height: 50px;
+  top: 450px;
+  left: 0;
+}
+
+.dashboard .views-form {
+  position: absolute;
+  width: 90px;
+  height: 50px;
+  top: 0;
+  left: 0;
+  background-color: #ffb1b1;
+  border: 1px solid;
+  border-color: #000000;
+}
+
+.dashboard .likes-form {
+  position: absolute;
+  width: 90px;
+  height: 50px;
+  top: 0;
+  left: 88px;
+  background-color: #ffb1b1;
+  border: 1px solid;
+  border-color: #000000;
+}
+
+.dashboard .views-text {
+  position: absolute;
+  top: 11px;
+  left: 26px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 23px;
+  line-height: normal;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .likes-text {
+  position: absolute;
+  top: 11px;
+  left: 114px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 23px;
+  line-height: normal;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .downloads-wrapper {
+  position: absolute;
+  width: 122px;
+  height: 50px;
+  top: 450px;
+  left: 178px;
+  background-color: #ffb1b1;
+  border: 1px solid;
+  border-color: #000000;
+}
+
+.dashboard .downloads-text {
+  position: absolute;
+  top: 10px;
+  left: 20px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 23px;
+  line-height: normal;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .created-wapper {
+  position: absolute;
+  width: 300px;
+  height: 50px;
+  top: 400px;
+  left: 0;
+  background-color: #ffb1b1;
+  border: 1px solid;
+  border-color: #000000;
+}
+
+.dashboard .created-text {
+  position: absolute;
+  top: 10px;
+  left: 118px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 23px;
+  line-height: normal;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .price-wrapper {
+  position: absolute;
+  width: 150px;
+  height: 50px;
+  top: 350px;
+  left: 150px;
+  background-color: #ffb1b1;
+  border: 1px solid;
+  border-color: #000000;
+}
+
+.dashboard .price-text {
+  position: absolute;
+  top: 13px;
+  left: 55px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 23px;
+  line-height: normal;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .writer-wrapper {
+  position: absolute;
+  width: 150px;
+  height: 50px;
+  top: 350px;
+  left: 0;
+  background-color: #ffb1b1;
+  border: 1px solid;
+  border-color: #000000;
+}
+
+.dashboard .writer-text {
+  position: absolute;
+  top: 13px;
+  left: 43px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 23px;
+  line-height: normal;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .title-wrapper {
+  position: absolute;
+  width: 300px;
+  height: 50px;
+  top: 300px;
+  left: 0;
+  background-color: #ffb1b1;
+  border: 1px solid;
+  border-color: #000000;
+}
+
+.dashboard .title-text {
+  position: absolute;
+  top: 10px;
+  left: 130px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 23px;
+  line-height: normal;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .thumbnail {
+  position: absolute;
+  width: 300px;
+  height: 300px;
+  top: 0;
+  left: 0;
+  background-color: #d9d9d9;
+  border: 1px solid;
+  border-color: #000000;
+}
+
+.dashboard .element-2 {
+  position: absolute;
+  width: 314px;
+  height: 500px;
+  top: 305px;
+  left: 404px;
+}
+
+.dashboard .element-3 {
+  position: absolute;
+  width: 314px;
+  height: 500px;
+  top: 305px;
+  left: 732px;
+}
+
+.dashboard .board_name-wrapper {
+  position: absolute;
+  width: 302px;
+  height: 60px;
+  top: 156px;
+  left: 404px;
+}
+
+.dashboard .board_name-form {
+  position: relative;
+  width: 300px;
+  height: 60px;
+  background-color: #f8c5c5;
+}
+
+.dashboard .baord_name-text {
+  position: absolute;
+  top: 3px;
+  left: 42px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 44px;
+  line-height: normal;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .btnPrev-wrapper {
+  position: absolute;
+  width: 252px;
+  height: 70px;
+  top: 861px;
+  left: 252px;
+}
+
+.dashboard .btnPage-form {
+  position: relative;
+  width: 250px;
+  height: 70px;
+  background-color: #ff6666;
+  border-radius: 15px;
+}
+
+.dashboard .page-text {
+  position: absolute;
+  width: 219px;
+  top: 14px;
+  left: 15px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 35px;
+  line-height: normal;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .btnNext-wrapper {
+  position: absolute;
+  width: 252px;
+  height: 70px;
+  top: 861px;
+  left: 608px;
+}
+
+.dashboard .personal-wrapper {
+  position: absolute;
+  width: 324px;
+  height: 82px;
+  top: 22px;
+  left: 760px;
+}
+
+.dashboard .private-navigation {
+  position: absolute;
+  width: 323px;
+  height: 55px;
+  top: 27px;
+  left: 0;
+}
+
+.dashboard .personal-form {
+  position: relative;
+  width: 319px;
+  height: 55px;
+  background-color: #ddf2ff;
+  border-radius: 15px;
+}
+
+.dashboard .user_name-text {
+  position: absolute;
+  top: 19px;
+  left: 31px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 18px;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .btnSignout {
+  position: absolute;
+  top: 19px;
+  left: 186px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 18px;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .public-navigation {
+  position: absolute;
+  width: 323px;
+  height: 55px;
+  top: 0;
+  left: 1px;
+}
+
+.dashboard .btnSignup {
+  position: absolute;
+  top: 19px;
+  left: 35px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 18px;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.dashboard .btnSignin {
+  position: absolute;
+  top: 19px;
+  left: 200px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 18px;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}

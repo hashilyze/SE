@@ -1,67 +1,200 @@
-게시판
-<%for(i = 0; i < posts.length; ++i){%>
-<div>
-    <div>
-        <span>pid</span>
-        <span><%=posts[i].pid%></span>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>게시판</title>
+
+  <link rel="stylesheet" href="/stylesheets/board.css" />
+</head>
+
+<body>
+  <div class="dashboard">
+    <!--게시판 네비게이션-->
+    <div class="sidebar-section">
+      <div class="sidebar-wrapper">
+        <!--설계코드-->
+        <div class="sidebar-1">
+          <div class="sidemenu-title">설계코드</div>
+          <a class="sidemenu-option" href="/post/board?format_name=설계코드&category_name=딥러닝">딥러닝</a>
+          <img class="line" src="/images/line-8.svg" />
+          <a class="sidemenu-option" href="/post/board?format_name=설계코드&category_name=프로그래밍 언어">프로그래밍 언어</a>
+          <img class="line" src="/images/line-8.svg" />
+          <a class="sidemenu-option" href="/post/board?format_name=설계코드&category_name=임베디드 소프트웨어">임베디드 소프트웨어</a>
+          <img class="line" src="/images/line-8.svg" />
+          <a class="sidemenu-option" href="/post/board?format_name=설계코드&category_name=머신러닝">머신러닝</a>
+          <img class="line" src="/images/line-8.svg" />
+          <a class="sidemenu-option" href="/post/board?format_name=설계코드&category_name=데이터베이스">데이터베이스</a>
+          <img class="line" src="/images/line-8.svg" />
+          <a class="sidemenu-option" href="/post/board?format_name=설계코드&category_name=알고리즘">알고리즘</a>
+          <img class="line" src="/images/line-8.svg" />
+          <a class="sidemenu-option" href="/post/board?format_name=설계코드&category_name=소프트웨어 공학 및 설계">소프트웨어 공학 및 설계</a>
+        </div>
+
+        <!--설계도-->
+        <div class="sidebar-2">
+          <div class="sidemenu-title">설계도</div>
+          <a class="sidemenu-option" href="/post/board?format_name=설계도&category_name=딥러닝">딥러닝</a>
+          <img class="line" src="/images/line-8.svg" />
+          <a class="sidemenu-option" href="/post/board?format_name=설계도&category_name=프로그래밍 언어">프로그래밍 언어</a>
+          <img class="line" src="/images/line-8.svg" />
+          <a class="sidemenu-option" href="/post/board?format_name=설계도&category_name=임베디드 소프트웨어">임베디드 소프트웨어</a>
+          <img class="line" src="/images/line-8.svg" />
+          <a class="sidemenu-option" href="/post/board?format_name=설계도&category_name=머신러닝">머신러닝</a>
+          <img class="line" src="/images/line-8.svg" />
+          <a class="sidemenu-option" href="/post/board?format_name=설계도&category_name=데이터베이스">데이터베이스</a>
+          <img class="line" src="/images/line-8.svg" />
+          <a class="sidemenu-option" href="/post/board?format_name=설계도&category_name=알고리즘">알고리즘</a>
+          <img class="line" src="/images/line-8.svg" />
+          <a class="sidemenu-option" href="/post/board?format_name=설계도&category_name=소프트웨어 공학 및 설계">소프트웨어 공학 및 설계</a>
+        </div>
+      </div>
     </div>
-    <div>
-        <span>writer</span>
-        <span><%=posts[i].writer%></span>
-    </div>
-    <div>
-        <span>writer_name</span>
-        <span><%=posts[i].writer_name%></span>
-    </div>
-    <div>
-        <span>category</span>
-        <span><%=posts[i].category%></span>
-    </div>
-    <div>
-        <span>category_name</span>
-        <span><%=posts[i].category_name%></span>
-    </div>
-    <div>
-        <span>format</span>
-        <span><%=posts[i].format%></span>
-    </div>
-    <div>
-        <span>format_name</span>
-        <span><%=posts[i].format_name%></span>
-    </div>
-    <div>
-        <span>views</span>
-        <span><%=posts[i].views%></span>
-    </div>
-    <div>
-        <span>likes</span>
-        <span><%=posts[i].likes%></span>
-    </div>
-    <div>
-        <span>downloads</span>
-        <span><%=posts[i].downloads%></span>
-    </div>
-    <div>
-        <span>title</span>
-        <span><%=posts[i].title%></span>
-    </div>
-    <div>
-        <span>price</span>
-        <span><%=posts[i].price%></span>
-    </div>
-    <div>
-        <span>description</span>
-        <span><%=posts[i].description%></span>
-    </div>
-    <div>
-        <%if(posts[i].images){%>
-            <%for(let image of posts[i].images){%>
-                <img src = "/uploads/<%=image%>" width="300px" height="300px">
-            <%}%>
-        <%} else {%>
-            <img src = "/images/no_image.png" width="300px" height="300px">
-        <%}%>
-    </div>
-</div>
-<hr>
-<%}%>
+
+    <!--콘텐츠-->
+    <div class="main-section">
+      <!--헤더-->
+      <div class="header">
+        <!--로고-->
+        <div class="logo-wrapper">
+          <a class="logo-text" href="/">(홈페이지로고)</a>
+        </div>
+
+        <!--게시판 이름-->
+        <div class="board_name-wrapper">
+          <div class="board_name-form">
+            <a class="baord_name-text" href="">게시판 이름</a>
+          </div>
+        </div>
+
+        <!--글쓰기 페이지로 이동-->
+        <div class="btnWrite">
+          <a class="write-text" href="/post/write">글쓰기</a>
+        </div>
+
+        <!--회원 네비게이션-->
+        <div class="personal-wrapper">
+          <div class="private-navigation">
+            <div class="personal-form">
+              <div class="user_name-text">회원이름</div>
+              <a class="btnSignout" href="">로그아웃</a>
+            </div>
+          </div>
+
+          <div class="public-navigation">
+            <div class="personal-form">
+              <a class="btnSignup" href="">회원가입</a>
+              <a class="btnSignin" href="">로그인</a>
+            </div>
+          </div>
+        </div>
+
+      </div> <!--헤더-->
+
+      <!--컬럼-->
+      <div class="column">
+        <!--게시물-1-->
+        <div class="element-1">
+          <div class="views_likes-wrapper">
+            <div class="views-form"></div>
+            <div class="likes-form"></div>
+            <div class="views-text">조회</div>
+            <div class="likes-text">추천</div>
+          </div>
+          <div class="downloads-wrapper">
+            <div class="downloads-text">다운로드</div>
+          </div>
+          <div class="created-wapper">
+            <div class="created-text">게시일</div>
+          </div>
+          <div class="price-wrapper">
+            <div class="price-text">가격</div>
+          </div>
+          <div class="writer-wrapper">
+            <div class="writer-text">작성자</div>
+          </div>
+          <div class="title-wrapper">
+            <div class="title-text"><a href="">제목</a></div>
+          </div>
+          <a class="thumbnail" href="">
+            <img src="https://via.placeholder.com/298x298" width="298" height="298">
+          </a>
+        </div>
+
+        <!--게시물-2-->
+        <div class="element-2">
+          <div class="views_likes-wrapper">
+            <div class="views-form"></div>
+            <div class="likes-form"></div>
+            <div class="views-text">조회</div>
+            <div class="likes-text">추천</div>
+          </div>
+          <div class="downloads-wrapper">
+            <div class="downloads-text">다운로드</div>
+          </div>
+          <div class="created-wapper">
+            <div class="created-text">게시일</div>
+          </div>
+          <div class="price-wrapper">
+            <div class="price-text">가격</div>
+          </div>
+          <div class="writer-wrapper">
+            <div class="writer-text">작성자</div>
+          </div>
+          <div class="title-wrapper">
+            <div class="title-text"><a href="">제목</a></div>
+          </div>
+          <a class="thumbnail" href="">
+            <img src="https://via.placeholder.com/298x298" width="298" height="298">
+          </a>
+        </div>
+
+        <!--게시물-3-->
+        <div class="element-3">
+          <div class="views_likes-wrapper">
+            <div class="views-form"></div>
+            <div class="likes-form"></div>
+            <div class="views-text">조회</div>
+            <div class="likes-text">추천</div>
+          </div>
+          <div class="downloads-wrapper">
+            <div class="downloads-text">다운로드</div>
+          </div>
+          <div class="created-wapper">
+            <div class="created-text">게시일</div>
+          </div>
+          <div class="price-wrapper">
+            <div class="price-text">가격</div>
+          </div>
+          <div class="writer-wrapper">
+            <div class="writer-text">작성자</div>
+          </div>
+          <div class="title-wrapper">
+            <div class="title-text"><a href="">제목</a></div>
+          </div>
+          <a class="thumbnail" href="">
+            <img src="https://via.placeholder.com/298x298" width="298" height="298">
+          </a>
+        </div>
+      </div> <!--컬럼-->
+
+      <!--페이지 네비게이션-->
+      <div class="page-navigation">
+        <div class="btnPrev-wrapper">
+          <div class="btnPage-form">
+            <a class="page-text" href="">이전페이지</a>
+          </div>
+        </div>
+        <div class="btnNext-wrapper">
+          <div class="btnPage-form">
+            <a class="page-text" href="">다음페이지</a>
+          </div>
+        </div>
+      </div>
+
+    </div> <!--콘텐츠-->
+  </div>
+</body>
+
+</html>
