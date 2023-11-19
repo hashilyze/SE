@@ -1,0 +1,23 @@
+<link rel="stylesheet" href="/stylesheets/personalNav.css" />
+<script src="/javascripts/personal.js"></script>
+
+<!--회원 네비게이션-->
+<div class="personal-wrapper">
+  <%if(isPrivate){%>
+  <div class="private-navigation">
+    <div class="personal-form">
+      <div class="user_name-text">
+        <%=user_name%>
+      </div>
+      <a class="btnSignout" href="javascript:void(0);" onclick="onSignout()">로그아웃</a>
+    </div>
+  </div>
+  <%}else{%>
+  <div class="public-navigation">
+    <div class="personal-form">
+      <a class="btnSignup" href="/auth/sign-up">회원가입</a>
+      <a class="btnSignin" href="/auth/sign-in">로그인</a>
+    </div>
+  </div>
+  <%}%>
+</div> <!--회원 네비게이션-->

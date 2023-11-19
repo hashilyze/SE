@@ -7,6 +7,7 @@ const Post = require("../models/Post");
 const controller = require("../controllers/postController");
 const auth = require("../middlewares/auth");
 const nullSafty = require("../middlewares/nullSafty");
+var decorator = require("./renderDecorator");
 // Router
 const router = express.Router();
 
@@ -81,7 +82,8 @@ router.get("/board", async (req, res) => {
     req.session["format_name"] = filter.format_name;
     req.session["category_name"] = filter.category_name;
     let posts = await Post.findAll(filter);
-    res.render("board", { posts: posts });
+    decorator.render(req, res, "board", { posts: posts });
+    // res.render("board", { posts: posts });
 });
 
 

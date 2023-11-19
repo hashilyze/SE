@@ -1,0 +1,87 @@
+.personal-wrapper {
+  position: absolute;
+  width: 324px;
+  height: 82px;
+  top: 22px;
+  left: 760px;
+}
+
+.personal-wrapper .private-navigation {
+  position: absolute;
+  width: 323px;
+  height: 55px;
+  top: 27px;
+  left: 0;
+}
+
+.personal-wrapper .personal-form {
+  position: relative;
+  width: 319px;
+  height: 55px;
+  background-color: #ddf2ff;
+  border-radius: 15px;
+}
+
+.personal-wrapper .user_name-text {
+  position: absolute;
+  top: 19px;
+  left: 31px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 18px;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.personal-wrapper .btnSignout {
+  position: absolute;
+  top: 19px;
+  left: 186px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 18px;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.personal-wrapper .public-navigation {
+  position: absolute;
+  width: 323px;
+  height: 55px;
+  top: 0;
+  left: 1px;
+}
+
+.personal-wrapper .btnSignup {
+  position: absolute;
+  top: 19px;
+  left: 35px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 18px;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.personal-wrapper .btnSignin {
+  position: absolute;
+  top: 19px;
+  left: 200px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 18px;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}

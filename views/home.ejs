@@ -12,101 +12,61 @@
 <body>
   <div class="main-remake">
     <% include ./sidebar.html %>
-    
+
     <!--콘텐츠-->
     <div class="main-section">
       <div class="center-section">
         <!--로고-->
-        <div class="view">
-          <div class="text-wrapper-3"><a href="/">(홈페이지로고)</a></div>
+        <div class="logo-wrapper">
+          <a class="logo-text" href="/">(홈페이지로고)</a>
         </div>
-        <div class="view-2">
-          <div style="text-align: center; font-size: 25px;">Introduction</div>
+        <div class="intro-wrapper">
+          <div class="intro-text">Introduction</div>
         </div>
-
+    
         <!--설계도 추천-->
-        <div class="preview">
+        <div class="recommandation-1">
           <div class="background"></div>
-          <div class="text-wrapper-4">이 달의 설계도 TOP3</div>
-
-          <div id="thumbnail-1">
-            <a id="link-1" href="">
-              <img id="img-1" src="" width="220px" height="246px">
-            </a>
-          </div>
-          <div id="thumbnail-2"><a id="link-2"><img id="img-2" src="" width="220px" height="246px"></a></div>
-          <div id="thumbnail-3"><a id="link-3"><img id="img-3" src="" width="220px" height="246px"></a></div>
-
-          <div id="title-1" class="title">제목1</div>
-          <div id="title-2" class="title">제목2</div>
-          <div id="title-3" class="title">제목3</div>
+          <div class="recommandation-text">이 달의 설계도 TOP3</div>
+    
+          <a id="thumbnail-1" href=""><img id="img-1" src="" width="220px" height="246px"></a>
+          <a id="thumbnail-2" href=""><img id="img-2" src="" width="220px" height="246px"></a>
+          <a id="thumbnail-3" href=""><img id="img-3" src="" width="220px" height="246px"></a>
+    
+          <a id="title-1" class="title-text" href="">제목1</a>
+          <a id="title-2" class="title-text" href="">제목2</a>
+          <a id="title-3" class="title-text" href="">제목3</a>
         </div>
+    
         <!--설계코드 추천-->
-        <div class="preview-2">
-          <div class="background-2"></div>
-          <div class="text-wrapper-5">이 달의 설계코드 TOP3</div>
-
-          <div id="thumbnail-4"><a id="link-4"><img id="img-4" src="" width="220px" height="246px"></a></div>
-          <div id="thumbnail-5"><a id="link-5"><img id="img-5" src="" width="220px" height="246px"></a></div>
-          <div id="thumbnail-6"><a id="link-6"><img id="img-6" src="" width="220px" height="246px"></a></div>
-
-          <div id="title-4" class="title">제목4</div>
-          <div id="title-5" class="title">제목5</div>
-          <div id="title-6" class="title">제목6</div>
+        <div class="recommandation-2">
+          <div class="background"></div>
+          <div class="recommandation-text">이 달의 설계코드 TOP3</div>
+    
+          <a id="thumbnail-4"><img id="img-4" src="" width="220px" height="246px"></a>
+          <a id="thumbnail-5"><img id="img-5" src="" width="220px" height="246px"></a>
+          <a id="thumbnail-6"><img id="img-6" src="" width="220px" height="246px"></a>
+    
+          <a id="title-4" class="title-text" href="">제목4</a>
+          <a id="title-5" class="title-text" href="">제목5</a>
+          <a id="title-6" class="title-text" href="">제목6</a>
         </div>
       </div>
-
+    
       <!--오른쪽 -->
-      <div class="AD-loginsection">
-        <div class="login-space"></div>
+      <div class="right-section">
         <!--광고 -->
+        <div class="login-space"></div>
         <div class="ad"><img src="/images/ad2.png" width="323px" height="402px"></div>
         <div class="ad"><img src="/images/ad3.jpg" width="323px" height="402px"></div>
-
-        <!--로그인 네비게이션-->
-        <%if(isPrivate){%>
-          <%# 로그인 상태%>
-            <div id="privateNav">
-              <div class="loginContainer">
-                <div class="text-wrapper-6">
-                  <%=user_name%>
-                </div>
-                <div class="text-wrapper-7"><a href="javascript:void(0);" onclick="onSignout()">로그아웃</a></div>
-              </div>
-            </div>
-            <%}else{%>
-              <%# 비로그인 상태%>
-                <div id="publicNav">
-                  <div class="loginContainer">
-                    <div id="btnSignup"><a href="/auth/sign-up">회원가입</a></div>
-                    <div id="btnSignin"><a href="/auth/sign-in">로그인</a></div>
-                  </div>
-                </div>
-                <%}%>
       </div>
-
+    
+      <%include ./personalNav.ejs%>
     </div>
   </div>
 </body>
+
 <script>
-  // 로그아웃 이벤트  
-  function onSignout() {
-    let req = {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-    };
-    let url = "/auth/sign-out";
-    fetch(url = "/auth/sign-out", req)
-      .then((response) => response.json())
-      .then(data => {
-        if (data.result == "Success") {
-          alert("로그아웃 되었습니다.");
-          location.reload();
-        } else {
-          alert("로그아웃 실패");
-        }
-      }).catch((err) => console.log(err));
-  }
   // 추천 시스템
   window.onload = function () {
     let req = {
@@ -130,7 +90,8 @@
           } else {
             document.getElementById(`img-${i + 1}`).setAttribute("src", "/images/no_image.png");
           }
-          document.getElementById(`link-${i + 1}`).setAttribute("href", `/post/read/${post.pid}`);
+          document.getElementById(`thumbnail-${i + 1}`).setAttribute("href", `/post/read/${post.pid}`);
+          document.getElementById(`title-${i + 1}`).setAttribute("href", `/post/read/${post.pid}`);
           document.getElementById(`title-${i + 1}`).innerText = post.title;
         }
       }).catch((err) => console.error(err));
@@ -150,7 +111,7 @@
           } else {
             document.getElementById(`img-${i + 4}`).setAttribute("src", "/images/no_image.png");
           }
-          document.getElementById(`link-${i + 4}`).setAttribute("href", `/post/read/${post.pid}`);
+          document.getElementById(`thumbnail-${i + 4}`).setAttribute("href", `/post/read/${post.pid}`);
           document.getElementById(`title-${i + 4}`).innerText = post.title;
         }
       }).catch((err) => console.error(err));

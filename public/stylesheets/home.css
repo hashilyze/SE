@@ -1,457 +1,285 @@
 @import url("./globals.css");
 
 .main-remake {
-    display: flex;
-    min-height: 100vh;
-    align-items: flex-start;
-    justify-content: center;
-    gap: 10px;
-    padding: 10px;
-    position: relative;
-    background-color: #ffffff;
-  }
-  
-  .main-remake .sidebar-section {
-    position: relative;
-    align-self: stretch;
-    width: 318.5px;
-    background-color: #ffffff;
-    overflow: hidden;
-  }
-  
-  .main-remake .overlap-group {
-    position: relative;
-    width: 319px;
-    height: 1004px;
-  }
-  
-  .main-remake .sidebar {
-    top: 502px;
-    background: linear-gradient(
-      180deg,
-      rgb(232.6, 215, 255) 0%,
-      rgba(233, 215, 255, 0.74) 40.62%,
-      rgba(215, 248, 255, 0) 100%
-    );
-    display: flex;
-    flex-direction: column;
-    width: 319px;
-    height: 502px;
-    align-items: center;
-    justify-content: center;
-    gap: 21px;
-    padding: 36px 24px;
-    position: absolute;
-    left: 0;
-  }
-  
-  .main-remake .text-wrapper {
-    position: relative;
-    width: 271px;
-    height: 19.64px;
-    margin-top: -1px;
-    font-family: "Inter-Bold", Helvetica;
-    font-weight: 700;
-    font-size: 45px;
-    line-height: 18px;
-    white-space: nowrap;
-    color: #000000;
-    text-align: center;
-    letter-spacing: 0;
-  }
-  
-  .main-remake .div {
-    position: relative;
-    width: 271px;
-    height: 19.64px;
-    font-family: "Inter-Thin", Helvetica;
-    font-weight: 100;
-    font-size: 26px;
-    line-height: normal;
-    white-space: nowrap;
-    color: #000000;
-    text-align: center;
-    letter-spacing: 0;
-  }
-  
-  .main-remake .line {
-    position: relative;
-    width: 271px;
-    height: 1px;
-    object-fit: cover;
-  }
-  
-  .main-remake .sidebar-r {
-    top: 0;
-    background: linear-gradient(
-      180deg,
-      rgb(215, 248, 255) 0%,
-      rgba(215, 248, 255, 0.84) 52.08%,
-      rgba(215, 248, 255, 0) 100%
-    );
-    display: flex;
-    flex-direction: column;
-    width: 319px;
-    height: 502px;
-    align-items: center;
-    justify-content: center;
-    gap: 21px;
-    padding: 36px 24px;
-    position: absolute;
-    left: 0;
-  }
-  
-  .main-remake .text-wrapper-2 {
-    position: relative;
-    width: 271px;
-    height: 19.64px;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    font-size: 26px;
-    line-height: normal;
-    white-space: nowrap;
-    color: #000000;
-    text-align: center;
-    letter-spacing: 0;
-  }
-  
-  .main-remake .main-section {
-    display: flex;
-    width: 1108.5px;
-    height: 983.68px;
-    align-items: center;
-    justify-content: center;
-    gap: 6px;
-    position: relative;
-    border: 1px solid;
-    border-color: #00000080;
-  }
-  
-  .main-remake .center-section {
-    display: flex;
-    flex-direction: column;
-    width: 729.5px;
-    height: 983.68px;
-    align-items: center;
-    gap: 30px;
-    padding: 12px 11px;
-    position: relative;
-    background-color: #fff7f7;
-    border: 1px solid;
-    border-color: #ff7c7c;
-  }
-  
-  .main-remake .view {
-    display: inline-flex;
-    flex-direction: column;
-    height: 101px;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 24px 92px;
-    position: relative;
-    background-color: #d9d9d9;
-  }
-  
-  .main-remake .text-wrapper-3 {
-    position: relative;
-    width: fit-content;
-    margin-top: -1px;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    font-size: 44px;
-    line-height: normal;
-    color: #000000;
-    text-align: center;
-    letter-spacing: 0;
-  }
-  
-  .main-remake .view-2 {
-    width: 411px;
-    height: 31px;
-    position: relative;
-    background-color: #d9d9d9;
-  }
-  
-  .main-remake .preview {
-    width: 707.5px;
-    height: 370.25px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    position: relative;
-  }
-  
-  .main-remake .background {
-    position: relative;
-    flex: 1;
-    align-self: stretch;
-    width: 100%;
-    flex-grow: 1;
-    background-color: #fff7e9;
-  }
-  
-  .main-remake .text-wrapper-4 {
-    width: 283px;
-    top: 21px;
-    position: absolute;
-    left: 18px;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    color: #000000;
-    font-size: 28px;
-    text-align: center;
-    letter-spacing: 0;
-    line-height: normal;
-    white-space: nowrap;
-  }
-  
-  .main-remake #thumbnail-1 {
-    position: absolute;
-    width: 220px;
-    height: 246px;
-    top: 60px;
-    left: 15px;
-    background-color: #d9d9d9;
-  }
-  
-  .main-remake #thumbnail-2 {
-    position: absolute;
-    width: 220px;
-    height: 246px;
-    top: 60px;
-    left: 244px;
-    background-color: #d9d9d9;
-  }
-  
-  .main-remake #thumbnail-3 {
-    position: absolute;
-    width: 220px;
-    height: 246px;
-    top: 60px;
-    left: 474px;
-    background-color: #d9d9d9;
-  }
-  
-  .main-remake #title-1 {
-    top: 313px;
-    position: absolute;
-    width: 220px;
-    height: 40px;
-    left: 16px;
-    background-color: #d9d9d9;
-  }
-  
-  .main-remake #title-2 {
-    top: 313px;
-    position: absolute;
-    width: 220px;
-    height: 40px;
-    left: 244px;
-    background-color: #d9d9d9;
-  }
-  
-  .main-remake #title-3 {
-    top: 313px;
-    position: absolute;
-    width: 220px;
-    height: 40px;
-    left: 474px;
-    background-color: #d9d9d9;
-  }
-  .main-remake .title {
-    text-align: center;
-    line-height: 35px;
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
-  
-  .main-remake .preview-2 {
-    height: 367.43px;
-    align-self: stretch;
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    position: relative;
-  }
-  
-  .main-remake .text-wrapper-5 {
-    width: 294px;
-    top: 14px;
-    position: absolute;
-    left: 18px;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    color: #000000;
-    font-size: 28px;
-    text-align: center;
-    letter-spacing: 0;
-    line-height: normal;
-    white-space: nowrap;
-  }
-  
-  .main-remake #thumbnail-4 {
-    position: absolute;
-    width: 220px;
-    height: 246px;
-    top: 62px;
-    left: 15px;
-    background-color: #d9d9d9;
-  }
-  
-  .main-remake #thumbnail-5 {
-    position: absolute;
-    width: 220px;
-    height: 246px;
-    top: 62px;
-    left: 244px;
-    background-color: #d9d9d9;
-  }
-  
-  .main-remake #thumbnail-6 {
-    position: absolute;
-    width: 220px;
-    height: 246px;
-    top: 62px;
-    left: 474px;
-    background-color: #d9d9d9;
-  }
-  
-  .main-remake #title-4 {
-    top: 315px;
-    position: absolute;
-    width: 220px;
-    height: 40px;
-    left: 16px;
-    background-color: #d9d9d9;
-  }
-  
-  .main-remake #title-5 {
-    top: 315px;
-    position: absolute;
-    width: 220px;
-    height: 40px;
-    left: 244px;
-    background-color: #d9d9d9;
-  }
-  
-  .main-remake #title-6 {
-    top: 315px;
-    position: absolute;
-    width: 220px;
-    height: 40px;
-    left: 474px;
-    background-color: #d9d9d9;
-  }
-  
-  .main-remake .AD-loginsection {
-    display: flex;
-    flex-direction: column;
-    width: 373px;
-    align-items: center;
-    gap: 32px;
-    padding: 22px 25px;
-    position: relative;
-    align-self: stretch;
-    background-color: #f7fffc;
-  }
-  
-  .main-remake .login-space {
-    position: relative;
-    align-self: stretch;
-    width: 100%;
-    height: 72px;
-  }
-  
-  .main-remake .ad {
-    position: relative;
-    flex: 1;
-    align-self: stretch;
-    width: 100%;
-    flex-grow: 1;
-    background-color: #d9d9d9;
-  }
-  
-  .main-remake #privateNav {
-    top: 49px;
-    left: 25px;
-    position: absolute;
-    width: 323px;
-    height: 55px;
-  }
-  
-  .main-remake .loginContainer {
-    position: relative;
-    width: 319px;
-    height: 55px;
-    background-color: #ddf2ff;
-    border-radius: 15px;
-  }
-  
-  .main-remake .text-wrapper-6 {
-    position: absolute;
-    top: 19px;
-    left: 31px;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 18px;
-    white-space: nowrap;
-    color: #000000;
-    text-align: center;
-    letter-spacing: 0;
-  }
-  
-  .main-remake .text-wrapper-7 {
-    position: absolute;
-    top: 19px;
-    left: 186px;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 18px;
-    white-space: nowrap;
-    color: #000000;
-    text-align: center;
-    letter-spacing: 0;
-  }
-  
-  .main-remake #publicNav {
-    top: 22px;
-    left: 26px;
-    position: absolute;
-    width: 323px;
-    height: 55px;
-  }
-  
-  .main-remake #btnSignup {
-    position: absolute;
-    top: 19px;
-    left: 35px;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 18px;
-    white-space: nowrap;
-    color: #000000;
-    text-align: center;
-    letter-spacing: 0;
-  }
-  
-  .main-remake #btnSignin {
-    position: absolute;
-    top: 19px;
-    left: 200px;
-    font-family: "Inter-Regular", Helvetica;
-    font-weight: 400;
-    font-size: 30px;
-    line-height: 18px;
-    white-space: nowrap;
-    color: #000000;
-    text-align: center;
-    letter-spacing: 0;
-  }
+  display: flex;
+  min-height: 100vh;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 10px;
+  padding: 10px;
+  position: relative;
+  background-color: #ffffff;
+}
+
+.main-remake .div {
+  position: relative;
+  width: 271px;
+  height: 19.64px;
+  font-family: "Inter-Thin", Helvetica;
+  font-weight: 100;
+  font-size: 26px;
+  line-height: normal;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.main-remake .main-section {
+  display: flex;
+  width: 1108.5px;
+  height: 983.68px;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  position: relative;
+  border: 1px solid;
+  border-color: #00000080;
+}
+
+.main-remake .center-section {
+  display: flex;
+  flex-direction: column;
+  width: 729.5px;
+  height: 983.68px;
+  align-items: center;
+  gap: 30px;
+  padding: 12px 11px;
+  position: relative;
+  background-color: #fff7f7;
+  border: 1px solid;
+  border-color: #ff7c7c;
+}
+
+.main-remake .logo-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  height: 101px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px 92px;
+  position: relative;
+  background-color: #d9d9d9;
+}
+
+.main-remake .logo-text {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 44px;
+  line-height: normal;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.main-remake .intro-wrapper {
+  width: 411px;
+  height: 31px;
+  position: relative;
+  background-color: #d9d9d9;
+}
+
+.main-remake .intro-text {
+  position: relative;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 25px;
+  line-height: normal;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.main-remake .recommandation-1 {
+  width: 707.5px;
+  height: 370.25px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.main-remake .background {
+  position: relative;
+  flex: 1;
+  align-self: stretch;
+  width: 100%;
+  flex-grow: 1;
+  background-color: #fff7e9;
+}
+
+.main-remake .recommandation-text {
+  width: 283px;
+  top: 21px;
+  position: absolute;
+  left: 18px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 28px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+  white-space: nowrap;
+}
+
+.main-remake #thumbnail-1 {
+  position: absolute;
+  width: 220px;
+  height: 246px;
+  top: 60px;
+  left: 15px;
+  background-color: #d9d9d9;
+}
+
+.main-remake #thumbnail-2 {
+  position: absolute;
+  width: 220px;
+  height: 246px;
+  top: 60px;
+  left: 244px;
+  background-color: #d9d9d9;
+}
+
+.main-remake #thumbnail-3 {
+  position: absolute;
+  width: 220px;
+  height: 246px;
+  top: 60px;
+  left: 474px;
+  background-color: #d9d9d9;
+}
+
+.main-remake #title-1 {
+  top: 313px;
+  position: absolute;
+  width: 220px;
+  height: 40px;
+  left: 16px;
+  background-color: #d9d9d9;
+}
+
+.main-remake #title-2 {
+  top: 313px;
+  position: absolute;
+  width: 220px;
+  height: 40px;
+  left: 244px;
+  background-color: #d9d9d9;
+}
+
+.main-remake #title-3 {
+  top: 313px;
+  position: absolute;
+  width: 220px;
+  height: 40px;
+  left: 474px;
+  background-color: #d9d9d9;
+}
+
+.main-remake .title-text {
+  text-align: center;
+  line-height: 35px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color:#000000;
+}
+
+.main-remake .recommandation-2 {
+  height: 367.43px;
+  align-self: stretch;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  position: relative;
+}
+
+.main-remake #thumbnail-4 {
+  position: absolute;
+  width: 220px;
+  height: 246px;
+  top: 62px;
+  left: 15px;
+  background-color: #d9d9d9;
+}
+
+.main-remake #thumbnail-5 {
+  position: absolute;
+  width: 220px;
+  height: 246px;
+  top: 62px;
+  left: 244px;
+  background-color: #d9d9d9;
+}
+
+.main-remake #thumbnail-6 {
+  position: absolute;
+  width: 220px;
+  height: 246px;
+  top: 62px;
+  left: 474px;
+  background-color: #d9d9d9;
+}
+
+.main-remake #title-4 {
+  top: 315px;
+  position: absolute;
+  width: 220px;
+  height: 40px;
+  left: 16px;
+  background-color: #d9d9d9;
+}
+
+.main-remake #title-5 {
+  top: 315px;
+  position: absolute;
+  width: 220px;
+  height: 40px;
+  left: 244px;
+  background-color: #d9d9d9;
+}
+
+.main-remake #title-6 {
+  top: 315px;
+  position: absolute;
+  width: 220px;
+  height: 40px;
+  left: 474px;
+  background-color: #d9d9d9;
+}
+
+.main-remake .right-section {
+  display: flex;
+  flex-direction: column;
+  width: 373px;
+  align-items: center;
+  gap: 32px;
+  padding: 22px 25px;
+  position: relative;
+  align-self: stretch;
+  background-color: #f7fffc;
+}
+
+.main-remake .login-space {
+  position: relative;
+  align-self: stretch;
+  width: 100%;
+  height: 72px;
+}
+
+.main-remake .ad {
+  position: relative;
+  flex: 1;
+  align-self: stretch;
+  width: 100%;
+  flex-grow: 1;
+  background-color: #d9d9d9;
+}
