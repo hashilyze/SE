@@ -1,55 +1,22 @@
-게시물 수정
-<div>
-    <div>
-        <span>pid</span>
-        <span><%=post.pid%></span>
-    </div>
-    <div>
-        <span>writer</span>
-        <span><%=post.writer%></span>
-    </div>
-    <div>
-        <span>writer_name</span>
-        <span><%=post.writer_name%></span>
-    </div>
-    <div>
-        <span>category</span>
-        <span><%=post.category%></span>
-    </div>
-    <div>
-        <span>category_name</span>
-        <span><%=post.category_name%></span>
-    </div>
-    <div>
-        <span>format</span>
-        <span><%=post.format%></span>
-    </div>
-    <div>
-        <span>format_name</span>
-        <span><%=post.format_name%></span>
-    </div>
-    <div>
-        <span>views</span>
-        <span><%=post.views%></span>
-    </div>
-    <div>
-        <span>likes</span>
-        <span><%=post.likes%></span>
-    </div>
-    <div>
-        <span>downloads</span>
-        <span><%=post.downloads%></span>
-    </div>
-    <div>
-        <span>title</span>
-        <span><%=post.title%></span>
-    </div>
-    <div>
-        <span>price</span>
-        <span><%=post.price%></span>
-    </div>
-    <div>
-        <span>description</span>
-        <span><%=post.description%></span>
-    </div>
-</div>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <input type="text" id="title" placeholder="제목" value="<%=post.title%>"/> <br><br>
+    <input type="number" id="price"  placeholder="가격" value="<%=post.price%>"/> <br><br>
+    <textarea id="description" placeholder="내용"><%=post.description%></textarea> <br><br>
+    <%if(post.images && post.images.length > 0){%>
+        <%for(let i = 0; i < post.images.length; ++i){%>
+            <img src="/uploads/<%=post.images[i]%>" width="50px" height="50px">
+        <%}%>
+        <br><br>
+    <%}%>
+    <input type="file" id="image" accept="images/*" multiple/> <br><br>
+    <input type="button" onclick="onRegister('PUT')" value="등록">
+</body>
+<script src="/javascripts/post.js"></script>
+</html>

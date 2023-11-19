@@ -10,40 +10,7 @@
     <input type="number" id="price"  placeholder="가격"/> <br><br>
     <textarea id="description" placeholder="내용"></textarea> <br><br>
     <input type="file" id="image" accept="images/*" multiple/> <br><br>
-    <input type="button" onclick="onSubmit()" value="등록">
+    <input type="button" onclick="onRegister('POST')" value="등록">
 </body>
-<script>
-    function onSubmit(){
-        let title = document.getElementById("title").value;
-        let price = document.getElementById("price").value;
-        if(isNaN(price)) price = 0; else price = parseInt(price);
-        let description = document.getElementById("description").value;
-        let files = document.getElementById("image").files;
-
-        let formData = new FormData();
-        formData.append("title", title);
-        formData.append("price", price);
-        formData.append("description", description);
-        for(let file of files){
-            formData.append("images", file);
-        }
-
-        let req = {
-            method:"POST",
-            headers:{ },
-            body: formData
-        }
-        fetch("/post", req)
-        .then(response => response.json())
-        .then(json => {
-            if(json.result == "Success"){
-                alert("등록 성공");
-                location.href=`/post/read/${json.pid}`
-            } else{
-                alert("등록 실패");
-            }
-        }).catch(err => console.log(err));
-    }
-    
-</script>
+<script src="/javascripts/post.js"></script>
 </html>
