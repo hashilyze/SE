@@ -82,8 +82,28 @@ router.get("/board", async (req, res) => {
     req.session["format_name"] = filter.format_name;
     req.session["category_name"] = filter.category_name;
     let posts = await Post.findAll(filter);
-    decorator.render(req, res, "board", { posts: posts });
-    // res.render("board", { posts: posts });
+
+    const today = new Date();
+    const year = today.getFullYear(); // 2023
+    const month = (today.getMonth() + 1).toString().padStart(2, '0'); // 06
+    const day = today.getDate().toString().padStart(2, '0'); // 18
+    const dateString = year + '-' + month + '-' + day; // 2023-06-18
+    
+    posts.map((val, idx) => {
+        if(val.created_at.substring(0, 10) == dateString){
+            posts[idx].simpleCreated_at = val.created_at.substring(11, 19);
+        } else{
+            posts[idx].simpleCreated_at = val.created_at.substring(0, 10);
+        }
+    });
+
+    decorator.render(req, res, "board", { 
+        posts: posts, 
+        category_name: filter.category_name, 
+        format_name: filter.format_name,
+        offset: filter.offset || 0,
+        limit: filter.limit || 3,
+    });
 });
 
 

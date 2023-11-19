@@ -25,117 +25,79 @@
         <!--게시판 이름-->
         <div class="board_name-wrapper">
           <div class="board_name-form">
-            <a class="baord_name-text" href="">게시판 이름</a>
+            <a class="baord_name-text" href="/post/board?format_name=<%=format_name%>&category_name=<%=category_name%>">
+              <%if(category_name)%> <%=category_name%>
+            </a>
           </div>
         </div>
 
+        <%if(isPrivate){%>
         <!--글쓰기 페이지로 이동-->
         <div class="btnWrite">
           <a class="write-text" href="/post/write">글쓰기</a>
         </div>
+        <%}%>
 
         <%include personalNav.ejs%>
       </div> <!--헤더-->
 
       <!--컬럼-->
       <div class="column">
-        <!--게시물-1-->
-        <div class="element-1">
+        <%for(i = 1; i <= Math.min(3, posts.length); ++i){%>
+          <%let post = posts[i - 1];%>
+        <!--게시물-<%=i%>-->
+        <div class="element-<%=i%>">
           <div class="views_likes-wrapper">
-            <div class="views-form"></div>
-            <div class="likes-form"></div>
-            <div class="views-text">조회</div>
-            <div class="likes-text">추천</div>
+            <div class="views-form">
+              <div class="views-text"><%=post.views%></div>
+            </div>
+            <div class="likes-form">
+              <div class="likes-text"><%=post.likes%></div>
+            </div>
           </div>
           <div class="downloads-wrapper">
-            <div class="downloads-text">다운로드</div>
+            <div class="downloads-text"><%=post.downloads%></div>
           </div>
           <div class="created-wapper">
-            <div class="created-text">게시일</div>
+            <div class="created-text"><%=post.simpleCreated_at%></div>
           </div>
           <div class="price-wrapper">
-            <div class="price-text">가격</div>
+            <div class="price-text">￦ <%=post.price%></div>
           </div>
           <div class="writer-wrapper">
-            <div class="writer-text">작성자</div>
+            <div class="writer-text"><%=post.writer%></div>
           </div>
           <div class="title-wrapper">
-            <div class="title-text"><a href="">제목</a></div>
+            <div class="title-text"><a href="/post/read/<%=post.pid%>"><%=post.title%></a></div>
           </div>
-          <a class="thumbnail" href="">
-            <img src="https://via.placeholder.com/298x298" width="298" height="298">
+          <a class="thumbnail" href="/post/read/<%=post.pid%>">
+            <%if(post.images && post.images.length > 0){%>
+              <img src="/uploads/<%=post.images[0]%>" width="298" height="298">
+            <%} else {%>
+              <img src="/images/no_image.png" width="298" height="298">
+            <%}%>
           </a>
         </div>
-
-        <!--게시물-2-->
-        <div class="element-2">
-          <div class="views_likes-wrapper">
-            <div class="views-form"></div>
-            <div class="likes-form"></div>
-            <div class="views-text">조회</div>
-            <div class="likes-text">추천</div>
-          </div>
-          <div class="downloads-wrapper">
-            <div class="downloads-text">다운로드</div>
-          </div>
-          <div class="created-wapper">
-            <div class="created-text">게시일</div>
-          </div>
-          <div class="price-wrapper">
-            <div class="price-text">가격</div>
-          </div>
-          <div class="writer-wrapper">
-            <div class="writer-text">작성자</div>
-          </div>
-          <div class="title-wrapper">
-            <div class="title-text"><a href="">제목</a></div>
-          </div>
-          <a class="thumbnail" href="">
-            <img src="https://via.placeholder.com/298x298" width="298" height="298">
-          </a>
-        </div>
-
-        <!--게시물-3-->
-        <div class="element-3">
-          <div class="views_likes-wrapper">
-            <div class="views-form"></div>
-            <div class="likes-form"></div>
-            <div class="views-text">조회</div>
-            <div class="likes-text">추천</div>
-          </div>
-          <div class="downloads-wrapper">
-            <div class="downloads-text">다운로드</div>
-          </div>
-          <div class="created-wapper">
-            <div class="created-text">게시일</div>
-          </div>
-          <div class="price-wrapper">
-            <div class="price-text">가격</div>
-          </div>
-          <div class="writer-wrapper">
-            <div class="writer-text">작성자</div>
-          </div>
-          <div class="title-wrapper">
-            <div class="title-text"><a href="">제목</a></div>
-          </div>
-          <a class="thumbnail" href="">
-            <img src="https://via.placeholder.com/298x298" width="298" height="298">
-          </a>
-        </div>
+        <%}%>
       </div> <!--컬럼-->
 
       <!--페이지 네비게이션-->
       <div class="page-navigation">
+        <%let unit = 3;%>
+        <%if(offset >= unit){%>
         <div class="btnPrev-wrapper">
           <div class="btnPage-form">
-            <a class="page-text" href="">이전페이지</a>
+            <a class="page-text" href="/post/board?format_name=<%=format_name%>&category_name=<%=category_name%>&limit=<%=unit+1%>&offset=<%=offset - unit%>">이전페이지</a>
           </div>
         </div>
+        <%}%>
+        <%if(posts && posts.length > unit){%>
         <div class="btnNext-wrapper">
           <div class="btnPage-form">
-            <a class="page-text" href="">다음페이지</a>
+            <a class="page-text" href="/post/board?format_name=<%=format_name%>&category_name=<%=category_name%>&limit=<%=unit+1%>&offset=<%=offset + unit%>">다음페이지</a>
           </div>
         </div>
+        <%}%>
       </div>
 
     </div> <!--콘텐츠-->

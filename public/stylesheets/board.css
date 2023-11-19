@@ -128,7 +128,8 @@
 .dashboard .views-text {
   position: absolute;
   top: 11px;
-  left: 26px;
+  width: inherit;
+  height: inherit;
   font-family: "Inter-Regular", Helvetica;
   font-weight: 400;
   font-size: 23px;
@@ -136,12 +137,16 @@
   color: #000000;
   text-align: center;
   letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dashboard .likes-text {
   position: absolute;
   top: 11px;
-  left: 114px;
+  width: inherit;
+  height: inherit;
   font-family: "Inter-Regular", Helvetica;
   font-weight: 400;
   font-size: 23px;
@@ -149,6 +154,9 @@
   color: #000000;
   text-align: center;
   letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dashboard .downloads-wrapper {
@@ -165,7 +173,8 @@
 .dashboard .downloads-text {
   position: absolute;
   top: 10px;
-  left: 20px;
+  width: inherit;
+  height: inherit;
   font-family: "Inter-Regular", Helvetica;
   font-weight: 400;
   font-size: 23px;
@@ -173,6 +182,9 @@
   color: #000000;
   text-align: center;
   letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dashboard .created-wapper {
@@ -189,7 +201,8 @@
 .dashboard .created-text {
   position: absolute;
   top: 10px;
-  left: 118px;
+  width: inherit;
+  height: inherit;
   font-family: "Inter-Regular", Helvetica;
   font-weight: 400;
   font-size: 23px;
@@ -197,6 +210,9 @@
   color: #000000;
   text-align: center;
   letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dashboard .price-wrapper {
@@ -213,7 +229,8 @@
 .dashboard .price-text {
   position: absolute;
   top: 13px;
-  left: 55px;
+  width: inherit;
+  height: inherit;
   font-family: "Inter-Regular", Helvetica;
   font-weight: 400;
   font-size: 23px;
@@ -221,6 +238,9 @@
   color: #000000;
   text-align: center;
   letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dashboard .writer-wrapper {
@@ -237,7 +257,8 @@
 .dashboard .writer-text {
   position: absolute;
   top: 13px;
-  left: 43px;
+  width: inherit;
+  height: inherit;
   font-family: "Inter-Regular", Helvetica;
   font-weight: 400;
   font-size: 23px;
@@ -245,6 +266,9 @@
   color: #000000;
   text-align: center;
   letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dashboard .title-wrapper {
@@ -261,7 +285,8 @@
 .dashboard .title-text {
   position: absolute;
   top: 10px;
-  left: 130px;
+  width: inherit;
+  height: inherit;
   font-family: "Inter-Regular", Helvetica;
   font-weight: 400;
   font-size: 23px;
@@ -269,6 +294,9 @@
   color: #000000;
   text-align: center;
   letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dashboard .thumbnail {
@@ -315,15 +343,19 @@
 
 .dashboard .baord_name-text {
   position: absolute;
-  top: 3px;
-  left: 42px;
+  top: 10px;
+  width: inherit;
+  height: inherit;
   font-family: "Inter-Regular", Helvetica;
   font-weight: 400;
-  font-size: 44px;
+  font-size: 25px;
   line-height: normal;
   color: #000000;
   text-align: center;
   letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dashboard .btnPrev-wrapper {

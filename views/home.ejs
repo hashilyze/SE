@@ -112,6 +112,7 @@
             document.getElementById(`img-${i + 4}`).setAttribute("src", "/images/no_image.png");
           }
           document.getElementById(`thumbnail-${i + 4}`).setAttribute("href", `/post/read/${post.pid}`);
+          document.getElementById(`title-${i + 4}`).setAttribute("href", `/post/read/${post.pid}`);
           document.getElementById(`title-${i + 4}`).innerText = post.title;
         }
       }).catch((err) => console.error(err));
