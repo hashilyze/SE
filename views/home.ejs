@@ -5,54 +5,13 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>홈페이지</title>
-  <link rel="stylesheet" href="/stylesheets/home/home.css" />
+
+  <link rel="stylesheet" href="/stylesheets/home.css" />
 </head>
 
 <body>
   <div class="main-remake">
-    <!--메뉴-->
-    <div class="sidebar-section">
-      <div class="overlap-group">
-        <!--설계코드 메뉴-->
-        <div class="sidebar">
-          <div class="text-wrapper">설계코드</div>
-          <div class="text-wrapper-2"><a href="/post/board?format_name=설계코드&category_name=딥러닝">딥러닝</a></div>
-          <img class="line" src="/images/line-8.svg" />
-          <div class="text-wrapper-2"><a href="/post/board?format_name=설계코드&category_name=프로그래밍 언어">프로그래밍 언어</a></div>
-          <img class="line" src="/images/line-8.svg" />
-          <div class="text-wrapper-2"><a href="/post/board?format_name=설계코드&category_name=임베디드 소프트웨어">임베디드 소프트웨어</a>
-          </div>
-          <img class="line" src="/images/line-8.svg" />
-          <div class="text-wrapper-2"><a href="/post/board?format_name=설계코드&category_name=머신러닝">머신러닝</a></div>
-          <img class="line" src="/images/line-8.svg" />
-          <div class="text-wrapper-2"><a href="/post/board?format_name=설계코드&category_name=데이터베이스">데이터베이스</a></div>
-          <img class="line" src="/images/line-8.svg" />
-          <div class="text-wrapper-2"><a href="/post/board?format_name=설계코드&category_name=알고리즘">알고리즘</a></div>
-          <img class="line" src="/images/line-8.svg" />
-          <div class="text-wrapper-2"><a href="/post/board?format_name=설계코드&category_name=소프트웨어 공학 및 설계">소프트웨어 공학 및
-              설계</a></div>
-        </div>
-        <!--설계도 메뉴-->
-        <div class="sidebar-r">
-          <div class="text-wrapper">설계도</div>
-          <div class="text-wrapper-2"><a href="/post/board?format_name=설계도&category_name=딥러닝">딥러닝</a></div>
-          <img class="line" src="/images/line-8.svg" />
-          <div class="text-wrapper-2"><a href="/post/board?format_name=설계도&category_name=프로그래밍 언어">프로그래밍 언어</a></div>
-          <img class="line" src="/images/line-8.svg" />
-          <div class="text-wrapper-2"><a href="/post/board?format_name=설계도&category_name=임베디드 소프트웨어">임베디드 소프트웨어</a>
-          </div>
-          <img class="line" src="/images/line-8.svg" />
-          <div class="text-wrapper-2"><a href="/post/board?format_name=설계도&category_name=머신러닝">머신러닝</a></div>
-          <img class="line" src="/images/line-8.svg" />
-          <div class="text-wrapper-2"><a href="/post/board?format_name=설계도&category_name=데이터베이스">데이터베이스</a></div>
-          <img class="line" src="/images/line-8.svg" />
-          <div class="text-wrapper-2"><a href="/post/board?format_name=설계도&category_name=알고리즘">알고리즘</a></div>
-          <img class="line" src="/images/line-8.svg" />
-          <div class="text-wrapper-2"><a href="/post/board?format_name=설계도&category_name=소프트웨어 공학 및 설계">소프트웨어 공학 및
-              설계</a></div>
-        </div>
-      </div>
-    </div>
+    <% include ./sidebar.html %>
     
     <!--콘텐츠-->
     <div class="main-section">
