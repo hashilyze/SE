@@ -125,24 +125,7 @@
   border-color: #000000;
 }
 
-.dashboard .views-text {
-  position: absolute;
-  top: 11px;
-  width: inherit;
-  height: inherit;
-  font-family: "Inter-Regular", Helvetica;
-  font-weight: 400;
-  font-size: 23px;
-  line-height: normal;
-  color: #000000;
-  text-align: center;
-  letter-spacing: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
-.dashboard .likes-text {
+.dashboard .text-wrapper {
   position: absolute;
   top: 11px;
   width: inherit;
@@ -170,23 +153,6 @@
   border-color: #000000;
 }
 
-.dashboard .downloads-text {
-  position: absolute;
-  top: 10px;
-  width: inherit;
-  height: inherit;
-  font-family: "Inter-Regular", Helvetica;
-  font-weight: 400;
-  font-size: 23px;
-  line-height: normal;
-  color: #000000;
-  text-align: center;
-  letter-spacing: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .dashboard .created-wapper {
   position: absolute;
   width: 300px;
@@ -196,23 +162,6 @@
   background-color: #ffb1b1;
   border: 1px solid;
   border-color: #000000;
-}
-
-.dashboard .created-text {
-  position: absolute;
-  top: 10px;
-  width: inherit;
-  height: inherit;
-  font-family: "Inter-Regular", Helvetica;
-  font-weight: 400;
-  font-size: 23px;
-  line-height: normal;
-  color: #000000;
-  text-align: center;
-  letter-spacing: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .dashboard .price-wrapper {
@@ -225,24 +174,6 @@
   border: 1px solid;
   border-color: #000000;
 }
-
-.dashboard .price-text {
-  position: absolute;
-  top: 13px;
-  width: inherit;
-  height: inherit;
-  font-family: "Inter-Regular", Helvetica;
-  font-weight: 400;
-  font-size: 23px;
-  line-height: normal;
-  color: #000000;
-  text-align: center;
-  letter-spacing: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .dashboard .writer-wrapper {
   position: absolute;
   width: 150px;
@@ -254,23 +185,6 @@
   border-color: #000000;
 }
 
-.dashboard .writer-text {
-  position: absolute;
-  top: 13px;
-  width: inherit;
-  height: inherit;
-  font-family: "Inter-Regular", Helvetica;
-  font-weight: 400;
-  font-size: 23px;
-  line-height: normal;
-  color: #000000;
-  text-align: center;
-  letter-spacing: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .dashboard .title-wrapper {
   position: absolute;
   width: 300px;
@@ -280,23 +194,6 @@
   background-color: #ffb1b1;
   border: 1px solid;
   border-color: #000000;
-}
-
-.dashboard .title-text {
-  position: absolute;
-  top: 10px;
-  width: inherit;
-  height: inherit;
-  font-family: "Inter-Regular", Helvetica;
-  font-weight: 400;
-  font-size: 23px;
-  line-height: normal;
-  color: #000000;
-  text-align: center;
-  letter-spacing: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
 }
 
 .dashboard .thumbnail {

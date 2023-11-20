@@ -23,8 +23,8 @@
         </div>
 
         <% include ./board_title.ejs%>
+
         <%if(isPrivate){%>
-          
         <!--글쓰기 페이지로 이동-->
         <div class="btnWrite">
           <a class="write-text" href="/post/write">글쓰기</a>
@@ -39,30 +39,38 @@
         <%for(i = 1; i <= Math.min(3, posts.length); ++i){%>
           <%let post = posts[i - 1];%>
         <!--게시물-<%=i%>-->
-        <div class="element-<%=i%>">
+        <div class="element-<%=i%>">          
           <div class="views_likes-wrapper">
+            <!--조회수-->
             <div class="views-form">
-              <div class="views-text"><%=post.views%></div>
+              <div class="text-wrapper"><%=post.views%></div>
             </div>
+            <!--추천수-->
             <div class="likes-form">
-              <div class="likes-text"><%=post.likes%></div>
+              <div class="text-wrapper"><%=post.likes%></div>
             </div>
           </div>
+          <!--다운로드수-->
           <div class="downloads-wrapper">
-            <div class="downloads-text"><%=post.downloads%></div>
+            <div class="text-wrapper"><%=post.downloads%></div>
           </div>
+          <!--게시일-->
           <div class="created-wapper">
-            <div class="created-text"><%=post.simpleCreated_at%></div>
+            <div class="text-wrapper"><%=post.simpleCreated_at%></div>
           </div>
+          <!--가격-->
           <div class="price-wrapper">
-            <div class="price-text">￦ <%=post.price%></div>
+            <div class="text-wrapper">￦ <%=post.price%></div>
           </div>
+          <!--작성자-->
           <div class="writer-wrapper">
-            <div class="writer-text"><%=post.writer%></div>
+            <div class="text-wrapper"><%=post.writer_name%></div>
           </div>
+          <!--제목-->
           <div class="title-wrapper">
-            <div class="title-text"><a href="/post/read/<%=post.pid%>"><%=post.title%></a></div>
+            <div class="text-wrapper"><a href="/post/read/<%=post.pid%>"><%=post.title%></a></div>
           </div>
+
           <a class="thumbnail" href="/post/read/<%=post.pid%>">
             <%if(post.images && post.images.length > 0){%>
               <img src="/uploads/<%=post.images[0]%>" width="298" height="298">
@@ -78,20 +86,26 @@
       <div class="page-navigation">
         <%let unit = 3;%>
         <%if(offset >= unit){%>
+        <!--이전 페이지로 이동-->
         <div class="btnPrev-wrapper">
           <div class="btnPage-form">
-            <a class="page-text" href="/post/board?format_name=<%=format_name%>&category_name=<%=category_name%>&limit=<%=unit+1%>&offset=<%=offset - unit%>">이전페이지</a>
+            <a class="page-text" href="/post/board?format_name=<%=format_name%>&category_name=<%=category_name%>&limit=<%=unit+1%>&offset=<%=offset - unit%>">
+              이전페이지
+            </a>
           </div>
         </div>
         <%}%>
         <%if(posts && posts.length > unit){%>
+        <!--다음 페이지로 이동-->
         <div class="btnNext-wrapper">
           <div class="btnPage-form">
-            <a class="page-text" href="/post/board?format_name=<%=format_name%>&category_name=<%=category_name%>&limit=<%=unit+1%>&offset=<%=offset + unit%>">다음페이지</a>
+            <a class="page-text" href="/post/board?format_name=<%=format_name%>&category_name=<%=category_name%>&limit=<%=unit+1%>&offset=<%=offset + unit%>">
+              다음페이지
+            </a>
           </div>
         </div>
         <%}%>
-      </div>
+      </div> <!--페이지 네비게이션-->
 
     </div> <!--콘텐츠-->
   </div>
