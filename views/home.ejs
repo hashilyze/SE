@@ -7,6 +7,7 @@
   <title>홈페이지</title>
 
   <link rel="stylesheet" href="/stylesheets/home.css" />
+  <script src="/javascripts/home.js"></script>
 </head>
 
 <body>
@@ -20,6 +21,7 @@
         <div class="logo-wrapper">
           <a class="logo-text" href="/">(홈페이지로고)</a>
         </div>
+        <!--소개글-->
         <div class="intro-wrapper">
           <div class="intro-text">Introduction</div>
         </div>
@@ -29,13 +31,13 @@
           <div class="background"></div>
           <div class="recommandation-text">이 달의 설계도 TOP3</div>
     
-          <a id="thumbnail-1" href=""><img id="img-1" src="" width="220px" height="246px"></a>
-          <a id="thumbnail-2" href=""><img id="img-2" src="" width="220px" height="246px"></a>
-          <a id="thumbnail-3" href=""><img id="img-3" src="" width="220px" height="246px"></a>
+          <a id="thumbnail-1" href=""><img id="img-1" class="thumbnail" src="/images/no_image.png"></a>
+          <a id="thumbnail-2" href=""><img id="img-2" class="thumbnail" src="/images/no_image.png"></a>
+          <a id="thumbnail-3" href=""><img id="img-3" class="thumbnail" src="/images/no_image.png"></a>
     
-          <a id="title-1" class="title-text" href="">제목1</a>
-          <a id="title-2" class="title-text" href="">제목2</a>
-          <a id="title-3" class="title-text" href="">제목3</a>
+          <a id="title-1" class="title-text" href="">빈 제목</a>
+          <a id="title-2" class="title-text" href="">빈 제목</a>
+          <a id="title-3" class="title-text" href="">빈 제목</a>
         </div>
     
         <!--설계코드 추천-->
@@ -43,13 +45,13 @@
           <div class="background"></div>
           <div class="recommandation-text">이 달의 설계코드 TOP3</div>
     
-          <a id="thumbnail-4"><img id="img-4" src="" width="220px" height="246px"></a>
-          <a id="thumbnail-5"><img id="img-5" src="" width="220px" height="246px"></a>
-          <a id="thumbnail-6"><img id="img-6" src="" width="220px" height="246px"></a>
+          <a id="thumbnail-4"><img id="img-4" class="thumbnail" src="/images/no_image.png"></a>
+          <a id="thumbnail-5"><img id="img-5" class="thumbnail" src="/images/no_image.png"></a>
+          <a id="thumbnail-6"><img id="img-6" class="thumbnail" src="/images/no_image.png"></a>
     
-          <a id="title-4" class="title-text" href="">제목4</a>
-          <a id="title-5" class="title-text" href="">제목5</a>
-          <a id="title-6" class="title-text" href="">제목6</a>
+          <a id="title-4" class="title-text" href="">빈 제목</a>
+          <a id="title-5" class="title-text" href="">빈 제목</a>
+          <a id="title-6" class="title-text" href="">빈 제목</a>
         </div>
       </div>
     
@@ -65,58 +67,5 @@
     </div>
   </div>
 </body>
-
-<script>
-  // 추천 시스템
-  window.onload = function () {
-    let req = {
-      method: "GET",
-      headers: { "Content-Type": "application/json" }
-    };
-    let url_1 = "/post/search?format=1&limit=3&offset=0&order=DESC&key=likes";
-    let url_2 = "/post/search?format=2&limit=3&offset=0&order=DESC&key=likes";
-    // 설계도 추천
-    fetch(url_2, req)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.result != "Success") {
-          return;
-        }
-        let count = data.posts.length;
-        for (let i = 0; i < count; ++i) {
-          let post = data.posts[i];
-          if (post.images && post.images.length > 0) {
-            document.getElementById(`img-${i + 1}`).setAttribute("src", `/uploads/${post.images[0]}`);
-          } else {
-            document.getElementById(`img-${i + 1}`).setAttribute("src", "/images/no_image.png");
-          }
-          document.getElementById(`thumbnail-${i + 1}`).setAttribute("href", `/post/read/${post.pid}`);
-          document.getElementById(`title-${i + 1}`).setAttribute("href", `/post/read/${post.pid}`);
-          document.getElementById(`title-${i + 1}`).innerText = post.title;
-        }
-      }).catch((err) => console.error(err));
-
-    // 설계코드 추천
-    fetch(url_1, req)
-      .then((response) => response.json())
-      .then((data) => {
-        if (data.result != "Success") {
-          return;
-        }
-        let count = data.posts.length;
-        for (let i = 0; i < count; ++i) {
-          let post = data.posts[i];
-          if (post.images && post.images.length > 0) {
-            document.getElementById(`img-${i + 4}`).setAttribute("src", `/uploads/${post.images[0]}`);
-          } else {
-            document.getElementById(`img-${i + 4}`).setAttribute("src", "/images/no_image.png");
-          }
-          document.getElementById(`thumbnail-${i + 4}`).setAttribute("href", `/post/read/${post.pid}`);
-          document.getElementById(`title-${i + 4}`).setAttribute("href", `/post/read/${post.pid}`);
-          document.getElementById(`title-${i + 4}`).innerText = post.title;
-        }
-      }).catch((err) => console.error(err));
-  }
-</script>
 
 </html>

@@ -92,6 +92,9 @@
   color: #000000;
   text-align: center;
   letter-spacing: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .main-remake .recommandation-1 {
@@ -126,6 +129,11 @@
   letter-spacing: 0;
   line-height: normal;
   white-space: nowrap;
+}
+
+.main-remake .thumbnail {
+  width: 220px;
+  height: 246px;
 }
 
 .main-remake #thumbnail-1 {
