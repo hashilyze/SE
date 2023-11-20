@@ -3,14 +3,16 @@ const utility = require("./utility");
 
 
 exports.validateCreateParameter = async (req, res, next) =>{
-    if(req.body.login_id === undefined){
+    if(req.body.login_id === undefined || req.body.login_id === ""){
         console.log("Login_id is not exist");
-    } else if(req.body.password === undefined){
+    } else if(req.body.password === undefined || req.body.password === ""){
         console.log("Password is not exist");
-    } else if(req.body.name === undefined){
+    } else if(req.body.name === undefined || req.body.name === ""){
         console.log("Name is not exist");
     } else if(await User.existByLoginId(req.body.login_id)){
         console.log("Duplicated login_id");
+        utility.errorHandle({kind: "forbidden"}, req, res);
+        return;
     }  else{
         next();
         return;

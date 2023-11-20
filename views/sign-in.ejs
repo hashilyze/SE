@@ -7,7 +7,6 @@
   <title>로그인</title>
   
   <link rel="stylesheet" href="/stylesheets/signin.css" />
-  <script src="/javascripts/hyperlink.js"></script>
   <script src="/javascripts/signin.js"></script>
 </head>
 
@@ -19,27 +18,30 @@
     </div>
 
     <!--콘텐츠-->
-    <div class="frame">
-      <div class="overlap-group">
-        <!--라벨-->
+    <div class="signin-wrapper">
+      <div class="signin-form">
+        <!--아이디-->
         <label class="id_label_wrapper" for="login_id">
-          <div class="text-wrapper-1">아이디</div>
+          <div class="text-wrapper">아이디</div>
         </label>
-        <label class="pw_label_wrapper" for="password">
-          <div class="text-wrapper-2">비밀번호</div>
-        </label>
-        <!--입력-->
         <div class="id_input"><input id="login_id" type="text"></div>
+        <!--비밀번호-->
+        <label class="pw_label_wrapper" for="password">
+          <div class="text-wrapper">비밀번호</div>
+        </label>
         <div class="pw_input"><input id="password" type="password"></div>
+        
+        <!--콘텍스트 메뉴-->
+        <div class="context-wrapper">
+          <a class="signup_wrapper" href="/auth/sign-up">
+            <div class="text-wrapper">회원가입</div>
+          </a>
+          <a class="signin_wrapper" href="javascript:void(0)"onclick="requestSignin()">
+            <div class="text-wrapper">로그인</div>
+          </a>
+        </div>
+      </div> <!--콘텍스트 메뉴-->
 
-        <!--버튼-->
-        <button class="signup_wrapper" onclick="moveToSignUp()">
-          <div class="text-wrapper-2">회원가입</div>
-        </button>
-        <button class="signin_wrapper" onclick="requestSignin()">
-          <div class="text-wrapper-1">로그인</div>
-        </button>
-      </div>
     </div>
 
   </div>

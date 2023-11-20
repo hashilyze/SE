@@ -36,13 +36,13 @@
   line-height: normal;
 }
 
-.register .frame {
+.register .signup-wrapper {
   position: relative;
   width: 810px;
   height: 665px;
 }
 
-.register .overlap-group {
+.register .signup-form {
   position: relative;
   width: 734px;
   height: 645px;
@@ -62,11 +62,12 @@
   border-radius: 8px;
 }
 
-.register .text-wrapper-1 {
+.register .text-wrapper {
   position: absolute;
-  height: 48px;
+  height: inherit;
+  width:inherit;
   top: 3px;
-  left: 68px;
+  /* left: 68px; */
   font-size: 40px;
   white-space: nowrap;
   font-family: "Inter-Regular", Helvetica;
@@ -87,21 +88,6 @@
   border-radius: 8px;
 }
 
-.register .text-wrapper-3 {
-  position: absolute;
-  height: 48px;
-  top: 3px;
-  left: 32px;
-  font-size: 40px;
-  white-space: nowrap;
-  font-family: "Inter-Regular", Helvetica;
-  font-weight: 400;
-  color: #000000;
-  text-align: center;
-  letter-spacing: 0;
-  line-height: normal;
-}
-
 .register .id_label_wrapper {
   position: absolute;
   width: 212px;
@@ -112,21 +98,6 @@
   border-radius: 8px;
 }
 
-.register .text-wrapper-2 {
-  position: absolute;
-  height: 48px;
-  top: 3px;
-  left: 51px;
-  font-size: 40px;
-  white-space: nowrap;
-  font-family: "Inter-Regular", Helvetica;
-  font-weight: 400;
-  color: #000000;
-  text-align: center;
-  letter-spacing: 0;
-  line-height: normal;
-}
-
 .register .signup_wrapper {
   position: absolute;
   width: 284px;
@@ -135,21 +106,6 @@
   left: 226px;
   background-color: #ff6666;
   border-radius: 8px;
-}
-
-.register .text-wrapper-4 {
-  position: absolute;
-  width: 198px;
-  height: 48px;
-  top: 3px;
-  left: 42px;
-  font-size: 40px;
-  font-family: "Inter-Regular", Helvetica;
-  font-weight: 400;
-  color: #000000;
-  text-align: center;
-  letter-spacing: 0;
-  line-height: normal;
 }
 
 .register .name_input {
@@ -180,8 +136,8 @@
 }
 
 input[type=text] {
-    height:50px;
-    width:320px;
-    border:0px;
-    font-size:45px;
+  height: 50px;
+  width: 320px;
+  border: 0px;
+  font-size: 45px;
 }
