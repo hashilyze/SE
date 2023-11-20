@@ -50,12 +50,12 @@ router.get("/read/:pid",
 // 게시물 작성 페이지
 router.get("/write", 
     auth.requirePrivate,
-    async (req, res) => await decorator.render(req, res, "write", { }));
+    async (req, res) => await decorator.render(req, res, "write", { method: "POST"}));
 // 게시물 갱신 페이지
 router.get("/edit/:pid", 
     auth.extractWriter,
     auth.requirePrivateOnlyMine,
-    async (req, res) => { await decorator.render(req, res, "edit", { post: await Post.findById(req.params.pid) }) });
+    async (req, res) => { await decorator.render(req, res, "write", { method: "PUT", post: await Post.findById(req.params.pid) }) });
 // 게시판
 router.get("/board", async (req, res) => {
     let filter = { 

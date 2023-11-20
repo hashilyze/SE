@@ -30,7 +30,8 @@
             <div class="posting-header-text">제목</div>
           </label>
           <div class="input">
-            <input id="title" class="t1" type="text">
+            <input id="title" class="t1" type="text" 
+              value="<%=method == 'POST' ? '' : post.title %>" />
           </div>
         </div>
         <!--가격-->
@@ -39,12 +40,13 @@
             <div class="posting-header-text">가격</div>
           </label>
           <div class="input">
-            <input id="price" class="t1" type="number">
+            <input id="price" class="t1" type="number"
+              value="<%=method == 'POST' ? '' : post.price %>" />
           </div>
         </div>
         <!--본문-->
         <div class="textarea">
-          <textarea id="description" class="t2"></textarea>
+          <textarea id="description" class="t2"><%=method == 'POST' ? '' : post.description%></textarea>
         </div>
         <!--이미지-->
         <div class="imageInput-wrapper">
@@ -70,7 +72,7 @@
         </div>
         <!--등록하기-->
         <div class="btbRegister-wrapper">
-          <button class="context-form" onclick="onRegister('POST')">
+          <button class="context-form" onclick="onRegister('<%=method%>')">
             <div class="context-text">등록하기</div>
           </button>
         </div>
