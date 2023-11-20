@@ -4,7 +4,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>글쓰기</title>
+  <title>글 쓰기</title>
 
   <link rel="stylesheet" href="/stylesheets/write.css" />
   <script src="/javascripts/post.js"></script>
@@ -66,7 +66,7 @@
       <div class="context-wrapper">
         <!--취소하기-->
         <div class="btnCanceal-wrapper">
-          <button class="context-form" onclick="location.href='/';">
+          <button class="context-form" onclick="backTo('<%=method%>')">
             <div class="context-text">취소하기</div>
           </button>
         </div>
@@ -82,6 +82,13 @@
   </div>
 </body>
 <script>
+  function backTo(method){
+    <%if(method == "POST"){%>
+      location.href="/post/board?format_name=<%=format_name%>&category_name=<%=category_name%>";
+    <%}else{%>
+      location.href="/post/read/<%=post.pid%>";
+    <%}%>
+  }
   function displayFileName(){
     let imageInput = document.getElementById("image");
     let fileDisplay = document.getElementById("fileDisplay");

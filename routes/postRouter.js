@@ -45,7 +45,10 @@ const upload = multer({ storage: multer.diskStorage({
 router.get("/read/:pid", 
     nullSafty.ensurePost,
     async (req, res) => {
-        await decorator.render(req, res, "details", { post: await Post.findById(req.params.pid) });
+        await Post.addViewsById(req.params.pid, 1);
+        await decorator.render(req, res, "details", { 
+            post: await Post.findById(req.params.pid) 
+        });
 });
 // 게시물 작성 페이지
 router.get("/write", 

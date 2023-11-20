@@ -29,7 +29,11 @@ exports.onePay = async (req, res) => {
 
     try{
         let list = await Download.findAll({uid, pid});
-        if(list.length == 0) await Post.addDownloadsById(pid, 1);
+        if(list.length > 0){
+            utility.errorHandle({kind: "forbidden"}, req, res);
+            return;
+        }
+        await Post.addDownloadsById(pid, 1);
         await Download.create({uid, pid});
         res.send(utility.getSuccess());
     } catch(err){

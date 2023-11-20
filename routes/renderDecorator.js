@@ -10,7 +10,9 @@ exports.render = async function(req, res, url, params){
         if(req.session.uid){
             params.isPrivate = true;
             params.uid = req.session.uid;
-            params.user_name = (await User.findById(params.uid)).name;
+            let user = await User.findById(params.uid);
+            params.user_name = user.name;
+            params.user_role = user.role;
 
             res.render(url, params);
             return;

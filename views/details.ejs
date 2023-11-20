@@ -1,74 +1,210 @@
-<div>
-    <div>
-        <span>pid</span>
-        <span><%=post.pid%></span>
-    </div>
-    <div>
-        <span>writer</span>
-        <span><%=post.writer%></span>
-    </div>
-    <div>
-        <span>writer_name</span>
-        <span><%=post.writer_name%></span>
-    </div>
-    <div>
-        <span>category</span>
-        <span><%=post.category%></span>
-    </div>
-    <div>
-        <span>category_name</span>
-        <span><%=post.category_name%></span>
-    </div>
-    <div>
-        <span>format</span>
-        <span><%=post.format%></span>
-    </div>
-    <div>
-        <span>format_name</span>
-        <span><%=post.format_name%></span>
-    </div>
-    <div>
-        <span>views</span>
-        <span><%=post.views%></span>
-    </div>
-    <div>
-        <span>likes</span>
-        <span><%=post.likes%></span>
-    </div>
-    <div>
-        <span>downloads</span>
-        <span><%=post.downloads%></span>
-    </div>
-    <div>
-        <span>title</span>
-        <span><%=post.title%></span>
-    </div>
-    <div>
-        <span>price</span>
-        <span><%=post.price%></span>
-    </div>
-    <div>
-        <span>description</span> <br>
-        <% 
-        let text = post.description;
-        let map = {
-            " " : "&nbsp;",
-            "\n":  "<br>",
-            "<" : "&lt;",
-            ">" : "&gt;",
-            "\"": "&quot;",
-            "&" : "&amp;",
-        };
-        let escapedText = text.replace(/[ \n<>\"&]/g, (m) => map[m]);
-        %>
-        <span><%- escapedText%></span>
-    </div>
-    <div>
-        <span>images</span>
-        <%if(post.images){%>
-            <%for(let image of post.images){%>
-                <img src="/uploads/<%=image%>" width="300px" height="300px">
-            <%}%>
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>글 보기</title>
+
+  <link rel="stylesheet" href="/stylesheets/detail.css" />
+</head>
+
+<body>
+  <div class="detail-page">
+    <%include sidebar.html%>
+
+    <div class="main-section">
+      <div class="logo-wrapper">
+        <a class="logo-text" href="/">(홈페이지로고)</a>
+      </div>
+
+      <%include board_title.ejs%>
+      
+      <!--콘텍스트 메뉴-->
+      <div class="context-wrapper">
+        <%if(isPrivate && (post.writer == uid || user_role == 1)){%>
+        <div class="btnEdit-wrapper">
+          <button class="context-form1" onclick="moveToEdit()">
+            <div class="context-text">수정하기</div>
+          </button>
+        </div>
         <%}%>
-    </div>
-</div>
+        <div class="btnBoard-wrapper">
+          <button class="context-form1" onclick="backToBoard()">
+            <div class="context-text">목록으로</div>
+          </button>
+        </div>
+        <div class="btnLike-wrapper">
+          <button class="context-form2" onclick="addLikes()">
+            <div class="context-text">추천하기</div>
+          </button>
+        </div>
+        <div class="btnPay-wrapper">
+          <button class="context-form2" onclick="pay()">
+            <div class="context-text">구매하기</div>
+          </button>
+        </div>
+      </div>
+      <%include personalNav.ejs%>
+
+      <!--게시물-->
+      <div class="post-wrapper">
+        <!--제목-->
+        <div class="title-wrapper">
+          <div class="title-label">
+            <div class="attr-text">제목</div>
+          </div>
+          <div class="title-value">
+            <div class="attr-text"><%=post.title%></div>
+          </div>
+        </div>
+        <!--가격-->
+        <div class="price-wrapper">
+          <div class="attr-label1">
+            <div class="attr-text">가격</div>
+          </div>
+          <div class="attr-value1">
+            <div class="attr-text">￦ <%=post.price%></div>
+          </div>
+        </div>
+        <!--형식-->
+        <div class="format-wrapper">
+          <div class="attr-label1">
+            <div class="attr-text">형식</div>
+          </div>
+          <div class="attr-value1">
+            <div class="attr-text"><%=post.format_name%></div>
+          </div>
+        </div>
+        <!--카테고리-->
+        <div class="category-wrapper">
+          <div class="attr-label2">
+            <div class="attr-text">카테고리</div>
+          </div>
+          <div class="attr-value2">
+            <div class="attr-text"><%=post.category_name%></div>
+          </div>
+        </div>
+        <!--작성자-->
+        <div class="writer-wrapper">
+          <div class="attr-label1">
+            <div class="attr-text">작성자</div>
+          </div>
+          <div class="attr-value1">
+            <div class="attr-text"><%=post.writer_name%></div>
+          </div>
+        </div>
+        <!--조회수-->
+        <div class="views-wrapper">
+          <div class="attr-label2">
+            <div class="attr-text">조회수</div>
+          </div>
+          <div class="attr-value2">
+            <div class="attr-text"><%=post.views%></div>
+          </div>
+        </div>
+        <!--추천수-->
+        <div class="likes-wrapper">
+          <div class="attr-label1">
+            <div class="attr-text">추천수</div>
+          </div>
+          <div class="attr-value1">
+            <div class="attr-text"><%=post.likes%></div>
+          </div>
+        </div>
+        <!--다운로드수-->
+        <div class="downloads-wrapper">
+          <div class="downloads-label">
+            <div class="attr-text">다운로드</div>
+          </div>
+          <div class="downloads-value">
+            <div class="attr-text"><%=post.downloads%></div>
+          </div>
+        </div>
+        <!--내용-->
+        <% 
+        var text=post.description; 
+        var map={
+          " " : "&nbsp;", 
+          "\n" : "<br>", 
+          "<" : "&lt;" ,
+          ">" : "&gt;", 
+          "\"": "&quot;", 
+          "&" : "&amp;", 
+        }; 
+        var escapedText=text.replace(/[ \n<>\"&]/g, (m) => map[m]);
+        %>
+        <div class="textarea" id="description"><%-escapedText%></div>
+        <!--이미지-->
+        <%if(post.images){%>
+          <div class="image-wrapper">
+          <%for(let i = 0; i < Math.min(10, post.images.length); ++i){%>
+            <div id="image-<%=i+1%>" class="image" style="left:<%=195 * i%>px">
+              <img src="/uploads/<%=post.images[i]%>" width="175" height="108"
+                onclick="window.open(this.src);"
+                />
+            </div>
+          <%}%>
+          </div>
+        <%}%>
+      </div>
+    </div> <!--게시물-->
+  </div>  
+</body>
+<script>
+  function moveToEdit(){
+    location.href="/post/edit/<%=post.pid%>"
+  }
+  function backToBoard(){
+    location.href="/post/board?format_name=<%=format_name%>&category_name=<%=category_name%>"
+  }
+  async function addLikes(){
+    let req = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ })
+    };
+    let url = "/post/<%=post.pid%>/up-likes";
+    try{
+      let response = await fetch(url, req);
+      if(response.status == 403){
+        alert("이미 추천한 게시물 입니다.");
+        return;
+      }
+      let data = await response.json();
+      if(data.result == "Success"){
+          alert("추천하였습니다.");
+          location.reload();
+          return;
+      }
+    } catch(err){
+      alert("추천에 실패하였습니다.");  
+      console.error(err);
+    }
+  }
+  async function pay(){
+    let req = {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ })
+    };
+    let url = "/pay/<%=post.pid%>";
+    try{
+      let response = await fetch(url, req);
+      if(response.status == 403){
+        alert("이미 구매한 게시물 입니다.");
+        return;
+      }
+      let data = await response.json();
+      if(data.result == "Success"){
+          alert("구매하였습니다.");
+          location.reload();
+          return;
+      }
+    } catch(err){
+      alert("구매에 실패하였습니다.");  
+      console.error(err);
+    }
+  }
+</script>
+</html>
