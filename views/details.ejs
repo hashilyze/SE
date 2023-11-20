@@ -7,6 +7,7 @@
   <title>글 보기</title>
 
   <link rel="stylesheet" href="/stylesheets/detail.css" />
+  <link rel="stylesheet" href="/stylesheets/modal.css" />
 </head>
 
 <body>
@@ -23,27 +24,27 @@
       <!--콘텍스트 메뉴-->
       <div class="context-wrapper">
         <%if(isPrivate && (post.writer == uid || user_role == 1)){%>
-        <div class="btnEdit-wrapper">
-          <button class="context-form1" onclick="moveToEdit()">
+        <a class="btnEdit-wrapper" href="/post/edit/<%=post.pid%>">
+          <div class="context-form1">
             <div class="context-text">수정하기</div>
-          </button>
-        </div>
+          </div>
+        </a>
         <%}%>
-        <div class="btnBoard-wrapper">
-          <button class="context-form1" onclick="backToBoard()">
+        <a class="btnBoard-wrapper" href="/post/board?format_name=<%=format_name%>&category_name=<%=category_name%>">
+          <div class="context-form1">
             <div class="context-text">목록으로</div>
-          </button>
-        </div>
-        <div class="btnLike-wrapper">
-          <button class="context-form2" onclick="addLikes()">
+          </div>
+        </a>
+        <a class="btnLike-wrapper" href="javascript:void(0)" onclick="addLikes()">
+          <div class="context-form2">
             <div class="context-text">추천하기</div>
-          </button>
-        </div>
-        <div class="btnPay-wrapper">
-          <button class="context-form2" onclick="pay()">
+          </div>
+        </a>
+        <a class="btnPay-wrapper" href="javascript:void(0)" onclick="activeModal()">
+          <div class="context-form2">
             <div class="context-text">구매하기</div>
-          </button>
-        </div>
+          </div>
+        </a>
       </div>
       <%include personalNav.ejs%>
 
@@ -150,14 +151,67 @@
       </div>
     </div> <!--게시물-->
   </div>  
+
+  <!-- The Modal -->
+  <div id="myModal" class="modal">
+
+    <!-- Modal content -->
+    <div class="modal-content">
+      <div class="modal-header">
+        <span class="close" onclick="inactiveModal()">&times;</span>
+        <h2>저작권 안내</h2>
+      </div>
+      <div class="modal-body">
+        <p>
+          이 소프트웨어의 저작권은 작성자에게 있으며,<br> 
+          MIT 라이선스에 따라 배포됩니다. <br>
+          영리 목적으로 이용할 수 있으며, <br>
+          수정과 배포가 허용되나 저작권 표시를 유지해야 합니다.<br><br>
+          개발자는 소프트웨어의 사용으로 인해 발생하는 문제에 대해 <br>
+          책임을 지지 않습니다.
+        </p>
+        <br>
+        <p>
+          본 자료의 일부 혹은 전체 내용을 무단으로 복제/배포하거나 <br>
+          2차적 저작물로 재편집하는 경우,<br> 
+          5년 이하의 징역 또는 5천만원 이하의 <br>
+          벌금과 민사상 손해배상을 청구합니다.
+        </p>
+        <br>
+        <input type="radio" name="agreement" value="no" checked onclick="inactiveBtnPay()"/>동의하지 않음
+        <input type="radio" name="agreement" value="yes" onclick="activeBtnPay()"/>동의함
+      </div>
+      <div class="modal-footer">
+        <button id="btnPay" class="modal-btn-wrapper" onclick="pay()" disabled>
+          구매하기
+        </button>
+      </div>
+    </div>
+
+  </div>
+  
+  <script>
+    // Modal Handler
+    function activeModal(){
+      let modal = document.getElementById("myModal");
+      modal.style.display = "block";
+    }
+    function inactiveModal(){
+      let modal = document.getElementById("myModal");
+      modal.style.display = "none";
+    }
+    
+    // When the user clicks anywhere outside of the modal, close it
+    window.onclick = function(event) {
+      let modal = document.getElementById("myModal");
+      if (event.target == modal) {
+        modal.style.display = "none";
+      }
+    }
+  </script>
 </body>
+
 <script>
-  function moveToEdit(){
-    location.href="/post/edit/<%=post.pid%>"
-  }
-  function backToBoard(){
-    location.href="/post/board?format_name=<%=format_name%>&category_name=<%=category_name%>"
-  }
   async function addLikes(){
     let req = {
       method: "POST",
@@ -182,6 +236,7 @@
       console.error(err);
     }
   }
+  
   async function pay(){
     let req = {
       method: "POST",
@@ -204,7 +259,17 @@
     } catch(err){
       alert("구매에 실패하였습니다.");  
       console.error(err);
+    } finally{
+      inactiveModal();
     }
+  }
+  function activeBtnPay(){
+    let btnPay = document.getElementById("btnPay");
+    btnPay.disabled = false;
+  }
+  function inactiveBtnPay(){
+    let btnPay = document.getElementById("btnPay");
+    btnPay.disabled = true;
   }
 </script>
 </html>
