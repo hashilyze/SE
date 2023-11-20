@@ -153,10 +153,26 @@
 
 .posting-page .btnCanceal-wrapper {
   position: absolute;
-  width: 252px;
+  width: 250px;
   height: 70px;
   top: 861px;
-  left: 252px;
+  left: 100px;
+}
+
+.posting-page .btnRegister-wrapper {
+  position: absolute;
+  width: 250px;
+  height: 70px;
+  top: 861px;
+  left: 700px;
+}
+
+.posting-page .btnDelete-wrapper {
+  position: absolute;
+  width: 250px;
+  height: 70px;
+  top: 861px;
+  left: 400px;
 }
 
 .posting-page .context-form {
@@ -180,14 +196,6 @@
   color: #000000;
   text-align: center;
   letter-spacing: 0;
-}
-
-.posting-page .btbRegister-wrapper {
-  position: absolute;
-  width: 252px;
-  height: 70px;
-  top: 861px;
-  left: 608px;
 }
 
 .posting-page .view-3 {

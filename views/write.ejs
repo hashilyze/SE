@@ -30,8 +30,7 @@
             <div class="posting-header-text">제목</div>
           </label>
           <div class="input">
-            <input id="title" class="t1" type="text" 
-              value="<%=method == 'POST' ? '' : post.title %>" />
+            <input id="title" class="t1" type="text" value="<%=method == 'PUT' ? post.title : '' %>" />
           </div>
         </div>
         <!--가격-->
@@ -40,13 +39,12 @@
             <div class="posting-header-text">가격</div>
           </label>
           <div class="input">
-            <input id="price" class="t1" type="number"
-              value="<%=method == 'POST' ? '' : post.price %>" />
+            <input id="price" class="t1" type="number" value="<%=method == 'PUT' ? post.price : '' %>" />
           </div>
         </div>
         <!--본문-->
         <div class="textarea">
-          <textarea id="description" class="t2"><%=method == 'POST' ? '' : post.description%></textarea>
+          <textarea id="description" class="t2"><%=method == 'PUT' ? post.description : ''%></textarea>
         </div>
         <!--이미지-->
         <div class="imageInput-wrapper">
@@ -66,13 +64,21 @@
       <div class="context-wrapper">
         <!--취소하기-->
         <div class="btnCanceal-wrapper">
-          <button class="context-form" onclick="backTo('<%=method%>')">
+          <button class="context-form" onclick="backTo()">
             <div class="context-text">취소하기</div>
           </button>
         </div>
+        <%if(method == "PUT"){%>
+        <!--삭제하기-->
+        <div class="btnDelete-wrapper">
+          <button class="context-form" onclick="requestDelete()">
+            <div class="context-text">삭제하기</div>
+          </button>
+        </div>
+        <%}%>
         <!--등록하기-->
-        <div class="btbRegister-wrapper">
-          <button class="context-form" onclick="onRegister('<%=method%>')">
+        <div class="btnRegister-wrapper">
+          <button class="context-form" onclick="requestRegister('<%=method%>')">
             <div class="context-text">등록하기</div>
           </button>
         </div>
@@ -89,6 +95,7 @@
       location.href="/post/read/<%=post.pid%>";
     <%}%>
   }
+  
   function displayFileName(){
     let imageInput = document.getElementById("image");
     let fileDisplay = document.getElementById("fileDisplay");

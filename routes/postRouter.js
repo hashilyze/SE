@@ -52,12 +52,12 @@ router.get("/read/:pid",
 });
 // 게시물 작성 페이지
 router.get("/write", 
-    auth.requirePrivate,
+    auth.requirePrivateForPage,
     async (req, res) => await decorator.render(req, res, "write", { method: "POST"}));
 // 게시물 갱신 페이지
 router.get("/edit/:pid", 
     auth.extractWriter,
-    auth.requirePrivateOnlyMine,
+    auth.requirePrivateOnlyMineForPage,
     async (req, res) => { await decorator.render(req, res, "write", { method: "PUT", post: await Post.findById(req.params.pid) }) });
 // 게시판
 router.get("/board", async (req, res) => {
