@@ -10,7 +10,7 @@ function onSignout() {
     .then(data => {
         if (data.result == "Success") {
             alert("로그아웃 되었습니다.");
-            location.reload();
+            location.href="/";
         } else {
             alert("로그아웃 실패");
         }

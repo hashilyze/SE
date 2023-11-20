@@ -22,16 +22,9 @@
           <a class="logo-text" href="/">(홈페이지로고)</a>
         </div>
 
-        <!--게시판 이름-->
-        <div class="board_name-wrapper">
-          <div class="board_name-form">
-            <a class="baord_name-text" href="/post/board?format_name=<%=format_name%>&category_name=<%=category_name%>">
-              <%if(category_name)%> <%=category_name%>
-            </a>
-          </div>
-        </div>
-
+        <% include ./board_title.ejs%>
         <%if(isPrivate){%>
+          
         <!--글쓰기 페이지로 이동-->
         <div class="btnWrite">
           <a class="write-text" href="/post/write">글쓰기</a>

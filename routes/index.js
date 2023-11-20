@@ -4,7 +4,7 @@ var decorator = require("./renderDecorator");
 
 /* GET home page. */
 router.get('/', async function (req, res) {
-    decorator.render(req, res, "home");
+    await decorator.render(req, res, "home");
 });
 
 module.exports = router;

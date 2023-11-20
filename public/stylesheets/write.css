@@ -1,0 +1,389 @@
+@import url("./globals.css");
+
+.posting-page {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 10px;
+  position: relative;
+  background-color: #ffffff;
+  width: 100%;
+  min-width: 1457px;
+  min-height: 1003.68px;
+  justify-content: center;
+}
+
+.posting-page .sidebar-section {
+  position: relative;
+  width: 318.5px;
+  height: 983.68px;
+  background-color: #ffffff;
+  overflow: hidden;
+}
+
+.posting-page .overlap-group {
+  position: relative;
+  width: 319px;
+  height: 1004px;
+}
+
+.posting-page .sidebar {
+  top: 502px;
+  background: linear-gradient(
+    180deg,
+    rgb(232.6, 215, 255) 0%,
+    rgba(233, 215, 255, 0.74) 40.62%,
+    rgba(215, 248, 255, 0) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  width: 319px;
+  height: 502px;
+  align-items: center;
+  justify-content: center;
+  gap: 21px;
+  padding: 36px 24px;
+  position: absolute;
+  left: 0;
+}
+
+.posting-page .text-wrapper {
+  position: relative;
+  width: 271px;
+  height: 19.64px;
+  margin-top: -1px;
+  font-family: "Inter-Bold", Helvetica;
+  font-weight: 700;
+  font-size: 45px;
+  line-height: 18px;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.posting-page .div {
+  position: relative;
+  width: 271px;
+  height: 19.64px;
+  font-family: "Inter-Thin", Helvetica;
+  font-weight: 100;
+  white-space: nowrap;
+  color: #000000;
+  font-size: 26px;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.posting-page .line {
+  position: relative;
+  width: 271px;
+  height: 1px;
+  object-fit: cover;
+}
+
+.posting-page .sidebar-r {
+  top: 0;
+  background: linear-gradient(
+    180deg,
+    rgb(215, 248, 255) 0%,
+    rgba(215, 248, 255, 0.84) 52.08%,
+    rgba(215, 248, 255, 0) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  width: 319px;
+  height: 502px;
+  align-items: center;
+  justify-content: center;
+  gap: 21px;
+  padding: 36px 24px;
+  position: absolute;
+  left: 0;
+}
+
+.posting-page .text-wrapper-2 {
+  position: relative;
+  width: 271px;
+  height: 19.64px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: normal;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.posting-page .main-section {
+  position: relative;
+  width: 1108.5px;
+  height: 983.68px;
+  background-color: #fff7f7;
+  border: 1px solid;
+  border-color: #00000080;
+}
+
+.posting-page .logo-wrapper {
+  display: inline-flex;
+  flex-direction: column;
+  height: 101px;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px 92px;
+  position: absolute;
+  top: 26px;
+  left: 24px;
+  background-color: #d9d9d9;
+}
+
+.posting-page .logo-text {
+  position: relative;
+  width: fit-content;
+  margin-top: -1px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 44px;
+  line-height: normal;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.posting-page .btnCanceal-wrapper {
+  position: absolute;
+  width: 252px;
+  height: 70px;
+  top: 861px;
+  left: 252px;
+}
+
+.posting-page .context-form {
+  position: relative;
+  width: 250px;
+  height: 70px;
+  background-color: #ff6666;
+  border-radius: 15px;
+}
+
+.posting-page .context-text {
+  position: absolute;
+  width: 219px;
+  top: 14px;
+  left: 15px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 35px;
+  line-height: normal;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.posting-page .btbRegister-wrapper {
+  position: absolute;
+  width: 252px;
+  height: 70px;
+  top: 861px;
+  left: 608px;
+}
+
+.posting-page .view-3 {
+  position: absolute;
+  width: 323px;
+  height: 55px;
+  top: 49px;
+  left: 760px;
+}
+
+.posting-page .overlap-2 {
+  position: relative;
+  width: 319px;
+  height: 55px;
+  background-color: #ddf2ff;
+  border-radius: 15px;
+}
+
+.posting-page .text-wrapper-6 {
+  position: absolute;
+  top: 19px;
+  left: 31px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 18px;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.posting-page .text-wrapper-7 {
+  position: absolute;
+  top: 19px;
+  left: 186px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 18px;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+}
+
+.posting-page .posting-wrapper {
+  position: absolute;
+  width: 1030px;
+  height: 590px;
+  top: 244px;
+  left: 40px;
+  background-color: #ffd3d3;
+  border-radius: 7px;
+}
+
+.posting-page .postingTitle-wrapper {
+  position: absolute;
+  width: 965px;
+  height: 45px;
+  top: 24px;
+  left: 37px;
+}
+
+.posting-page .posting-header-form {
+  position: absolute;
+  width: 190px;
+  height: 45px;
+  top: 0;
+  left: 0;
+  background-color: #ff6666;
+  border-radius: 15px 0px 0px 15px;
+}
+
+.posting-page .posting-header-text {
+  position: absolute;
+  width: 160px;
+  height: 39px;
+  top: 3px;
+  left: 18px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  color: #000000;
+  font-size: 26px;
+  text-align: center;
+  letter-spacing: 0;
+  line-height: normal;
+}
+
+.posting-page .input {
+  position: absolute;
+  width: 773px;
+  height: 45px;
+  top: 0;
+  left: 190px;
+  background-color: #ffffff;
+  border-radius: 0px 15px 15px 0px;
+}
+
+.posting-page .postingPrice-wrapper {
+  position: absolute;
+  width: 965px;
+  height: 45px;
+  top: 90px;
+  left: 37px;
+}
+
+.posting-page .textarea {
+  position: absolute;
+  width: 963px;
+  height: 364px;
+  top: 150px;
+  left: 37px;
+  background-color: #ffffff;
+}
+
+.posting-page .btnRegFile-wrapper {
+  position: absolute;
+  width: 175px;
+  height: 40px;
+  top: 529px;
+  left: 37px;
+  /* background-color: #d9d9d9; */
+}
+.posting-page .btnRegFile {
+  position: absolute;
+  display: inline-block;
+  width: inherit;
+  height: inherit;
+  background-color: #ff6666;
+  cursor: pointer;
+  border: #000;
+  border-radius: 15px;
+}
+.posting-page .btnRegFile-text {
+  position: absolute;
+  top:12px;
+  left:20px;
+  color: #000;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 26px;
+}
+
+.posting-page input[type="file"] {
+  position: absolute;
+  width: 0;
+  height: 0;
+  padding: 0;
+  overflow: hidden;
+  border: 0;
+}
+
+.posting-page .regFile-wrapper {
+  position: absolute;
+  width: 400px;
+  height: 40px;
+  top: 529px;
+  left: 244px;
+  background-color: #ff8f8f;
+  border-radius: 7px;
+}
+
+.posting-page .regFile-text {
+  position: absolute;
+  width: inherit;
+  height: inherit;
+  top: 5px;
+  font-family: "Inter-Regular", Helvetica;
+  font-weight: 400;
+  font-size: 26px;
+  line-height: normal;
+  white-space: nowrap;
+  color: #000000;
+  text-align: center;
+  letter-spacing: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+input[type=text].t1 {
+    height:43px;
+    width:770px;
+    border:0px;
+    font-size:40px;
+}
+input[type=number].t1 {
+  height:43px;
+  width:770px;
+  border:0px;
+  font-size:40px;
+}
+
+textarea.t2 {
+    height:360px;
+    width:960px;
+    border:0px;
+    font-size:15px;
+}

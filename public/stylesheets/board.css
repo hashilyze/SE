@@ -326,38 +326,6 @@
   left: 732px;
 }
 
-.dashboard .board_name-wrapper {
-  position: absolute;
-  width: 302px;
-  height: 60px;
-  top: 156px;
-  left: 404px;
-}
-
-.dashboard .board_name-form {
-  position: relative;
-  width: 300px;
-  height: 60px;
-  background-color: #f8c5c5;
-}
-
-.dashboard .baord_name-text {
-  position: absolute;
-  top: 10px;
-  width: inherit;
-  height: inherit;
-  font-family: "Inter-Regular", Helvetica;
-  font-weight: 400;
-  font-size: 25px;
-  line-height: normal;
-  color: #000000;
-  text-align: center;
-  letter-spacing: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-}
-
 .dashboard .btnPrev-wrapper {
   position: absolute;
   width: 252px;

@@ -11,15 +11,14 @@ var decorator = require("./renderDecorator");
 // Router
 const router = express.Router();
 
+// Create upload storage
 const filePath = 'public/uploads/';
-
 try {
     fs.readdirSync(filePath);
 } catch (error) {
     console.error('not exist directory.');
     fs.mkdirSync(filePath);
 }
-
 const upload = multer({ storage: multer.diskStorage({
     destination(req, file, cb){
         cb(null, filePath);
@@ -46,19 +45,17 @@ const upload = multer({ storage: multer.diskStorage({
 router.get("/read/:pid", 
     nullSafty.ensurePost,
     async (req, res) => {
-    res.render("details", { post: await Post.findById(req.params.pid) })
+        await decorator.render(req, res, "details", { post: await Post.findById(req.params.pid) });
 });
 // 게시물 작성 페이지
 router.get("/write", 
     auth.requirePrivate,
-    (req, res) => res.render("write", { }));
+    async (req, res) => await decorator.render(req, res, "write", { }));
 // 게시물 갱신 페이지
 router.get("/edit/:pid", 
     auth.extractWriter,
     auth.requirePrivateOnlyMine,
-    async (req, res) => {
-        res.render("edit", { post: await Post.findById(req.params.pid) })
-});
+    async (req, res) => { await decorator.render(req, res, "edit", { post: await Post.findById(req.params.pid) }) });
 // 게시판
 router.get("/board", async (req, res) => {
     let filter = { 
@@ -97,10 +94,8 @@ router.get("/board", async (req, res) => {
         }
     });
 
-    decorator.render(req, res, "board", { 
+    await decorator.render(req, res, "board", { 
         posts: posts, 
-        category_name: filter.category_name, 
-        format_name: filter.format_name,
         offset: filter.offset || 0,
         limit: filter.limit || 3,
     });

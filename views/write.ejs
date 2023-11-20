@@ -1,16 +1,98 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ko">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>글쓰기</title>
+
+  <link rel="stylesheet" href="/stylesheets/write.css" />
+  <script src="/javascripts/post.js"></script>
 </head>
+
 <body>
-    <input type="text" id="title" placeholder="제목"/> <br><br>
-    <input type="number" id="price"  placeholder="가격"/> <br><br>
-    <textarea id="description" placeholder="내용"></textarea> <br><br>
-    <input type="file" id="image" accept="images/*" multiple/> <br><br>
-    <input type="button" onclick="onRegister('POST')" value="등록">
+  <div class="posting-page">
+    <% include ./sidebar.html %>
+    <!--콘텐츠-->
+    <div class="main-section">
+      <!--로고-->
+      <div class="logo-wrapper">
+        <a class="logo-text" href="/">(홈페이지로고)</a>
+      </div>
+      <% include ./board_title.ejs%>
+      <%include personalNav.ejs%>
+
+      <!--글쓰기-->
+      <div class="posting-wrapper">
+        <!--제목-->
+        <div class="postingTitle-wrapper">
+          <label class="posting-header-form" for="title">
+            <div class="posting-header-text">제목</div>
+          </label>
+          <div class="input">
+            <input id="title" class="t1" type="text">
+          </div>
+        </div>
+        <!--가격-->
+        <div class="postingPrice-wrapper">
+          <label class="posting-header-form" for="price">
+            <div class="posting-header-text">가격</div>
+          </label>
+          <div class="input">
+            <input id="price" class="t1" type="number">
+          </div>
+        </div>
+        <!--본문-->
+        <div class="textarea">
+          <textarea id="description" class="t2"></textarea>
+        </div>
+        <!--이미지-->
+        <div class="imageInput-wrapper">
+          <div class="btnRegFile-wrapper">
+            <label class="btnRegFile" for="image">
+              <div class="btnRegFile-text">첨부 이미지</div>
+            </label>
+            <input id="image" type="file" accept="image/*" multiple onchange="displayFileName()">
+          </div>
+          <div class="regFile-wrapper">
+            <div class="regFile-text" id="fileDisplay">첨부 이미지 등록</div>
+          </div>
+        </div>
+      </div> <!--글쓰기-->
+      
+      <!--콘텍스트 메뉴-->
+      <div class="context-wrapper">
+        <!--취소하기-->
+        <div class="btnCanceal-wrapper">
+          <button class="context-form" onclick="location.href='/';">
+            <div class="context-text">취소하기</div>
+          </button>
+        </div>
+        <!--등록하기-->
+        <div class="btbRegister-wrapper">
+          <button class="context-form" onclick="onRegister('POST')">
+            <div class="context-text">등록하기</div>
+          </button>
+        </div>
+      </div> <!--콘텍스트 메뉴-->
+
+    </div>
+  </div>
 </body>
-<script src="/javascripts/post.js"></script>
+<script>
+  function displayFileName(){
+    let imageInput = document.getElementById("image");
+    let fileDisplay = document.getElementById("fileDisplay");
+    let fileString = "";
+    if(imageInput.files){
+      for(let file of imageInput.files){
+        fileString += file.name + ", ";
+      }
+    }
+    if(fileString === "") {
+      fileString = "첨부 이미지 등록";
+    }
+    fileDisplay.innerText = fileString;
+  }
+</script>
 </html>

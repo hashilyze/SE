@@ -3,6 +3,8 @@ var User = require('../models/User');
 
 exports.render = async function(req, res, url, params){
     if(!params) params = { };
+    params.format_name = req.session["format_name"];
+    params.category_name = req.session["category_name"];
 
     try{
         if(req.session.uid){
