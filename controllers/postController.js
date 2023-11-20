@@ -6,6 +6,7 @@ const User = require("../models/User");
 const Category = require("../models/Category");
 const Format = require("../models/Format");
 const utility = require("./utility");
+const fs = require("fs");
 
 
 exports.validateCreateParameter = async (req, res, next) =>{
@@ -107,6 +108,17 @@ exports.deleteOne = async function (req, res) {
     let pid = req.params.pid;
 
     try {
+        let post = await Post.findById(pid);
+        if(post.images && post.images.length > 0){
+            for(let image of post.images){
+                try{
+                    await fs.promises.readFile(`public/uploads/${image}`);
+                    await fs.promises.rm(`public/uploads/${image}`);
+                } catch(e){
+                    
+                }
+            }
+        }
         await Post.deleteById(pid);
         res.send(utility.getSuccess());
     } catch (err) {
