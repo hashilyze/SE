@@ -29,6 +29,17 @@
   width:1000px;
 }
 
+#image-Modal-contents{
+  margin: auto;
+  display: block;
+  width: auto; 
+  height: auto;
+  max-width: 1000px;
+  border-radius: 10px;
+  animation-name: zoom;
+  animation-duration: 0.8s;
+}
+
 /* Add Animation */
 @-webkit-keyframes animatetop {
   from {top:-300px; opacity:0} 

@@ -35,16 +35,18 @@
             <div class="context-text">목록으로</div>
           </div>
         </a>
+        <%if(isPrivate){%>
         <a class="btnLike-wrapper" href="javascript:void(0)" onclick="addLikes()">
           <div class="context-form2">
             <div class="context-text">추천하기</div>
           </div>
         </a>
-        <a class="btnPay-wrapper" href="javascript:void(0)" onclick="activeModal()">
+        <a class="btnPay-wrapper" href="javascript:void(0)" onclick="activeTermModal()">
           <div class="context-form2">
             <div class="context-text">구매하기</div>
           </div>
         </a>
+        <%}%>
       </div>
       <%include personalNav.ejs%>
 
@@ -142,7 +144,7 @@
           <%for(let i = 0; i < Math.min(10, post.images.length); ++i){%>
             <div id="image-<%=i+1%>" class="image" style="left:<%=195 * i%>px">
               <img src="/uploads/<%=post.images[i]%>" width="175" height="108"
-                onclick="window.open(this.src);"
+                onclick="activeImageModal('/uploads/<%=post.images[i]%>');"
                 />
             </div>
           <%}%>
@@ -152,13 +154,11 @@
     </div> <!--게시물-->
   </div>  
 
-  <!-- The Modal -->
-  <div id="myModal" class="modal">
-
-    <!-- Modal content -->
+  <!-- 약관 모달 -->
+  <div id="term-Modal" class="modal">
     <div class="modal-content">
       <div class="modal-header">
-        <span class="close" onclick="inactiveModal()">&times;</span>
+        <span class="close" onclick="inactiveTermModal()">&times;</span>
         <h2>저작권 안내</h2>
       </div>
       <div class="modal-body">
@@ -187,25 +187,34 @@
         </button>
       </div>
     </div>
+  </div>
 
+  <!-- 이미지 모달 -->
+  <div id="image-Modal" class="modal">
+    <img id="image-Modal-contents" src="">
+    </img>
   </div>
   
   <script>
     // Modal Handler
-    function activeModal(){
-      let modal = document.getElementById("myModal");
-      modal.style.display = "block";
+    function activeTermModal(){ document.getElementById("term-Modal").style.display="block";}
+    function inactiveTermModal(){ document.getElementById("term-Modal").style.display = "none";}
+
+    function activeImageModal(url){ 
+      document.getElementById("image-Modal").style.display = "block";
+      document.getElementById("image-Modal-contents").setAttribute("src", url);
     }
-    function inactiveModal(){
-      let modal = document.getElementById("myModal");
-      modal.style.display = "none";
-    }
+    function inactiveImageModal(){ document.getElementById("image-Modal").style.display = "none";}
     
     // When the user clicks anywhere outside of the modal, close it
     window.onclick = function(event) {
-      let modal = document.getElementById("myModal");
-      if (event.target == modal) {
-        modal.style.display = "none";
+      let termModal = document.getElementById("term-Modal");
+      let imageModal = document.getElementById("image-Modal");
+      if (event.target == termModal) {
+        termModal.style.display = "none";
+      }
+      if (event.target == imageModal) {
+        imageModal.style.display = "none";
       }
     }
   </script>
@@ -260,7 +269,7 @@
       alert("구매에 실패하였습니다.");  
       console.error(err);
     } finally{
-      inactiveModal();
+      inactiveTermModal();
     }
   }
   function activeBtnPay(){
