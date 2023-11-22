@@ -13,54 +13,6 @@
   justify-content: center;
 }
 
-.posting-page .sidebar-section {
-  position: relative;
-  width: 318.5px;
-  height: 983.68px;
-  background-color: #ffffff;
-  overflow: hidden;
-}
-
-.posting-page .overlap-group {
-  position: relative;
-  width: 319px;
-  height: 1004px;
-}
-
-.posting-page .sidebar {
-  top: 502px;
-  background: linear-gradient(
-    180deg,
-    rgb(232.6, 215, 255) 0%,
-    rgba(233, 215, 255, 0.74) 40.62%,
-    rgba(215, 248, 255, 0) 100%
-  );
-  display: flex;
-  flex-direction: column;
-  width: 319px;
-  height: 502px;
-  align-items: center;
-  justify-content: center;
-  gap: 21px;
-  padding: 36px 24px;
-  position: absolute;
-  left: 0;
-}
-
-.posting-page .text-wrapper {
-  position: relative;
-  width: 271px;
-  height: 19.64px;
-  margin-top: -1px;
-  font-family: "Inter-Bold", Helvetica;
-  font-weight: 700;
-  font-size: 45px;
-  line-height: 18px;
-  color: #000000;
-  text-align: center;
-  letter-spacing: 0;
-}
-
 .posting-page .div {
   position: relative;
   width: 271px;
@@ -72,33 +24,6 @@
   font-size: 26px;
   letter-spacing: 0;
   line-height: normal;
-}
-
-.posting-page .line {
-  position: relative;
-  width: 271px;
-  height: 1px;
-  object-fit: cover;
-}
-
-.posting-page .sidebar-r {
-  top: 0;
-  background: linear-gradient(
-    180deg,
-    rgb(215, 248, 255) 0%,
-    rgba(215, 248, 255, 0.84) 52.08%,
-    rgba(215, 248, 255, 0) 100%
-  );
-  display: flex;
-  flex-direction: column;
-  width: 319px;
-  height: 502px;
-  align-items: center;
-  justify-content: center;
-  gap: 21px;
-  padding: 36px 24px;
-  position: absolute;
-  left: 0;
 }
 
 .posting-page .text-wrapper-2 {
@@ -131,11 +56,11 @@
   align-items: center;
   justify-content: center;
   gap: 10px;
-  padding: 24px 92px;
+  /* padding: 24px 92px; */
   position: absolute;
   top: 26px;
   left: 24px;
-  background-color: #d9d9d9;
+  /* background-color: #d9d9d9; */
 }
 
 .posting-page .logo-text {
