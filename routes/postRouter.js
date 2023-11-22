@@ -46,8 +46,12 @@ router.get("/read/:pid",
     nullSafty.ensurePost,
     async (req, res) => {
         await Post.addViewsById(req.params.pid, 1);
+        let post = await Post.findById(req.params.pid);
+        req.session["format_name"] = post.format_name;
+        req.session["category_name"] = post.category_name;
+         
         await decorator.render(req, res, "details", { 
-            post: await Post.findById(req.params.pid) 
+            post: post 
         });
 });
 // 게시물 작성 페이지

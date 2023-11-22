@@ -91,8 +91,25 @@ exports.findOne = async function (req, res) {
 exports.updateOne = async function (req, res){
     let pid = req.params.pid;
     let updateInfo = new Post(req.body);
+
     if(req.files) 
         updateInfo.images = req.files.map((val) => val.filename);
+
+    try {
+        let post = await Post.findById(pid);
+        if(post.images && post.images.length > 0){
+            for(let image of post.images){
+                try{
+                    await fs.promises.readFile(`public/uploads/${image}`);
+                    await fs.promises.rm(`public/uploads/${image}`);
+                } catch(e){
+                    console.log(`Fail to remove image ${image}`);
+                }
+            }
+        }
+    } catch (err) {
+        utility.errorHandle(err, req, res);
+    }
 
     try {
         await Post.updateById(pid, updateInfo);
@@ -115,7 +132,7 @@ exports.deleteOne = async function (req, res) {
                     await fs.promises.readFile(`public/uploads/${image}`);
                     await fs.promises.rm(`public/uploads/${image}`);
                 } catch(e){
-                    
+                    console.log(`Fail to remove image ${image}`);
                 }
             }
         }

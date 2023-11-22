@@ -30,8 +30,8 @@ window.onload = function () {
             }).catch((err) => console.error(err));
     };
 
-    let url1 = "/post/search?format=1&limit=3&offset=0&order=DESC&key=likes";
-    let url2 = "/post/search?format=2&limit=3&offset=0&order=DESC&key=likes";
+    let url1 = "/post/search?format=2&limit=3&offset=0&order=DESC&key=likes";
+    let url2 = "/post/search?format=1&limit=3&offset=0&order=DESC&key=likes";
     buildRecommandation(url1, 1);
     buildRecommandation(url2, 4);
 }
